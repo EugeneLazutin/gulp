@@ -8,22 +8,31 @@ var Page = React.createClass({
   },
 
   componentWillMount() {
-    this.listenTo(store, this._onChange);
+    store.listen(this.onChange);
   },
 
-  _onChange() {
-    this.setState(store.getState());
+  componentWillUnmount() {
+    store.unlisten(this.onChange);
   },
 
-  _setNewValue(evt) {
+  onChange(state) {
+    this.setState(state);
+  },
+
+  setNewValue(evt) {
     actions.setValue(evt.target.value);
+  },
+
+  reset() {
+    actions.resetValue();
   },
 
   render: function () {
     return (
       <div>
         <label>{this.state.value}</label>
-        <input value={this.state.value} onChange={this._setNewValue} />
+        <input value={this.state.value} onChange={this.setNewValue} />
+        <button onClick={this.reset}>RESET</button>
       </div>
     );
   }

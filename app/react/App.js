@@ -15,6 +15,15 @@ var App = React.createClass({
           <Link to="home">
             <li className="navigation-item">Home</li>
           </Link>
+          <Link to="page1">
+            <li className="navigation-item">page 1</li>
+          </Link>
+          <Link to="page2">
+            <li className="navigation-item">page 2</li>
+          </Link>
+          <Link to="page3">
+            <li className="navigation-item">page 3</li>
+          </Link>
         </ul>
         <RouteHandler {...this.props} />
       </div>

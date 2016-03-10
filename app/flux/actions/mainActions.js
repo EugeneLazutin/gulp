@@ -2,12 +2,12 @@ var alt = require('../alt');
 
 class mainActions {
 
-  setValue (newValue) {
-    this.dispatch(newValue);
+  constructor() {
+    this.generateActions('resetValue');
   }
 
-  resetValue () {
-    this.dispatch();
+  setValue (newValue) {
+    return newValue;
   }
 
 }
