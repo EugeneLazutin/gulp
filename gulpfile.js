@@ -6,48 +6,59 @@ var watchify = require('watchify');
 var moment = require('moment');
 var chalk = require('chalk');
 
+var defaultOpts = {
+  entries: './app/bootstrap.js',
+  debug: true
+};
+
 gulp.task('watch', () => {
-  var b = createBundle(true);
-
-  b.on('log', (msg) => {
-    console.log(chalk.green(msg));
-  });
-
-  function rebundle() {
-    console.log(chalk.bgBlack.white('\nSomething changed. Starting...'));
-    bundle(b);
-  }
-
-  b.on('update', rebundle);
-
-  rebundle();
-});
-
-gulp.task('build', () => {
-  return bundle(createBundle(false));
-});
-
-function createBundle(watch) {
-  var opts = Object.assign({}, browserifyInc.args, {
-    entries: './app/bootstrap.js',
-    debug: true
+  var opts = Object.assign({}, watchify.args, defaultOpts, {
+    cache: {},
+    packageCache: {},
+    plugin: [watchify]
   });
 
   var b = browserify(opts);
+  b.transform('babelify', {presets: ['es2015', 'react']});
 
-  if(watch) {
-    b.plugin(watchify);
+  b.on('log', handleLog);
+
+  function rebundle() {
+    console.log(chalk.blue.bold('\nBundle changed...'));
+    bundle(b);
   }
 
-  browserifyInc(b, {cacheFile: './b-cache.json'});
+  b.on('update', rebundle, () => {
+    console.log('--123131232--');
+  });
+
+  bundle(b);
+});
+
+gulp.task('build', () => {
+  var opts = Object.assign({}, browserifyInc.args, defaultOpts);
+  var b = browserify(opts);
+
+  browserifyInc(b, { cacheFile: './b-cache.json' });
 
   b.transform('babelify', {presets: ['es2015', 'react']});
 
-  return b;
-}
+  b.on('log', handleLog);
+
+  return bundle(b);
+});
 
 function bundle(b) {
   return b.bundle()
+    .on('error', handleError)
     .pipe(source('build.js'))
-    .pipe(gulp.dest('./public/javascripts/'))
+    .pipe(gulp.dest('./public/javascripts/'));
+}
+
+function handleError(msg) {
+  console.log(chalk.red.bold(msg));
+}
+
+function handleLog(msg) {
+  console.log(chalk.green(msg));
 }
