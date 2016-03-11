@@ -3,12 +3,8 @@
  */
 
 var React = require('react');
-var ReactDom = require('react-dom');
+var { render } = require('react-dom');
 var routes = require('./react/routes');
-var { Router, hashHistory } = require('react-router');
-var App = require('./react/pages/page1');
+var { Router, browserHistory } = require('react-router');
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDom.render(<App/> /*<Router history={hashHistory}>{routes}</Router>*/, document.getElementById('root'));
-});
-
+render(<Router history={browserHistory }>{routes}</Router>, document.getElementById('root'));

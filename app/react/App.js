@@ -1,31 +1,20 @@
 var React = require('react');
-var { RouteHandler, Link } = require('react-router');
-var { PropTypes } = React;
+var { Link } = require('react-router');
+
+const ACTIVE = { color: 'red' }
 
 var App = React.createClass({
-  propTypes: {
-    params: PropTypes.object.isRequired,
-    query: PropTypes.object.isRequired
-  },
   render: function () {
     return (
       <div>
         <h1>Pages</h1>
-        <ul className="navigation">
-          <Link to="home">
-            <li className="navigation-item">Home</li>
-          </Link>
-          <Link to="page1">
-            <li className="navigation-item">page 1</li>
-          </Link>
-          <Link to="page2">
-            <li className="navigation-item">page 2</li>
-          </Link>
-          <Link to="page3">
-            <li className="navigation-item">page 3</li>
-          </Link>
+        <ul>
+          <li><Link      to="/"           activeStyle={ACTIVE}>/</Link></li>
+          <li><Link      to="/page1"      activeStyle={ACTIVE}>/page 1</Link></li>
+          <li><Link      to="/page2"      activeStyle={ACTIVE}>/page 2</Link></li>
+          <li><Link      to="/page3"      activeStyle={ACTIVE}>/page 3</Link></li>
         </ul>
-        <RouteHandler {...this.props} />
+        {this.props.children}
       </div>
     );
   }

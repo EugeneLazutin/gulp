@@ -5,6 +5,7 @@ var Page = React.createClass({
     return (
       <div>
         Page 2
+        {this.props.children}
       </div>
     );
   }
