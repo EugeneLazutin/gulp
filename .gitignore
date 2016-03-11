@@ -1,4 +1,5 @@
 node_modules
 .idea
-public/javascripts/build.js
+public/javascripts
 b-cache.json
+app/bower_components

@@ -10,8 +10,8 @@ var App = React.createClass({
         <h1>Pages</h1>
         <ul>
           <li><Link      to="/"           activeStyle={ACTIVE}>/</Link></li>
-          <li><Link      to="/page1"      activeStyle={ACTIVE}>/page 1</Link></li>
           <li><Link      to="/page2"      activeStyle={ACTIVE}>/page 2</Link></li>
+          <li><Link      to="/page2/3"      activeStyle={ACTIVE}>/page 2 / 3</Link></li>
           <li><Link      to="/page3"      activeStyle={ACTIVE}>/page 3</Link></li>
         </ul>
         {this.props.children}

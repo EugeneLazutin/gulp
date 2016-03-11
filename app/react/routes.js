@@ -9,7 +9,8 @@ var Page3 = require('./pages/page3');
 
 var routes = (
     <Route path='/' component={App} >
-      <Route path='page1' component={Page1} />
+
+      <IndexRoute component={Page1} />
       <Route path='page2' component={Page2} >
         <IndexRoute component={Page1} />
         <Route path="3" component={Page3} />

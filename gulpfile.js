@@ -5,6 +5,18 @@ var source = require('vinyl-source-stream');
 var watchify = require('watchify');
 var moment = require('moment');
 var chalk = require('chalk');
+var filter = require('gulp-filter');
+var concat = require('gulp-concat');
+var mainBowerFiles = require('gulp-main-bower-files');
+
+gulp.task('js', () => {
+  var jsFilter = filter('**/*.js');
+  return gulp.src('./app/bower.json')
+    .pipe(mainBowerFiles())
+    .pipe(jsFilter)
+    .pipe(concat('lib.js'))
+    .pipe(gulp.dest('./public/js'));
+});
 
 var defaultOpts = {
   entries: './app/bootstrap.js',
@@ -28,9 +40,7 @@ gulp.task('watch', () => {
     bundle(b);
   }
 
-  b.on('update', rebundle, () => {
-    console.log('--123131232--');
-  });
+  b.on('update', rebundle);
 
   bundle(b);
 });
@@ -52,7 +62,7 @@ function bundle(b) {
   return b.bundle()
     .on('error', handleError)
     .pipe(source('build.js'))
-    .pipe(gulp.dest('./public/javascripts/'));
+    .pipe(gulp.dest('./public/js/'));
 }
 
 function handleError(msg) {
