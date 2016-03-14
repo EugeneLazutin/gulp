@@ -3,7 +3,7 @@ var alt = require('../alt');
 class mainActions {
 
   constructor() {
-    this.generateActions('resetValue');
+    this.generateActions('resetValue', 'login', 'create', 'get');
   }
 
   setValue (newValue) {

@@ -23,16 +23,12 @@ var Page = React.createClass({
     actions.setValue(evt.target.value);
   },
 
-  reset() {
-    actions.resetValue();
-  },
-
   render: function () {
     return (
       <div>
         <label>{this.state.value}</label>
         <input value={this.state.value} onChange={this.setNewValue} />
-        <button className="btn" onClick={this.reset}>RESET</button>
+        <button className="btn" onClick={actions.resetValue}>RESET</button>
       </div>
     );
   }

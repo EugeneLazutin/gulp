@@ -1,0 +1,25 @@
+var _ = require('lodash');
+var express = require('express');
+var router = express.Router();
+var passport = require('passport');
+
+var auth = require('../auth.service');
+
+router.post('/', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    var error = err || info;
+    if(error) {
+      return res.status(401).json(error);
+    }
+    if(!user) {
+      return res.status(401).json({ msg: 'login failed' });
+    }
+    console.log(user.toObject());
+    res.json({
+      user: _.omit(user.toObject(), ['passwordHash', 'salt']),
+      token: auth.signToken(user._id)
+    });
+  })(req, res, next);
+});
+
+module.exports = router;
