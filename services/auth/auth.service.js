@@ -11,13 +11,11 @@ exports.isAuthenticated = () => {
   return compose()
     .use(validateJwt)
     .use((req, res, next) => {
-      console.log(req.user);
       User.findById(req.user._id, (err, user) => {
         if(err) {
           return next(err);
         }
         if(!user) {
-          console.log("-=-=-=-=Ooops!=-=-=-=-");
           return res.sendStatus(401);
         }
         req.user = user;
@@ -30,6 +28,6 @@ exports.signToken = (id) => {
   return jwt.sign(
     { _id: id },
     secret,
-    { expiresIn: 60 * 60 * 5 }
+    { expiresIn: 60 * 60 * 5 } //5hours
   );
 };

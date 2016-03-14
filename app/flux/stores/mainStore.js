@@ -21,7 +21,7 @@ class mainStore {
 
   onLogin() {
     ajax
-      .post('/auth/local')
+      .post('/auth')
       .send({
         email: 'eugene@mail',
         password: 'my_pass'
@@ -65,6 +65,10 @@ class mainStore {
       console.log(err || res);
     });
     return false;
+  }
+
+  ddd() {
+    return '???';
   }
 }
 

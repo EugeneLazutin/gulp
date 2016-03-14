@@ -28,7 +28,6 @@ app.use(require('node-sass-middleware')({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/user', require('./api/user'));
-app.use('/auth', require('./services/auth'));
 app.use('/', routes);
 
 // catch 404 and forward to error handler
