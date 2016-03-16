@@ -1,6 +1,5 @@
 var agent = require('superagent');
-var cookie = require('react-cookie');
-
+var userActions = require('../../flux/actions/user.actions');
 
 function send(user, url) {
   return new Promise((resolve, reject) => {
@@ -11,7 +10,7 @@ function send(user, url) {
         if (err) {
           reject(err);
         } else {
-          cookie.save('token', res.body.token);
+          userActions.set(res.body);
           resolve(res.body.user);
         }
       });
@@ -24,5 +23,9 @@ exports.login = (user) => {
 
 exports.register = (user) => {
   return send(user, '/api/user');
+};
+
+exports.logout = () => {
+  userActions.remove();
 };
 

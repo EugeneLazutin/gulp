@@ -14,7 +14,7 @@ var Login = React.createClass({
       last: values.lastName
     };
 
-    register(values)
+    register(user)
       .then((user) => {
         console.log('success', user);
       })

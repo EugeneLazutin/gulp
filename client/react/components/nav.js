@@ -1,8 +1,26 @@
 var React = require('react');
 var { Navbar, Nav } = require('react-bootstrap');
-var Link = require('./link');
+var userStore = require('../../flux/stores/user.store');
+var Auth = require('./auth');
 
 var nav = React.createClass({
+
+  getInitialState() {
+    return userStore.getState();
+  },
+
+  componentWillMount() {
+    userStore.listen(this.onChange);
+  },
+
+  componentWillUnmount() {
+    userStore.unlisten(this.onChange);
+  },
+
+  onChange(state) {
+    this.setState(state);
+  },
+
   render() {
     return (
       <Navbar staticTop fluid>
@@ -18,10 +36,7 @@ var nav = React.createClass({
 
           </Nav>
 
-          <Nav pullRight>
-            <Link      to='/login' >      Login         </Link>
-            <Link      to='/register' >   Register      </Link>
-          </Nav>
+          <Auth />
         </Navbar.Collapse>
       </Navbar>
     );
