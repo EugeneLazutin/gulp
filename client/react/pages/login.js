@@ -1,34 +1,19 @@
 var React = require('react');
 var { ButtonInput } = require('react-bootstrap');
-var { Form, ValidatedInput, Validator } = require('react-bootstrap-validation');
-var agent = require('superagent');
-var cookie = require('react-cookie');
+var { Form, ValidatedInput } = require('react-bootstrap-validation');
+var { login, isEmail } = require('../../services');
 
 
 var Login = React.createClass({
 
-  handleValid(values){
-    agent
-      .post('/auth')
-      .send(values)
-      .end((err, res) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(res.body);
-          cookie.save('token', res.body.token);
-        }
+  handleValid(values) {
+    login(values)
+      .then((user) => {
+        console.log('success', user);
+      })
+      .catch((err) => {
+        console.log('error', err);
       });
-  },
-
-  validate(email) {
-    if(!email) {
-      return 'Please enter your email.'
-    }
-    if(Validator.isEmail(email, {require_tld: false})){
-      return true;
-    }
-    return 'Email is invalid.'
   },
 
   render() {
@@ -41,7 +26,7 @@ var Login = React.createClass({
           type="email"
           name="email"
           placeholder="Email"
-          validate={this.validate}
+          validate={isEmail}
         />
 
         <ValidatedInput

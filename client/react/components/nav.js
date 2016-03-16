@@ -1,25 +1,31 @@
 var React = require('react');
+var { Navbar, Nav } = require('react-bootstrap');
+var Link = require('./link');
 
-module.exports = React.createClass({
+var nav = React.createClass({
   render() {
     return (
-      <nav className='navbar navbar-default'>
-        <div className='container-fluid'>
-          <div className='navbar-header'>
-            <button type='button' className="navbar-toggle collapsed" data-toggle="collapse" data-target="#links" aria-expanded="false">
-              <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
-            <a className="navbar-brand" href="/">Brand</a>
-          </div>
+      <Navbar staticTop fluid>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <a href="#">React-Bootstrap</a>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
 
-          <div className="collapse navbar-collapse" id="links">
-            {this.props.children}
-          </div>
-        </div>
-      </nav>
+        <Navbar.Collapse>
+          <Nav>
+
+          </Nav>
+
+          <Nav pullRight>
+            <Link      to='/login' >      Login         </Link>
+            <Link      to='/register' >   Register      </Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     );
   }
 });
+
+module.exports = nav;

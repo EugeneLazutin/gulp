@@ -16,7 +16,6 @@ router.post('/auth', (req, res, next) => {
     if(!user) {
       return res.status(401).json({ msg: 'login failed' });
     }
-    console.log(user.toObject());
     res.json({
       user: _.omit(user.toObject(), ['passwordHash', 'salt']),
       token: auth.signToken(user._id)

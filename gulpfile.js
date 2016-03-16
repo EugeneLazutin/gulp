@@ -12,14 +12,14 @@ var sass = require('gulp-sass');
 
 
 gulp.task('sass', () => {
-  return gulp.src('./styles/**/*.scss')
+  return gulp.src('./server/styles/**/*.scss')
     .pipe(sass().on('error', handleError))
     .pipe(concat('style.css'))
     .pipe(gulp.dest('./public/css/'));
 });
 
 gulp.task('watch:sass', () => {
-  gulp.watch('./styles/**/*.scss', ['sass']);
+  gulp.watch('./server/styles/**/*.scss', ['sass']);
 });
 
 gulp.task('build:lib', () => {

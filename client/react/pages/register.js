@@ -1,8 +1,8 @@
 var React = require('react');
 var { ButtonInput } = require('react-bootstrap');
-var { Form, ValidatedInput, Validator} = require('react-bootstrap-validation');
+var { Form, ValidatedInput } = require('react-bootstrap-validation');
 var _ = require('lodash');
-var agent = require('superagent');
+var { register, isEmail } = require('../../services');
 
 
 var Login = React.createClass({
@@ -14,22 +14,13 @@ var Login = React.createClass({
       last: values.lastName
     };
 
-    agent
-      .post('/api/user')
-      .send(user)
-      .end((err, res) => {
-        console.log(err || res);
+    register(values)
+      .then((user) => {
+        console.log('success', user);
+      })
+      .catch((err) => {
+        console.log('error', err);
       });
-  },
-
-  validate(email) {
-    if (!email) {
-      return 'Please enter your email.'
-    }
-    if (Validator.isEmail(email, {require_tld: false})) {
-      return true;
-    }
-    return 'Email is invalid.'
   },
 
   render() {
@@ -42,7 +33,7 @@ var Login = React.createClass({
           type="email"
           name="email"
           placeholder="Email"
-          validate={this.validate}
+          validate={isEmail}
         />
 
         <ValidatedInput
