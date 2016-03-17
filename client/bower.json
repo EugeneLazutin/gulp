@@ -21,7 +21,8 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.6",
-    "jquery": "^2.2.1"
+    "jquery": "^2.2.1",
+    "toastr": "^2.1.2"
   },
   "overrides": {
     "bootstrap": {
@@ -33,6 +34,9 @@
     },
     "jquery": {
       "main": "dist/jquery.min.js"
+    },
+    "toastr": {
+      "main": "toastr.min.*"
     }
   }
 }

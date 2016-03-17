@@ -1,13 +1,19 @@
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
-
 var User = require('../../api/user/user.model');
+var tokenExpiresIn = require('../../config').tokenExpiresIn;
 
 var secret = 'my_secret';
 var validateJwt = expressJwt({ secret: secret });
 
-exports.isAuthenticated = () => {
+
+module.exports = {
+  isAuthenticated,
+  signToken
+};
+
+function isAuthenticated(isAdmin) {
   return compose()
     .use(validateJwt)
     .use((req, res, next) => {
@@ -18,16 +24,19 @@ exports.isAuthenticated = () => {
         if(!user) {
           return res.sendStatus(401);
         }
+        if(isAdmin && !user.isAdmin()) {
+          return res.sendStatus(403);
+        }
         req.user = user;
         next();
       })
     });
-};
+}
 
-exports.signToken = (id) => {
+function signToken(id) {
   return jwt.sign(
     { _id: id },
     secret,
-    { expiresIn: 60 * 60 * 5 } //5hours
+    { expiresIn: tokenExpiresIn }
   );
-};
+}

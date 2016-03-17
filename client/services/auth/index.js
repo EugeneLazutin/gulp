@@ -17,11 +17,11 @@ function send(user, url) {
   });
 }
 
-exports.login = (user) => {
+exports.login = user => {
   return send(user, '/auth')
 };
 
-exports.register = (user) => {
+exports.register = user => {
   return send(user, '/api/user');
 };
 

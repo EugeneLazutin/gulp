@@ -22,7 +22,7 @@ gulp.task('watch:sass', () => {
   gulp.watch('./server/styles/**/*.scss', ['sass']);
 });
 
-gulp.task('build:lib', () => {
+gulp.task('js:lib', () => {
   var jsFilter = filter('**/*.js');
   return gulp.src('./client/bower.json')
     .pipe(mainBowerFiles())
@@ -67,7 +67,7 @@ gulp.task('watch:app', () => {
   bundle(b);
 });
 
-gulp.task('build:app', () => {
+gulp.task('js:app', () => {
   var opts = Object.assign({}, browserifyInc.args, defaultOpts);
   var b = browserify(opts);
 
@@ -95,8 +95,8 @@ function handleLog(msg) {
   console.log(chalk.green(msg));
 }
 
-gulp.task('app', ['build:app','sass']);
+gulp.task('app', ['js:app','sass']);
 
-gulp.task('lib', ['build:lib', 'css']);
+gulp.task('lib', ['js:lib', 'css']);
 
 gulp.task('build', ['app', 'lib']);

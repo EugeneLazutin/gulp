@@ -1,11 +1,12 @@
-var React = require('react');
-var { ButtonInput } = require('react-bootstrap');
-var { Form, ValidatedInput } = require('react-bootstrap-validation');
-var _ = require('lodash');
-var { register, isEmail } = require('../../services');
+var React = require( 'react');
+var { ButtonInput } = require( 'react-bootstrap');
+var { Form, ValidatedInput } = require( 'react-bootstrap-validation');
+var _ = require( 'lodash');
+var { register, isEmail } = require( '../../services');
+var { browserHistory } = require( 'react-router');
 
 
-var Login = React.createClass({
+module.exports = React.createClass({
 
   handleValid(values){
     var user = _.omit(values, ['firstName', 'lastName']);
@@ -16,7 +17,8 @@ var Login = React.createClass({
 
     register(user)
       .then((user) => {
-        console.log('success', user);
+        toastr.success('successfully registered & logged');
+        browserHistory.push('/');
       })
       .catch((err) => {
         console.log('error', err);
@@ -79,5 +81,3 @@ var Login = React.createClass({
     );
   }
 });
-
-module.exports = Login;

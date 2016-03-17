@@ -1,15 +1,16 @@
 var React = require('react');
 var { ButtonInput } = require('react-bootstrap');
 var { Form, ValidatedInput } = require('react-bootstrap-validation');
-var { login, isEmail } = require('../../services');
+var { login, isEmail} = require('../../services');
+var { browserHistory } = require('react-router');
 
-
-var Login = React.createClass({
+module.exports = React.createClass({
 
   handleValid(values) {
     login(values)
       .then((user) => {
-        console.log('success', user);
+        toastr.success('successfully logged');
+        browserHistory.push('/');
       })
       .catch((err) => {
         console.log('error', err);
@@ -52,5 +53,3 @@ var Login = React.createClass({
     );
   }
 });
-
-module.exports = Login;

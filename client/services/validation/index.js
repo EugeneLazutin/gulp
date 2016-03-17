@@ -6,12 +6,12 @@ var { Validator } = require('react-bootstrap-validation');
  * so pass manually
  */
 
-exports.isEmail = (email) => {
+exports.isEmail = email => {
   if (!email) {
     return 'Please enter your email.'
   }
-  if (Validator.isEmail(email, {require_tld: false})) {
-    return true;
+  if (!Validator.isEmail(email, {require_tld: false})) {
+    return 'Email is invalid.';
   }
-  return 'Email is invalid.'
+  return true;
 };

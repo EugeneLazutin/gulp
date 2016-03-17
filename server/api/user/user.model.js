@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema  = mongoose.Schema;
 var crypto = require('crypto');
+var roles = requireAbs('server/config').roles;
 
 var UserSchema = new Schema ({
   email: String,
@@ -10,7 +11,7 @@ var UserSchema = new Schema ({
   },
   passwordHash: { type: String, select: false },
   salt: { type: String, select: false },
-  status: Number
+  role: { type: Number, default: roles.user }
 });
 
 
@@ -56,7 +57,10 @@ UserSchema.methods = {
     }
     var salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+  },
+  isAdmin() {
+    return this.role === roles.admin;
   }
-}
+};
 
 module.exports = mongoose.model('User', UserSchema);

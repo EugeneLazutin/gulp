@@ -1,6 +1,5 @@
 var _ = require('lodash');
-
-var auth = require('../../services/auth/auth.service.js');
+var auth = requireAbs('server/services/auth/auth.service.js');
 var User = require('./user.model.js');
 
 function handleError (res, err) {
@@ -25,7 +24,6 @@ exports.getMe = (req, res) => {
       handleError(res, err);
     }
     if(!user) {
-      console.log('Ooooops!');
       return res.json(401);
     }
     res.status(200).json(user);

@@ -3,7 +3,7 @@ var { Navbar, Nav } = require('react-bootstrap');
 var userStore = require('../../flux/stores/user.store');
 var Auth = require('./auth');
 
-var nav = React.createClass({
+module.exports = React.createClass({
 
   getInitialState() {
     return userStore.getState();
@@ -42,5 +42,3 @@ var nav = React.createClass({
     );
   }
 });
-
-module.exports = nav;
