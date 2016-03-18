@@ -3,8 +3,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 
-var auth = requireAbs('server/services/auth/auth.service');
-requireAbs('server/services/auth/passport.config');
+var auth = require('../services/auth/auth.service');
+require('../services/auth/passport.config');
 
 /* POST login. */
 router.post('/auth', (req, res, next) => {

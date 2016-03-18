@@ -1,12 +1,12 @@
 var _ = require('lodash');
-var auth = requireAbs('server/services/auth/auth.service.js');
+var auth = require('../../services/auth/auth.service.js');
 var User = require('./user.model.js');
 
 function handleError (res, err) {
   return res.status(500).send(err);
 }
 
-exports.create = (req, res) => {
+exports.create = function (req, res) {
   User.create(req.body, (err, user) => {
     if(err) {
       return handleError(res, err);
@@ -18,7 +18,7 @@ exports.create = (req, res) => {
   });
 };
 
-exports.getMe = (req, res) => {
+exports.getMe = function (req, res) {
   User.findById(req.user._id, (err, user) => {
     if(err) {
       handleError(res, err);

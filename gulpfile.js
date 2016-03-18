@@ -9,6 +9,8 @@ var filter = require('gulp-filter');
 var concat = require('gulp-concat');
 var mainBowerFiles = require('gulp-main-bower-files');
 var sass = require('gulp-sass');
+var jasmine = require('gulp-jasmine');
+var SpecReporter = require('jasmine-spec-reporter');
 
 
 gulp.task('sass', () => {
@@ -71,7 +73,7 @@ gulp.task('js:app', () => {
   var opts = Object.assign({}, browserifyInc.args, defaultOpts);
   var b = browserify(opts);
 
-  browserifyInc(b, { cacheFile: './b-cache.json' });
+  browserifyInc(b, {cacheFile: './b-cache.json'});
 
   b.transform('babelify', {presets: ['es2015', 'react']});
 
@@ -95,7 +97,14 @@ function handleLog(msg) {
   console.log(chalk.green(msg));
 }
 
-gulp.task('app', ['js:app','sass']);
+gulp.task('test', () => {
+  return gulp.src('./server/tests/**/test-*.js')
+    .pipe(jasmine({
+      reporter: new SpecReporter()
+    }));
+});
+
+gulp.task('app', ['js:app', 'sass']);
 
 gulp.task('lib', ['js:lib', 'css']);
 

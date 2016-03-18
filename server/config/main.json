@@ -1,4 +1,5 @@
 {
   "//": "5 hours",
-  "tokenExpiresIn": 18000
+  "tokenExpiresIn": 18000,
+  "passwordMinLength": 3
 }

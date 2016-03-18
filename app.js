@@ -5,16 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-global.baseDir = __dirname;
-
-/**
- * require with absolute path
- * @path {String}
- */
-global.requireAbs = (path) => {
-  return require(baseDir + '/' + path);
-};
-
 var routes = require('./server/routes/index');
 
 var app = express();

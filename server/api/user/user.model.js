@@ -1,23 +1,37 @@
 var mongoose = require('mongoose');
-var Schema  = mongoose.Schema;
+var Schema = mongoose.Schema;
 var crypto = require('crypto');
-var roles = requireAbs('server/config').roles;
+var config = require('../../config');
+var _ = require('lodash');
+var chalk = require('chalk');
 
-var UserSchema = new Schema ({
-  email: String,
+var UserSchema = new Schema({
+  email: {type: String, required: true, unique: true},
   name: {
-    first: String,
-    last: String
+    first: {type: String, required: true},
+    last: {type: String, required: true}
   },
-  passwordHash: { type: String, select: false },
-  salt: { type: String, select: false },
-  role: { type: Number, default: roles.user }
+  passwordHash: {type: String, select: false, required: true},
+  salt: {type: String, select: false, required: true},
+  role: {type: Number, default: config.roles.user}
 });
-
 
 UserSchema
   .virtual('password')
   .set(function (password) {
+
+    if (_.isUndefined(password) || _.isNull(password)) {
+      return this.invalidate('password', 'required', password);
+    }
+
+    if (password && password.length < config.passwordMinLength) {
+      return this.invalidate(
+        'password',
+        `must be at least ${config.passwordMinLength} characters`,
+        password
+      );
+    }
+
     this._password = password;
     this.salt = this.makeSalt();
     this.passwordHash = this.encryptPassword(password);
@@ -27,22 +41,18 @@ UserSchema
   });
 
 UserSchema
-  .path('email')
-  .validate(function (value, respond) {
-    var self = this;
-    this.constructor.findOne({ email: value }, (err, user) => {
-      if(err) {
-        throw err;
-      }
-      if(user) {
-        if(self.id === user.id) {
-          return respond(true);
-        }
-        return respond(false);
-      }
-      respond(true);
-    });
-  }, 'email already used');
+  .path('role')
+  .validate((value, respond) => {
+    respond(_.includes(config.roles, value));
+  }, `role is incorrect`);
+
+UserSchema
+  .path('passwordHash')
+  .validate(function (value) {
+    if(!value) {
+      this.invalidate('password', 'required');
+    }
+  });
 
 UserSchema.methods = {
   authenticate(password) {
@@ -52,14 +62,14 @@ UserSchema.methods = {
     return crypto.randomBytes(16).toString('base64');
   },
   encryptPassword(password) {
-    if(!password || !this.salt) {
-      return '';
+    if (!password || !this.salt) {
+      throw Error('cannot encrypt password');
     }
     var salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
   },
   isAdmin() {
-    return this.role === roles.admin;
+    return this.role === config.roles.admin;
   }
 };
 
