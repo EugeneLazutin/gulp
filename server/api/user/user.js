@@ -1,10 +1,7 @@
 var _ = require('lodash');
 var auth = require('../../services/auth/auth.service.js');
 var User = require('./user.model.js');
-
-function handleError (res, err) {
-  return res.status(500).send(err);
-}
+var handleError = require('../utils').handleError;
 
 exports.create = function (req, res) {
   User.create(req.body, (err, user) => {

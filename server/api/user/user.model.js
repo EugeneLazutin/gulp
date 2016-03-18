@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var config = require('../../config');
 var _ = require('lodash');
-var chalk = require('chalk');
 
 var UserSchema = new Schema({
   email: {type: String, required: true, unique: true},

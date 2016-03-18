@@ -2,6 +2,9 @@ var React = require('react');
 var { Navbar, Nav } = require('react-bootstrap');
 var userStore = require('../../flux/stores/user.store');
 var Auth = require('./auth');
+var Link = require('./link');
+
+
 
 module.exports = React.createClass({
 
@@ -32,8 +35,9 @@ module.exports = React.createClass({
         </Navbar.Header>
 
         <Navbar.Collapse>
-          <Nav>
 
+          <Nav>
+            <Link to='/book'> Book </Link>
           </Nav>
 
           <Auth />
