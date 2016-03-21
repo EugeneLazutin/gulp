@@ -1,3 +1,5 @@
+var imageType = /^image\//;
+
 exports.file2base64 = file => {
   return new Promise((resolve, reject) => {
     var reader = new FileReader();
@@ -13,3 +15,7 @@ exports.file2base64 = file => {
     }
   });
 };
+
+exports.isImage = file => {
+  return imageType.test(file.type);
+}
