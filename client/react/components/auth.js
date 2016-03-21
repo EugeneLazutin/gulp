@@ -14,20 +14,19 @@ module.exports = React.createClass({
   },
 
   render() {
-    if (userStore.isAuthorized()) {
-      return (
-        <Nav pullRight>
-          <Link to='/user'> {userStore.fullName()} </Link>
-          <NavItem onClick={this.logout}>Logout</NavItem>
-        </Nav>
-      );
-    } else {
-      return (
-        <Nav pullRight>
-          <Link to='/login'> Login </Link>
-          <Link to='/register'> Register </Link>
-        </Nav>
-      );
-    }
+    return userStore.isAuthorized() ?
+
+      (<Nav pullRight>
+        <Link to='/user'> {userStore.fullName()} </Link>
+        <NavItem onClick={this.logout}>Logout</NavItem>
+      </Nav>)
+
+      :
+
+      (<Nav pullRight>
+        <Link to='/login'> Login </Link>
+        <Link to='/register'> Register </Link>
+      </Nav>);
+
   }
 });

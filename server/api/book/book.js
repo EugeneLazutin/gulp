@@ -11,3 +11,12 @@ exports.create = function (req, res) {
     res.status(201).json(bookInfo);
   });
 };
+
+exports.getAll = function (req, res) {
+  BookInfo.find({}, function (err, docs) {
+    if(err) {
+      return handleError(res, err);
+    }
+    res.status(200).json(docs);
+  });
+};

@@ -7,7 +7,6 @@ var { render } = require('react-dom');
 var routes = require('./react/routes');
 var { Router, hashHistory, browserHistory  } = require('react-router');
 
-
 render(
   <Router history={hashHistory}>
     {routes}

@@ -1,14 +1,18 @@
 var React = require('react');
 var { Route, IndexRoute } = require('react-router');
-var App = require('./app');
+var Layout = require('./layout');
 var Register = require('./pages/register');
 var Login = require('./pages/login');
 var BookCreate = require('./pages/book.create');
+var Books = require('./pages/books');
 
 module.exports = (
-    <Route path='/' component={App} >
+    <Route path='/' component={Layout} >
       <Route path='login' component={Login} />
       <Route path='register' component={Register} />
-      <IndexRoute component={BookCreate} />
+      <Route path='book' >
+        <IndexRoute component={Books} />
+        <Route path='create' component={BookCreate} />
+      </Route>
     </Route>
 );

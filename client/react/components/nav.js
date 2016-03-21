@@ -37,7 +37,7 @@ module.exports = React.createClass({
         <Navbar.Collapse>
 
           <Nav>
-            <Link to='/book'> Book </Link>
+            <Link to='/book'> Books </Link>
           </Nav>
 
           <Auth />

@@ -2,9 +2,11 @@ var React = require( 'react');
 var { ButtonInput } = require( 'react-bootstrap');
 var { Form, ValidatedInput } = require( 'react-bootstrap-validation');
 var _ = require( 'lodash');
-var { register, isEmail } = require( '../../services');
+var services = require( '../../services');
 var { browserHistory } = require( 'react-router');
 
+var register = services.auth.register;
+var isEmail = services.validation.isEmail;
 
 module.exports = React.createClass({
 

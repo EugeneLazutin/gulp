@@ -1,8 +1,11 @@
 var React = require('react');
 var { ButtonInput } = require('react-bootstrap');
 var { Form, ValidatedInput } = require('react-bootstrap-validation');
-var { login, isEmail} = require('../../services');
+var services = require('../../services');
 var { browserHistory } = require('react-router');
+
+var login = services.auth.login;
+var isEmail = services.validation.isEmail;
 
 module.exports = React.createClass({
 
