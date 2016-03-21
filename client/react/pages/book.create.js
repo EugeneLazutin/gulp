@@ -3,24 +3,19 @@ var { ButtonInput } = require('react-bootstrap');
 var { Form, ValidatedInput } = require('react-bootstrap-validation');
 var services = require('../../services');
 var ImagePicker = require('../components/image_picker');
+var _ = require('lodash');
 
 var create = services.book.create;
-var file2base64 = services.image.file2base64;
 var isNumber = services.validation.isNumber;
 
 module.exports = React.createClass({
 
-  handleValid(values) {
+  handleValid(book) {
 
-    var file = this.refs.picture.state.file;
-
-    if(file) {
-      file2base64(this.refs.picture.state.file)
+    if(this.haveImage()) {
+      this.refs.picture.getBase64()
         .then(base64 => {
-
-          var book = Object.assign(values, {
-            picture: base64
-          });
+          book.picture = base64;
 
           create(book)
             .then(createdBook => {
@@ -34,23 +29,26 @@ module.exports = React.createClass({
         .catch(err => {
           console.log(err);
           toastr.error('could not convert image');
-        })
-    } else {
-      this.refs.picture.setError('picture required');
+        });
     }
   },
 
-  handleInvalid() {
+  haveImage() {
     var picture = this.refs.picture;
 
-    if(!picture.state.file) {
-      picture.setError('picture required');
+    if (!picture.state.file) {
+      picture.setState({
+        hasError: true,
+        error: 'picture required'
+      });
     }
+
+    return !!picture.state.file;
   },
 
   render() {
     return (
-      <Form onValidSubmit={this.handleValid} onInvalidSubmit={this.handleInvalid} enctype='multipart/form-data'>
+      <Form onValidSubmit={this.handleValid} onInvalidSubmit={this.haveImage} enctype='multipart/form-data'>
 
         <legend>New Book</legend>
 
@@ -95,7 +93,7 @@ module.exports = React.createClass({
           validate={isNumber(0, 101)}
         />
 
-        <ImagePicker ref='picture' />
+        <ImagePicker ref='picture'/>
 
         <ButtonInput
           type='submit'

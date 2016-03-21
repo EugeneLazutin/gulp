@@ -1,13 +1,19 @@
 var React = require('react');
-var classnames = require('classnames');
+var ClassNames = require('classnames');
+var { file2base64 } = require('../../services/image');
 
 module.exports = React.createClass({
   getInitialState() {
     return {
       name: '',
       file: null,
-      error: ''
+      error: '',
+      hasError: false
     };
+  },
+
+  getBase64() {
+    return file2base64(this.state.file);
   },
 
   handleChange(evt) {
@@ -15,36 +21,35 @@ module.exports = React.createClass({
 
     if (file) {
       this.setState({
-        name: evt.target.files[0].name,
         file: file,
+        name: file.name,
+        hasError: false,
         error: ''
+      });
+    } else {
+      this.setState({
+        hasError: true,
+        error: 'picture required'
       });
     }
   },
 
-  setError(err) {
-    this.setState({
-      error: err
-    });
+  renderError() {
+    if (!this.state.valid) {
+      return <span className="help-block">{this.state.error}</span>;
+    }
   },
 
-  resetError() {
-    this.setState({
-      error: ''
+  formClass() {
+    return ClassNames({
+      'form-group': true,
+      'has-error': this.state.hasError
     });
   },
 
   render() {
-
-    var formClass = classnames({
-      'form-group': true,
-      'has-error': this.state.error
-    });
-
-    var error = this.state.error ? <span className="help-block">{this.state.error}</span> : null;
-
     return (
-      <div className={formClass}>
+      <div className={this.formClass()}>
         <div className='input-group img-picker'>
           <label className='btn input-group-addon' htmlFor='picture'>
             Pick picture <input type='file' name='picture' id='picture' className='hidden' accept='images/*'
@@ -52,7 +57,7 @@ module.exports = React.createClass({
           </label>
           <input type='text' className='form-control' value={this.state.name} readOnly/>
         </div>
-        {error}
+        {this.renderError()}
       </div>
     );
   }
