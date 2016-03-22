@@ -14,14 +14,14 @@ var SpecReporter = require('jasmine-spec-reporter');
 
 
 gulp.task('sass', () => {
-  return gulp.src('./server/styles/**/*.scss')
+  return gulp.src('./client/styles/**/*.scss')
     .pipe(sass().on('error', handleError))
     .pipe(concat('style.css'))
     .pipe(gulp.dest('./public/css/'));
 });
 
 gulp.task('watch:sass', () => {
-  gulp.watch('./server/styles/**/*.scss', ['sass']);
+  gulp.watch('./client/styles/**/*.scss', ['sass']);
 });
 
 gulp.task('js:lib', () => {

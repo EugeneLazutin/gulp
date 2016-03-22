@@ -1,5 +1,6 @@
 var React = require('react');
-var Nav = require('./components/nav');
+var Nav = require('./components/nav/nav');
+var Asd = require('./components/search_nav');
 
 module.exports = React.createClass({
 
@@ -7,7 +8,10 @@ module.exports = React.createClass({
     return (
       <div>
         <Nav />
-        <div className="container">
+
+        <Asd />
+
+        <div className="app-container">
           {this.props.children}
         </div>
       </div>
