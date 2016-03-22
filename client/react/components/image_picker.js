@@ -1,6 +1,6 @@
 var React = require('react');
 var ClassNames = require('classnames');
-var { file2base64, isImage } = require('../../services/image');
+var { isSingleImage } = require('../../services/validation');
 
 module.exports = React.createClass({
   getInitialState() {
@@ -12,42 +12,51 @@ module.exports = React.createClass({
     };
   },
 
-  getBase64() {
-    return file2base64(this.state.file);
+  validate() {
+    if(this.state.file === null) {
+      if (!this.state.hasError) {
+        this.setState({
+          hasError: true,
+          error: 'picture required'
+        });
+      }
+      return false;
+    }
+    return true;
   },
 
-  handleChange(evt) {
-    var file = evt.target.files[0];
-
-    if (!file) {
-      return this.setState({
-        hasError: true,
-        error: 'picture required'
-      });
-    }
-
-    if (!isImage(file)) {
-      return this.setState({
-        hasError: true,
-        error: 'only images'
-      });
-    }
-
-    this.setState({
-      file: file,
-      name: file.name,
-      hasError: false,
-      error: ''
-    });
+  getFile() {
+    return this.state.file;
   },
 
-  renderError() {
-    if (!this.state.valid) {
+  _handleChange(evt) {
+    var validationResult = isSingleImage(evt.target.files);
+
+    if(validationResult === true) {
+      var file = evt.target.files[0];
+      this.setState({
+        file: file,
+        name: file.name,
+        hasError: false,
+        error: ''
+      });
+    } else {
+      this.setState({
+        file: null,
+        name: '',
+        hasError: true,
+        error: validationResult
+      });
+    }
+  },
+
+  _renderError() {
+    if (this.state.hasError) {
       return <span className="help-block">{this.state.error}</span>;
     }
   },
 
-  formClass() {
+  _formClass() {
     return ClassNames({
       'form-group': true,
       'has-error': this.state.hasError
@@ -56,15 +65,15 @@ module.exports = React.createClass({
 
   render() {
     return (
-      <div className={this.formClass()}>
+      <div className={this._formClass()}>
         <div className='input-group img-picker'>
           <label className='btn input-group-addon' htmlFor='picture'>
             Pick picture <input type='file' name='picture' id='picture' className='hidden' accept='image/*'
-                                onChange={this.handleChange}/>
+                                onChange={this._handleChange}/>
           </label>
           <input type='text' className='form-control' value={this.state.name} readOnly/>
         </div>
-        {this.renderError()}
+        {this._renderError()}
       </div>
     );
   }

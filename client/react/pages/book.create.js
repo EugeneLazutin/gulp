@@ -6,49 +6,43 @@ var ImagePicker = require('../components/image_picker');
 var _ = require('lodash');
 
 var create = services.book.create;
-var isNumber = services.validation.isNumber;
+var { isNumber } = services.validation;
+var { file2base64 } = services.image;
 
 module.exports = React.createClass({
 
   handleValid(book) {
 
-    if(this.haveImage()) {
-      this.refs.picture.getBase64()
+    if(this.refs.picture.validate()) {
+      var file = this.refs.picture.getFile();
+
+      file2base64(file)
         .then(base64 => {
           book.picture = base64;
 
           create(book)
             .then(createdBook => {
-              toastr.success('book created');
+              toastr.success('Book created');
             })
-            .catch((err) => {
+            .catch(err => {
               console.log(err);
-              toastr.error('could not create book');
+              toastr.error('Could not create new book');
             });
         })
         .catch(err => {
           console.log(err);
-          toastr.error('could not convert image');
+          toastr.error('Could not convert image');
         });
     }
   },
 
-  haveImage() {
-    var picture = this.refs.picture;
-
-    if (!picture.state.file) {
-      picture.setState({
-        hasError: true,
-        error: 'picture required'
-      });
-    }
-
-    return !!picture.state.file;
+  handleInvalid() {
+    this.refs.picture.validate();
   },
 
   render() {
     return (
-      <Form onValidSubmit={this.handleValid} onInvalidSubmit={this.haveImage} enctype='multipart/form-data'>
+      <Form onValidSubmit={this.handleValid} onInvalidSubmit={this.handleInvalid} enctype='multipart/form-data'>
 
         <legend>New Book</legend>
 

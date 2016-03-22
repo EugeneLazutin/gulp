@@ -1,6 +1,8 @@
 var { Validator, FileValidator  } = require('react-bootstrap-validation');
 var _ = require('lodash');
 
+var imageType = /^image\//;
+
 /**
  * Can't pass parameter using ValidateInput.validate like
  * validate: "require,isEmail:{require_tdl:false}"
@@ -23,32 +25,44 @@ exports.isEmail = email => {
  * @param files
  */
 
-exports.filesRequired = files => {
-  if(FileValidator.isEmpty(files)) {
+exports.isSingleImage = files => {
+  if(!files || !files.length) {
     return 'Please select a file';
+  }
+
+  if(files.length > 1) {
+    return 'Only one file required';
+  }
+
+  if(!imageType.test(files[0].type)) {
+    return 'Image required';
   }
 
   return true;
 };
 
+exports.isImage = file => {
+  return imageType.test(file.type);
+};
+
 exports.isNumber = (min, max) => {
   return value => {
     if(_.isUndefined(value) || !value.length) {
-      return 'required';
+      return 'Required';
     }
 
     value = _.toNumber(value);
 
     if(!_.isNumber(value)) {
-      return 'value should be a number';
+      return 'Value should be a number';
     }
 
     if(!_.isUndefined(min) && value <= min) {
-      return `value should be greater than ${min}`;
+      return `Value should be greater than ${min}`;
     }
 
     if(!_.isUndefined(max) && value >= max) {
-      return `value should be less than ${max}`;
+      return `Value should be less than ${max}`;
     }
 
     return true;
