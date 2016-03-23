@@ -35,9 +35,11 @@ module.exports = placeholder => {
 
     render() {
       return (
-        <div className='input-group search search-lg'>
+        <div className="filter">
+          <div className='input-group'>
         <span className='input-group-btn'>
-          <button type='button' className='btn btn-default dropdown-toggle border-fix' data-toggle='dropdown' aria-haspopup='true'
+          <button type='button' className='btn btn-sm btn-default dropdown-toggle border-fix' data-toggle='dropdown'
+                  aria-haspopup='true'
                   aria-expanded='false'><span className={this.getClass()}></span>
           </button>
           <ul className='dropdown-menu'>
@@ -58,12 +60,13 @@ module.exports = placeholder => {
             </li>
           </ul>
         </span>
-          <input type='text' className='form-control' placeholder={placeholder}/>
+            <input type='text' className='form-control input-sm' placeholder={placeholder}/>
         <span className='input-group-btn'>
-          <button className='btn btn-danger' type='button' onClick={this.props.hideFilter}>
+          <button className='btn btn-sm btn-danger' type='button' onClick={this.props.hideFilter}>
             <span className='glyphicon glyphicon-remove'></span>
           </button>
         </span>
+          </div>
         </div>
       );
     }

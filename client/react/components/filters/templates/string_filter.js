@@ -8,13 +8,15 @@ module.exports = placeholder => {
 
     render() {
       return (
-        <div className='input-group search'>
-          <input type='text' className='form-control' placeholder={placeholder}/>
+        <div className="filter">
+          <div className='input-group'>
+            <input type='text' className='form-control input-sm' placeholder={placeholder}/>
         <span className='input-group-btn'>
-          <button className='btn btn-danger' type='button' onClick={this.props.hideFilter}>
+          <button className='btn btn-sm btn-danger' type='button' onClick={this.props.hideFilter}>
             <span className='glyphicon glyphicon-remove'></span>
           </button>
         </span>
+          </div>
         </div>
       );
     }

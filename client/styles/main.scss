@@ -7,27 +7,51 @@ body {
     margin-top: 20px;
   }
 
-  .navbar{
+  .navbar {
     margin-bottom: 0;
   }
 
   .search-panel {
-    padding: 10px;
+    min-height: 52px;
+    padding-right: 118px;
+    padding-left: 10px;
+    position: relative;
+
+    .filters {
+      font-size: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+
+      .input-group {
+        max-width: 160px;
+        display: inline-table;
+        margin: 10px;
+
+        .border-fix {
+          border-right: 0;
+        }
+      }
+    }
+
+    .buttons {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin-right: 10px;
+
+      & > * {
+        display: inline-block;
+        margin-right: 10px;
+        margin-left: 10px;
+      }
+    }
   }
 
   .empty-link {
     cursor: pointer;
-  }
-
-  .search {
-    max-width: 160px;
-    display: inline-table;
-    margin-left: 10px;
-    margin-right: 10px;
-
-    .border-fix {
-      border-right: 0;
-    }
   }
 
 }
