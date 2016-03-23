@@ -4,6 +4,10 @@ var classNames = require('classnames');
 var { Link } = require('react-router');
 
 module.exports = React.createClass({
+  propTypes: {
+    changeHandler: React.PropTypes.func
+  },
+
   getInitialState() {
     return {
       filters: filters.get()
@@ -29,17 +33,25 @@ module.exports = React.createClass({
     });
   },
 
-  _allIsActive() {
+  _isAllActive() {
     return this.state.filters.every(filter => {
       return filter.isActive;
     });
   },
 
-  render() {
+  _createHandler(filter) {
+    return value => {
+      this.props.changeHandler({
+        key: filter.name,
+        value: value
+      });
+    };
+  },
 
+  render() {
     var filterBtnClass = classNames({
       'btn btn-primary dropdown-toggle btn-sm': true,
-      'disabled': this._allIsActive()
+      'disabled': this._isAllActive()
     });
 
     return (
@@ -47,7 +59,13 @@ module.exports = React.createClass({
         <div className='filters'>
           {this.state.filters.map((filter, i) => {
             if (filter.isActive) {
-              return <filter.Component key={i} hideFilter={this._createFilterToggle(filter, false)}/>;
+              return (
+                <filter.Component
+                  key={i}
+                  hideFilter={this._createFilterToggle(filter, false)}
+                  changeHandler={this._createHandler(filter)}
+                />
+              );
             }
           })}
         </div>

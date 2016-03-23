@@ -2,37 +2,48 @@ var React = require('react');
 var Book = require('./../../components/book/book_grid');
 var agent = require('superagent');
 var SearchPanel = require('../../components/search_nav');
+var bookService = require('../../../services').book;
 
 module.exports = React.createClass({
   getInitialState() {
     return {
-      books: []
+      books: [],
+      searchParams: {}
     };
   },
 
   componentWillMount() {
-    this.req = agent
-      .get('/api/book')
-      .end((err, res) => {
-        if (err) {
-          console.log(err);
-          toastr.error('can`t fetch books');
-        }
+    this._fetch();
+  },
+
+  _fetch(params) {
+    bookService
+      .getBooks(params)
+      .then(books => {
         this.setState({
-          books: res.body
+          books: books
         });
+      })
+      .catch(err => {
+        toastr.error('Could not get books.');
       });
   },
 
-  componentWillUnmount() {
-    this.req.abort();
+  _updateSearchParams({key, value}) {
+    this.state.searchParams[key] = value;
+
+    this.setState({
+      searchParams: this.state.searchParams
+    }, () => {
+      this._fetch(this.state.searchParams);
+    });
   },
 
   render() {
     return (
       <div>
 
-        <SearchPanel />
+        <SearchPanel changeHandler={this._updateSearchParams}/>
 
         <div className='books'>
           {this.state.books.map((book, i) => {

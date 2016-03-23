@@ -8,11 +8,6 @@ function createFilter(name, createComponent) {
   };
 }
 
-var TitleFilter = createFilter('title', templateFactory.string);
-var AuthorFilter = createFilter('author', templateFactory.string);
-var YearFilter = createFilter('year', templateFactory.number);
-var PagesFilter = createFilter('pages', templateFactory.number);
-
 module.exports = {
   get: () => {
     var TitleFilter = createFilter('title', templateFactory.string);

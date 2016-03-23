@@ -1,17 +1,34 @@
 var React = require('react');
 var types = require('./number_filter.types.json');
 var classNames = require('classnames');
+var mixin = require('./template_mixin');
 
 module.exports = placeholder => {
   return React.createClass({
     propTypes: {
-      hideFilter: React.PropTypes.func
+      hideFilter: React.PropTypes.func,
+      changeHandler: React.PropTypes.func
     },
 
     getInitialState() {
       return {
-        type: types.equal
+        type: types.equal,
+        dirty: false
       };
+    },
+
+    mixins: [mixin],
+
+    _emitChanges() {
+      if (this.state.dirty) {
+        this.setState({
+          dirty: false
+        });
+
+        var params = {};
+        params[this.state.type] = this.refs.input.value;
+        this.props.changeHandler(params);
+      }
     },
 
     getClass() {
@@ -28,7 +45,10 @@ module.exports = placeholder => {
     createSetType(type) {
       return evt => {
         this.setState({
-          type: type
+          type: type,
+          dirty: true
+        }, () => {
+          this._emitChanges();
         });
       };
     },
@@ -60,7 +80,8 @@ module.exports = placeholder => {
             </li>
           </ul>
         </span>
-            <input type='text' className='form-control input-sm' placeholder={placeholder}/>
+            <input ref='input' type='number' className='form-control input-sm' placeholder={placeholder}
+                   onChange={this._handleChange} onKeyUp={this._handleKeyUp} onBlur={this._emitChanges}/>
         <span className='input-group-btn'>
           <button className='btn btn-sm btn-danger' type='button' onClick={this.props.hideFilter}>
             <span className='glyphicon glyphicon-remove'></span>

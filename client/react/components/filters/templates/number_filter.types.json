@@ -1,5 +1,5 @@
 {
-  "equal": 1,
-  "more": 2,
-  "less": 3
+  "equal": "$eq",
+  "more": "$gt",
+  "less": "$lt"
 }

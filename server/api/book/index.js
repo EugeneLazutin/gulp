@@ -4,6 +4,6 @@ var book = require('./book');
 
 router.post('/', book.create);
 
-router.get('/', book.getAll);
+router.post('/all', book.getAll);
 
 module.exports = router;

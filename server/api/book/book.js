@@ -13,7 +13,10 @@ exports.create = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
-  BookInfo.find({}, function (err, docs) {
+
+  console.log(req.body);
+
+  BookInfo.find(req.body, function (err, docs) {
     if(err) {
       return handleError(res, err);
     }
