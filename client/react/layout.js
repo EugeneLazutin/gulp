@@ -1,6 +1,6 @@
 var React = require('react');
 var Nav = require('./components/nav/nav');
-var Asd = require('./components/search_nav');
+var Asd = require('./components/filter/search_nav');
 
 module.exports = React.createClass({
 

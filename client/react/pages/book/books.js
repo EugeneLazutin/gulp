@@ -2,7 +2,7 @@ var React = require('react');
 var Book = require('./../../components/book/book_grid');
 var agent = require('superagent');
 var { Link } = require('react-router');
-var SearchPanel = require('../../components/search_nav');
+var SearchPanel = require('../../components/filter/search_nav');
 
 module.exports = React.createClass({
   getInitialState() {
