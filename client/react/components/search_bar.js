@@ -14,7 +14,7 @@ module.exports = React.createClass({
     };
   },
 
-  _createFilterToggle(filter, isActive) {;
+  _createFilterToggle(filter, isActive) {
     return evt => {
       filter.isActive = isActive;
       this._updateState();
@@ -46,7 +46,6 @@ module.exports = React.createClass({
 
   _createHandler(filter) {
     return value => {
-      console.log(2);
       this.props.changeHandler({
         key: filter.name,
         value: value

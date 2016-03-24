@@ -2,6 +2,7 @@ var React = require('react');
 var { types } = require('../../../../../config/client/filter').number;
 var classNames = require('classnames');
 var mixin = require('./template_mixin');
+var _ = require('lodash');
 
 module.exports = placeholder => {
   return React.createClass({
@@ -46,9 +47,13 @@ module.exports = placeholder => {
 
     createSetType(type) {
       return evt => {
+        var notNaN = !_.isNaN(this.refs.input.value);
+
+        console.log(this.refs.input.value, notNaN ? 'is' : 'is not', 'a number');
+
         this.setState({
           type: type,
-          dirty: true
+          dirty: notNaN
         }, () => {
           this._emitChanges();
         });

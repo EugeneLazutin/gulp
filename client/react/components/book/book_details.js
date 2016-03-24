@@ -11,9 +11,14 @@ module.exports = React.createClass({
 
     return (
       <div className='book-details'>
-        <Col sm={4}>
+        <Col sm={4} className='text-center'>
           <div className='picture'>
-            <img className='img-responsive' src={book.picture}/>
+            <img className='img-rounded img-responsive' src={book.picture}/>
+
+            <button className='btn btn-info btn-block'>
+              Make order
+            </button>
+
           </div>
         </Col>
         <Col sm={8}>
@@ -40,36 +45,3 @@ module.exports = React.createClass({
     );
   }
 });
-
-
-  //<dl className='dl-horizontal'>
-  //
-  //  <dt>
-  //    Author:
-  //  </dt>
-  //  <dd>
-  //    {book.author}
-  //  </dd>
-  //
-  //  <dt>
-  //    Year:
-  //  </dt>
-  //  <dd>
-  //    {book.year}
-  //  </dd>
-  //
-  //  <dt>
-  //    Pages:
-  //  </dt>
-  //  <dd>
-  //    {book.pages}
-  //  </dd>
-  //
-  //  <dt>
-  //    Count:
-  //  </dt>
-  //  <dd>
-  //    {book.count}
-  //  </dd>
-  //
-  //</dl>

@@ -21,11 +21,11 @@ exports.toQuery = params => {
     query.author = stringFilter(params.author);
   }
 
-  if(params.year) {
+  if(params.year && params.year.value) {
     query.year = numberFilter(params.year.value, params.year.type);
   }
 
-  if(params.pages) {
+  if(params.pages && params.pages.value) {
     query.pages = numberFilter(params.pages.value, params.pages.type);
   }
 
@@ -40,7 +40,7 @@ function numberFilter (number, type) {
 
 function stringFilter (str) {
   return {
-    $regex: new RegExp(str, 'g')
+    $regex: new RegExp(str, 'i')
   };
 }
 

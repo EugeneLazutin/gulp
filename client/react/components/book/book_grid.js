@@ -14,7 +14,7 @@ module.exports = React.createClass({
     return (
       <div className='book' key={key}>
         <Link to={`/book/${book._id}`}>
-          <img src={book.picture}/>
+          <img className='img-rounded' src={book.picture}/>
           <div>{book.title}</div>
         </Link>
       </div>

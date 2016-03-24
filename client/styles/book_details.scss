@@ -5,9 +5,12 @@ $dtWidth: 100px;
   position: relative;
 
   .picture {
-    img{
-      margin-left: auto;
-      margin-right: auto;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+
+    button {
+      margin-top: 20px;
     }
   }
 
