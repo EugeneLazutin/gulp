@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
-var config = require('../../config');
+var config = require('../../../config');
 var _ = require('lodash');
 
 var UserSchema = new Schema({

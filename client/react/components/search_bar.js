@@ -14,10 +14,15 @@ module.exports = React.createClass({
     };
   },
 
-  _createFilterToggle(filter, isActive) {
+  _createFilterToggle(filter, isActive) {;
     return evt => {
       filter.isActive = isActive;
       this._updateState();
+      if(!isActive) {
+        this.props.changeHandler({
+          key: filter.name
+        });
+      }
     };
   },
 
@@ -41,6 +46,7 @@ module.exports = React.createClass({
 
   _createHandler(filter) {
     return value => {
+      console.log(2);
       this.props.changeHandler({
         key: filter.name,
         value: value
@@ -88,7 +94,7 @@ module.exports = React.createClass({
             </ul>
           </div>
 
-          <Link to='/book/create' className='btn btn-sm btn-success' title='create new book'>
+          <Link to='/create-book' className='btn btn-sm btn-success' title='create new book'>
             <span className='glyphicon glyphicon-plus'></span>
           </Link>
         </div>

@@ -1,8 +1,8 @@
-var EnterKeyCode = 13;
+var { enter } = require('../../../../../config').keyCodes;
 
 module.exports = {
   _handleKeyUp(evt) {
-    if (evt.keyCode === EnterKeyCode) {
+    if (evt.keyCode === enter) {
       this._emitChanges();
     }
   },

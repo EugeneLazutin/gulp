@@ -1,7 +1,6 @@
-var mongoose = require('mongoose');
-var Book = require('./book.model');
 var BookInfo = require('./book_info.model');
 var handleError = require('../utils').handleError;
+var search = require('../../services/search');
 
 exports.create = function (req, res) {
   BookInfo.create(req.body, function (err, bookInfo) {
@@ -13,13 +12,28 @@ exports.create = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
+  var query = search.toQuery(req.body.search);
 
-  console.log(req.body);
-
-  BookInfo.find(req.body, function (err, docs) {
+  BookInfo.paginate(query, req.body.pagination, function (err, docs) {
     if(err) {
       return handleError(res, err);
     }
     res.status(200).json(docs);
   });
+};
+
+exports.getBook = function (req, res) {
+
+  var id = req.params.id;
+
+  if(id) {
+    BookInfo.findById(id, function (err, book) {
+      if(err) {
+        return handleError(res, err);
+      }
+      res.status(200).json(book);
+    });
+  } else {
+    res.status(500).send('id required');
+  }
 };

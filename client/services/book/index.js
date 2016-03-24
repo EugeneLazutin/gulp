@@ -28,3 +28,16 @@ exports.getBooks = params => {
       });
   });
 };
+
+exports.getBook = id => {
+  return new Promise((resolve, reject) => {
+    agent
+      .get(`api/book/${id}`)
+      .end((err, res) => {
+        if(err) {
+          reject(err);
+        }
+        resolve(res.body);
+      });
+  });
+};

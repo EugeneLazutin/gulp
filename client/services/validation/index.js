@@ -1,4 +1,4 @@
-var { Validator, FileValidator  } = require('react-bootstrap-validation');
+var { Validator } = require('react-bootstrap-validation');
 var _ = require('lodash');
 
 var imageType = /^image\//;

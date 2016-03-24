@@ -1,0 +1,9 @@
+{
+  "number": {
+    "types": {
+      "equal": 1,
+      "more": 2,
+      "less": 3
+    }
+  }
+}

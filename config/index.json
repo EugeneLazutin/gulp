@@ -1,0 +1,12 @@
+{
+  "keyCodes": {
+    "enter": 13
+  },
+  "tokenExpiresIn": 18000,
+  "passwordMinLength": 3,
+  "roles": {
+    "user": 1,
+    "admin": 2
+  },
+  "secret": "my_secret"
+}

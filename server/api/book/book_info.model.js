@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var Book = require('./book.model');
 var Transaction = require('mongoose-transaction')(mongoose);
 var _ = require('lodash');
+var paginate = require('mongoose-paginate');
 
 var currYear = new Date().getFullYear();
 
@@ -14,6 +15,8 @@ var BookInfoSchema = new Schema({
   pages: {type: Number, required: true, min: 1},
   count: {type: Number, default: 1, min: 1}
 });
+
+BookInfoSchema.plugin(paginate);
 
 BookInfoSchema
   .post('save', function (doc) {

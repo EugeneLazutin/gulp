@@ -2,9 +2,9 @@ var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var compose = require('composable-middleware');
 var User = require('../../api/user/user.model');
-var tokenExpiresIn = require('../../config').tokenExpiresIn;
-
-var secret = 'my_secret';
+var config = require('../../../config');
+var tokenExpiresIn = config.tokenExpiresIn;
+var secret = config.secret;
 var validateJwt = expressJwt({ secret: secret });
 
 

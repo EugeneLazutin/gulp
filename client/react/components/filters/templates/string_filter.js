@@ -19,6 +19,7 @@ module.exports = placeholder => {
         this.setState({
           dirty: false
         });
+
         this.props.changeHandler(this.refs.input.value);
       }
     },

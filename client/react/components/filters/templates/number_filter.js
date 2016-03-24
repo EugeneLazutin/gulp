@@ -1,5 +1,5 @@
 var React = require('react');
-var types = require('./number_filter.types.json');
+var { types } = require('../../../../../config/client/filter').number;
 var classNames = require('classnames');
 var mixin = require('./template_mixin');
 
@@ -25,8 +25,10 @@ module.exports = placeholder => {
           dirty: false
         });
 
-        var params = {};
-        params[this.state.type] = this.refs.input.value;
+        var params = {
+          type: this.state.type,
+          value: this.refs.input.value
+        };
         this.props.changeHandler(params);
       }
     },
@@ -51,6 +53,11 @@ module.exports = placeholder => {
           this._emitChanges();
         });
       };
+    },
+
+    abc(evt) {
+      console.log('wtf!!!');
+      this.props.hideFilter(evt);
     },
 
     render() {
@@ -83,7 +90,7 @@ module.exports = placeholder => {
             <input ref='input' type='number' className='form-control input-sm' placeholder={placeholder}
                    onChange={this._handleChange} onKeyUp={this._handleKeyUp} onBlur={this._emitChanges}/>
         <span className='input-group-btn'>
-          <button className='btn btn-sm btn-danger' type='button' onClick={this.props.hideFilter}>
+          <button className='btn btn-sm btn-danger' type='button' onClick={this.abc}>
             <span className='glyphicon glyphicon-remove'></span>
           </button>
         </span>

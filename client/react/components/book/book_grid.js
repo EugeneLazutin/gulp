@@ -1,5 +1,6 @@
 var React = require('react');
 var PropTypes = React.PropTypes;
+var { Link } = require('react-router');
 
 module.exports = React.createClass({
   propTypes: {
@@ -12,10 +13,10 @@ module.exports = React.createClass({
 
     return (
       <div className='book' key={key}>
-        <a href='#'>
+        <Link to={`/book/${book._id}`}>
           <img src={book.picture}/>
           <div>{book.title}</div>
-        </a>
+        </Link>
       </div>
     );
   }

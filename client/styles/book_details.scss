@@ -1,0 +1,27 @@
+$dtWidth: 100px;
+
+.book-details {
+  overflow: hidden;
+  position: relative;
+
+  .picture {
+    img{
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .book-info {
+    position: relative;
+    
+    .title {
+      font-family: 'Courgette', cursive;;
+      margin-right: 10px;
+      margin-left: 20px;
+    }
+
+    .description {
+      text-indent: 20px;
+    }
+  }
+}
