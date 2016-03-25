@@ -16,8 +16,7 @@ module.exports = React.createClass({
     if(this.state.file === null) {
       if (!this.state.hasError) {
         this.setState({
-          hasError: true,
-          error: 'picture required'
+          hasError: true
         });
       }
       return false;

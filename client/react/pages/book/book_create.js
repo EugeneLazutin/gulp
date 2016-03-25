@@ -3,6 +3,7 @@ var { ButtonInput } = require('react-bootstrap');
 var { Form, ValidatedInput } = require('react-bootstrap-validation');
 var services = require('../../../services/index');
 var ImagePicker = require('../../components/image_picker');
+var TextArea = require('../../components/textarea');
 var _ = require('lodash');
 
 var create = services.book.create;
@@ -13,7 +14,8 @@ module.exports = React.createClass({
 
   handleValid(book) {
 
-    if(this.refs.picture.validate()) {
+    if(this.refs.picture.validate() && this.refs.description.validate()) {
+      book.description = this.refs.description.getValue();
       var file = this.refs.picture.getFile();
 
       file2base64(file)
@@ -38,6 +40,7 @@ module.exports = React.createClass({
 
   handleInvalid() {
     this.refs.picture.validate();
+    this.refs.description.validate();
   },
 
   render() {
@@ -51,9 +54,6 @@ module.exports = React.createClass({
           name='title'
           placeholder='Title'
           validate='required'
-          errorHelp={{
-            required: 'Title required.'
-          }}
         />
 
         <ValidatedInput
@@ -61,9 +61,12 @@ module.exports = React.createClass({
           name='author'
           placeholder='Author'
           validate='required'
-          errorHelp={{
-            required: 'Author required.'
-          }}
+        />
+
+        <TextArea
+          ref="description"
+          placeholder="Description"
+          required
         />
 
         <ValidatedInput

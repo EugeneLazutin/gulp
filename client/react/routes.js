@@ -3,7 +3,7 @@ var { Route, IndexRoute } = require('react-router');
 var Layout = require('./layout');
 var Register = require('./pages/register');
 var Login = require('./pages/login');
-var BookCreate = require('./pages/book/book_create.js');
+var BookCreate = require('./pages/book/book_create');
 var Books = require('./pages/book/books');
 var Book = require('./pages/book/book');
 

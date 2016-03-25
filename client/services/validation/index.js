@@ -1,5 +1,6 @@
 var { Validator } = require('react-bootstrap-validation');
 var _ = require('lodash');
+var React = require('react');
 
 var imageType = /^image\//;
 
@@ -27,7 +28,7 @@ exports.isEmail = email => {
 
 exports.isSingleImage = files => {
   if(!files || !files.length) {
-    return 'Please select a file';
+    return;
   }
 
   if(files.length > 1) {
@@ -48,7 +49,7 @@ exports.isImage = file => {
 exports.isNumber = (min, max) => {
   return value => {
     if(_.isUndefined(value) || !value.length) {
-      return 'Required';
+      return;
     }
 
     value = _.toNumber(value);
