@@ -6,15 +6,16 @@ var BookDetails = require('../../components/book/book_details');
 module.exports = React.createClass({
   getInitialState() {
     return {
-      book: null
+      book: null,
+      available: 0
     }
   },
 
   _fetch() {
     book
       .getBook(this.props.params.id)
-      .then(book => {
-        this.setState({book});
+      .then((res) => {
+        this.setState(res);
       })
       .catch(err => {
         console.log(err);
@@ -24,7 +25,7 @@ module.exports = React.createClass({
 
   _renderBook(){
     if (this.state.book) {
-      return <BookDetails book={this.state.book}/>;
+      return <BookDetails book={this.state.book} available={this.state.available}/>;
     }
   },
 

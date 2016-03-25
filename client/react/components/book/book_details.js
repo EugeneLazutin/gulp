@@ -3,7 +3,8 @@ var { Col } = require('react-bootstrap');
 
 module.exports = React.createClass({
   propTypes: {
-    book: React.PropTypes.object
+    book: React.PropTypes.object,
+    available: React.PropTypes.number
   },
 
   render() {
@@ -36,7 +37,7 @@ module.exports = React.createClass({
               versions of Lorem Ipsum. <small>({book.pages}p.)</small></p>
 
             <p className='clearfix'>
-              <span className='pull-right'>{book.count} available</span>
+              <span className='pull-right'>{this.props.available}/{book.count} available</span>
             </p>
 
           </div>

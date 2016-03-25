@@ -1,10 +1,11 @@
 var BookInfo = require('./book_info.model');
 var handleError = require('../utils').handleError;
 var search = require('../../services/search');
+var _ = require('lodash');
 
 exports.create = function (req, res) {
   BookInfo.create(req.body, function (err, bookInfo) {
-    if(err) {
+    if (err) {
       return handleError(res, err);
     }
     res.status(201).json(bookInfo);
@@ -15,7 +16,7 @@ exports.getAll = function (req, res) {
   var query = search.toQuery(req.body.search);
 
   BookInfo.paginate(query, req.body.pagination, function (err, docs) {
-    if(err) {
+    if (err) {
       return handleError(res, err);
     }
     res.status(200).json(docs);
@@ -23,15 +24,25 @@ exports.getAll = function (req, res) {
 };
 
 exports.getBook = function (req, res) {
-
   var id = req.params.id;
 
-  if(id) {
+  if (id) {
     BookInfo.findById(id, function (err, book) {
-      if(err) {
+      if (err) {
         return handleError(res, err);
       }
-      res.status(200).json(book);
+      book
+        .available()
+        .then(count => {
+          res.status(200).json({
+              book: book,
+              available: count
+            }
+          );
+        })
+        .catch(err => {
+          res.status(200).json({book: book});
+        })
     });
   } else {
     res.status(500).send('id required');
