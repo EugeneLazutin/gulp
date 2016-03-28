@@ -32,7 +32,6 @@ module.exports = React.createClass({
 
   onChange(state) {
     this.setState(state);
-    console.log(state);
   },
 
   _fetch() {

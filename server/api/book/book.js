@@ -4,7 +4,10 @@ var search = require('../../services/search');
 var _ = require('lodash');
 
 exports.create = function (req, res) {
-  BookInfo.create(req.body, function (err, bookInfo) {
+  var book = req.body;
+  book.available = book.count;
+
+  BookInfo.create(book, function (err, bookInfo) {
     if (err) {
       return handleError(res, err);
     }
@@ -32,6 +35,21 @@ exports.getBook = function (req, res) {
         return handleError(res, err);
       }
       res.status(200).json(book);
+    });
+  } else {
+    res.status(500).send('id required');
+  }
+};
+
+exports.delete = function (req, res) {
+  var id = req.params.id;
+
+  if (id) {
+    BookInfo.remove({_id: id}, function (err) {
+      if (err) {
+        return handleError(res, err);
+      }
+      res.status(200).send('removed');
     });
   } else {
     res.status(500).send('id required');

@@ -2,7 +2,10 @@ var React = require('react');
 var { Col } = require('react-bootstrap');
 var bookActions = require('../../../flux/actions/book.actions');
 var bookStore = require('../../../flux/stores/book.store');
+var userStore = require('../../../flux/stores/user.store');
 
+var UserButtons = require('../../components/book/user_buttons');
+var AdminButtons = require('../../components/book/admin_buttons');
 
 module.exports = React.createClass({
   getInitialState() {
@@ -22,6 +25,13 @@ module.exports = React.createClass({
     this.setState(state);
   },
 
+  _renderButtons() {
+    if(userStore.isAdmin()) {
+      return <AdminButtons bookId={this.state.book._id} />;
+    }
+    return <UserButtons bookId={this.state.book._id} />;
+  },
+
   render() {
     var { book } = this.state;
 
@@ -38,9 +48,7 @@ module.exports = React.createClass({
             <div className='picture'>
               <img className='img-rounded img-responsive' src={book.picture}/>
 
-              <button className='btn btn-info btn-block'>
-                Make order
-              </button>
+              {this._renderButtons()}
 
             </div>
           </Col>

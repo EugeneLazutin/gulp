@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('react-express:server');
 var http = require('http');
 var mongoose = require('mongoose');
+var SocketBootstraper = require('../server/socket.io');
 
 mongoose.connect('mongodb://localhost/my_db');
 
@@ -23,6 +24,7 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+SocketBootstraper(server);
 
 /**
  * Listen on provided port, on all network interfaces.

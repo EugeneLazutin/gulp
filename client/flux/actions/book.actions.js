@@ -2,7 +2,6 @@ var alt = require('../alt');
 var agent = require('superagent');
 
 class BookActions {
-
   fetchBook(id) {
     return (dispatch) => {
       dispatch();
@@ -16,6 +15,10 @@ class BookActions {
           this.updateBook(res.body);
         });
     }
+  }
+
+  decAvailable(userEvent) {
+    return userEvent;
   }
 
   bookFailed(error) {

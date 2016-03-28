@@ -8,5 +8,14 @@
     "user": 1,
     "admin": 2
   },
-  "secret": "my_secret"
+  "secret": "my_secret",
+  "orderStatus": {
+    "booked": 1,
+    "onHand": 2,
+    "closed": 3
+  },
+  "orderAmount": {
+    "1": 2,
+    "2": 30
+  }
 }
