@@ -2,9 +2,11 @@ var React = require('react');
 var { Pagination } = require('react-bootstrap');
 var Book = require('./../../components/book/book_grid');
 var SearchBar = require('../../components/search_bar');
-var bookService = require('../../../services').book;
 var _ = require('lodash');
 var { limit } = require('../../../../config/client/pagination');
+
+var booksActions = require('../../../flux/actions/books.actions');
+var booksStore = require('../../../flux/stores/books.store');
 
 module.exports = React.createClass({
   getInitialState() {
@@ -15,13 +17,22 @@ module.exports = React.createClass({
         page: 1,
         limit: limit.forBook
       },
-      pages: 0,
-      total: 0
+      pages: 0
     };
   },
 
-  componentWillMount() {
+  componentDidMount() {
+    booksStore.listen(this.onChange);
     this._fetch();
+  },
+
+  componentWillUnmount() {
+    booksStore.unlisten(this.onChange);
+  },
+
+  onChange(state) {
+    this.setState(state);
+    console.log(state);
   },
 
   _fetch() {
@@ -30,18 +41,7 @@ module.exports = React.createClass({
       pagination: this.state.pagination
     };
 
-    bookService
-      .getBooks(params)
-      .then(res => {
-        this.setState({
-          books: res.docs,
-          pages: res.pages
-        });
-      })
-      .catch(err => {
-        console.log(err);
-        toastr.error('Could not get books.');
-      });
+    booksActions.fetchBooks(params);
   },
 
   _updateSearchParams({key, value}) {
@@ -86,6 +86,12 @@ module.exports = React.createClass({
   },
 
   render() {
+    if(!this.state.books) {
+      return (
+        <div> Loading ... </div>
+      );
+    }
+
     return (
       <div>
 

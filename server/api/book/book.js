@@ -31,18 +31,7 @@ exports.getBook = function (req, res) {
       if (err) {
         return handleError(res, err);
       }
-      book
-        .available()
-        .then(count => {
-          res.status(200).json({
-              book: book,
-              available: count
-            }
-          );
-        })
-        .catch(err => {
-          res.status(200).json({book: book});
-        })
+      res.status(200).json(book);
     });
   } else {
     res.status(500).send('id required');

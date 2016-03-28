@@ -4,7 +4,7 @@ var cookie = require('react-cookie');
 var agent = require('superagent');
 
 
-class mainStore {
+class userStore {
   constructor() {
 
     this.bindActions(userActions);
@@ -60,4 +60,4 @@ class mainStore {
   }
 }
 
-module.exports = alt.createStore(mainStore);
+module.exports = alt.createStore(userStore);
