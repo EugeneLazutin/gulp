@@ -12,7 +12,7 @@ var UserSchema = new Schema({
   },
   passwordHash: {type: String, select: false, required: true},
   salt: {type: String, select: false, required: true},
-  role: {type: Number, default: config.roles.admin}
+  role: {type: Number, default: config.roles.user}
 });
 
 UserSchema

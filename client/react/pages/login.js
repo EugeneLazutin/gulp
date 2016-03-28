@@ -3,6 +3,7 @@ var { ButtonInput } = require('react-bootstrap');
 var { Form, ValidatedInput } = require('react-bootstrap-validation');
 var services = require('../../services');
 var { browserHistory } = require('react-router');
+var config = require('../../../config');
 
 var login = services.auth.login;
 var isEmail = services.validation.isEmail;
@@ -37,10 +38,10 @@ module.exports = React.createClass({
           type="password"
           name="password"
           placeholder="Password"
-          validate="required,isLength:6:60"
+          validate={`required,isLength:${config.passwordMinLength}`}
           errorHelp={{
             required: 'Please specify your password.',
-            isLength: 'Password must be at least 6 characters.'
+            isLength: `Password must be at least ${config.passwordMinLength} characters.`
           }}
         />
 

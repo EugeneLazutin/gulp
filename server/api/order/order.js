@@ -30,6 +30,7 @@ exports.makeOrder = function (req, res) {
 
       bookInfo.save(function (err) {
         if(err) {
+          createdOrder.remove();
           return handleError(res, err);
         }
         res.status(200).json(createdOrder);

@@ -21,15 +21,17 @@ module.exports = React.createClass({
     bookStore.unlisten(this.onChange);
   },
 
+
   onChange(state) {
     this.setState(state);
   },
 
   _renderButtons() {
-    if(userStore.isAdmin()) {
-      return <AdminButtons bookId={this.state.book._id} />;
+    if (userStore.isAdmin()) {
+      return <AdminButtons bookId={this.state.book._id}/>;
+    } else if (userStore.isAuthorized()) {
+      return <UserButtons bookId={this.state.book._id}/>;
     }
-    return <UserButtons bookId={this.state.book._id} />;
   },
 
   render() {

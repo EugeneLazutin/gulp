@@ -10,12 +10,7 @@ class booksStore {
     this.pages = 0;
   }
 
-  onBooksFailed(err) {
-    console.log(err);
-    toastr.error(err);
-  }
-
-  onUpdateBooks(res) {
+  onReceiveBooks(res) {
     this.books = res.docs;
     this.pages = res.pages;
   }

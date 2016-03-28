@@ -1,32 +1,55 @@
 var alt = require('../alt');
 var agent = require('superagent');
+var cookie = require('react-cookie');
+var error = require('../error_handler');
 
 class BookActions {
-  fetchBook(id) {
-    return (dispatch) => {
+  fetchBook(bookId) {
+    return dispatch => {
       dispatch();
 
       agent
-        .get(`api/book/${id}`)
+        .get(`api/book/${bookId}`)
         .end((err, res) => {
-          if(err) {
-            this.bookFailed(err);
+          if (err) {
+            error(err);
+          } else {
+            this.receiveBook(res.body);
           }
-          this.updateBook(res.body);
         });
     }
   }
 
-  decAvailable(userEvent) {
-    return userEvent;
+  decrementAvailable() {
+    return dispatch => {
+      dispatch();
+    }
   }
 
-  bookFailed(error) {
-    return error;
-  }
-
-  updateBook(book) {
+  receiveBook(book) {
     return book;
+  }
+
+  orderIsMade(order) {
+    return order;
+  }
+
+  makeOrder(bookId) {
+    return dispatch => {
+      dispatch();
+
+      agent
+        .post('/api/order')
+        .send({id: bookId})
+        .set('Authorization', 'Bearer ' + cookie.load('token'))
+        .end((err, res) => {
+          if (err) {
+            return error(err);
+          } else {
+            this.orderIsMade(res.body);
+          }
+        });
+    }
   }
 }
 

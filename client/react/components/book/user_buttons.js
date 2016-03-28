@@ -1,8 +1,5 @@
 var React = require('react');
 var bookActions = require('../../../flux/actions/book.actions');
-var orderService = require('../../../services/order');
-
-
 
 module.exports = React.createClass({
   propTypes: {
@@ -10,16 +7,7 @@ module.exports = React.createClass({
   },
 
   _makeOrder() {
-    orderService
-      .makeOrder(this.props.bookId)
-      .then((res) => {
-        bookActions.decAvailable(true);
-        toastr.success('success');
-        console.log(res.body);
-      })
-      .catch(err => {
-        toastr.error(err);
-      });
+    bookActions.makeOrder(this.props.bookId);
   },
 
   render() {

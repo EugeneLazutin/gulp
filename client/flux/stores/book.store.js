@@ -7,21 +7,16 @@ class bookStore {
   constructor() {
     this.bindActions(bookActions);
 
-    socket.on('booked', id => {
+    socket.on('decrement_available_count', id => {
       if (this.book && this.book._id === id) {
-        bookActions.decAvailable(false);
+        bookActions.decrementAvailable();
       }
     });
 
     this.book = null;
   }
 
-  onBookFailed(err) {
-    console.log(err);
-    toastr.error(err);
-  }
-
-  onUpdateBook(book) {
+  onReceiveBook(book) {
     this.book = book;
   }
 
@@ -29,13 +24,13 @@ class bookStore {
     this.book = null;
   }
 
-  onDecAvailable(userEvent) {
-    if (this.book) {
-      this.book.available -= 1;
-      if (socket && userEvent) {
-        socket.emit('booked', this.book._id);
-      }
-    }
+  onOrderIsMade(order) {
+    this.book.available--;
+    socket.emit('booked', this.book._id);
+  }
+
+  onDecrementAvailable() {
+    this.book.available--;
   }
 }
 

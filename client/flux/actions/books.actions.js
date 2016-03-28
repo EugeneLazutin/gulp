@@ -1,5 +1,6 @@
 var alt = require('../alt');
 var agent = require('superagent');
+var error = require('../error_handler');
 
 class BooksActions {
 
@@ -12,18 +13,14 @@ class BooksActions {
         .send(params)
         .end((err, res) => {
           if (err) {
-            this.booksFailed(err);
+            error(err);
           }
-          this.updateBooks(res.body);
+          this.receiveBooks(res.body);
         });
     }
   }
 
-  booksFailed(error) {
-    return error;
-  }
-
-  updateBooks(books) {
+  receiveBooks(books) {
     return books;
   }
 }
