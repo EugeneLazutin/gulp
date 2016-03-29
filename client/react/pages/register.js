@@ -5,8 +5,8 @@ var _ = require( 'lodash');
 var services = require( '../../services');
 var { browserHistory } = require( 'react-router');
 var config = require('../../../config');
+var userActions = require('../../flux/actions/user.actions');
 
-var register = services.auth.register;
 var isEmail = services.validation.isEmail;
 
 module.exports = React.createClass({
@@ -18,14 +18,7 @@ module.exports = React.createClass({
       last: values.lastName
     };
 
-    register(user)
-      .then((user) => {
-        toastr.success('successfully registered & logged');
-        browserHistory.push('/');
-      })
-      .catch((err) => {
-        console.log('error', err);
-      });
+    userActions.register(user);
   },
 
   render() {

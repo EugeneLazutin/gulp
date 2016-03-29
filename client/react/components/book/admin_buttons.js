@@ -1,6 +1,5 @@
 var React = require('react');
-var bookService = require('../../../services/book');
-var { hashHistory, browserHistory } = require('react-router');
+var bookActions = require('../../../flux/actions/book.actions');
 
 module.exports = React.createClass({
   propTypes: {
@@ -8,15 +7,7 @@ module.exports = React.createClass({
   },
 
   remove() {
-    bookService
-      .delete(this.props.bookId)
-      .then(msg => {
-        toastr.success(msg);
-        hashHistory.push('/books');
-      })
-      .catch(err => {
-        toastr.error(err);
-      });
+    bookActions.removeBook(this.props.bookId);
   },
 
   render() {

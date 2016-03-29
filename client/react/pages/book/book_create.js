@@ -5,8 +5,8 @@ var services = require('../../../services/index');
 var ImagePicker = require('../../components/image_picker');
 var TextArea = require('../../components/textarea');
 var _ = require('lodash');
+var bookActions = require('../../../flux/actions/book.actions');
 
-var create = services.book.create;
 var { isNumber } = services.validation;
 var { file2base64 } = services.image;
 
@@ -22,17 +22,9 @@ module.exports = React.createClass({
         .then(base64 => {
           book.picture = base64;
 
-          create(book)
-            .then(createdBook => {
-              toastr.success('Book created');
-            })
-            .catch(err => {
-              console.log(err);
-              toastr.error('Could not create new book');
-            });
+          bookActions.createBook(book);
         })
         .catch(err => {
-          console.log(err);
           toastr.error('Could not convert image');
         });
     }

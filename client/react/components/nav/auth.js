@@ -7,9 +7,12 @@ var userActions = require('../../../flux/actions/user.actions.js');
 
 
 module.exports = React.createClass({
+  componentDidMount() {
+    userActions.tryFetchUser();
+  },
 
   logout(){
-    userActions.remove();
+    userActions.logout();
     browserHistory.push('/login');
   },
 

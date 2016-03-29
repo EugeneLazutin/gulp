@@ -4,21 +4,14 @@ var { Form, ValidatedInput } = require('react-bootstrap-validation');
 var services = require('../../services');
 var { browserHistory } = require('react-router');
 var config = require('../../../config');
+var userActions = require('../../flux/actions/user.actions');
 
-var login = services.auth.login;
 var isEmail = services.validation.isEmail;
 
 module.exports = React.createClass({
 
   handleValid(values) {
-    login(values)
-      .then((user) => {
-        toastr.success('successfully logged');
-        browserHistory.push('/');
-      })
-      .catch((err) => {
-        console.log('error', err);
-      });
+    userActions.login(values);
   },
 
   render() {
