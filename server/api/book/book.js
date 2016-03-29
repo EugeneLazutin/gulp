@@ -1,4 +1,5 @@
 var BookInfo = require('./book_info.model');
+var User = require('../user/user.model');
 var handleError = require('../utils').handleError;
 var search = require('../../services/search');
 var _ = require('lodash');
@@ -30,12 +31,27 @@ exports.getBook = function (req, res) {
   var id = req.params.id;
 
   if (id) {
-    BookInfo.findById(id, function (err, book) {
-      if (err) {
-        return handleError(res, err);
-      }
-      res.status(200).json(book);
-    });
+    BookInfo
+      .findById(id)
+      .populate('comments')
+      .exec(function (err, book) {
+        if (err) {
+          return handleError(res, err);
+        }
+
+        User.populate(book, {
+          path: 'comments.user',
+          select: 'name'
+        }, function (err) {
+          if (err) {
+            handleError(err);
+          } else {
+            res.status(200).json(book);
+          }
+        });
+
+
+      });
   } else {
     res.status(500).send('id required');
   }

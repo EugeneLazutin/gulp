@@ -3,9 +3,12 @@ var { Col } = require('react-bootstrap');
 var bookActions = require('../../../flux/actions/book.actions');
 var bookStore = require('../../../flux/stores/book.store');
 var userStore = require('../../../flux/stores/user.store');
+var commentActions = require('../../../flux/actions/comment.actions');
 
 var UserButtons = require('../../components/book/user_buttons');
 var AdminButtons = require('../../components/book/admin_buttons');
+
+var Comments = require('../../components/comment/comments');
 
 module.exports = React.createClass({
   getInitialState() {
@@ -20,7 +23,6 @@ module.exports = React.createClass({
   componentWillUnmount() {
     bookStore.unlisten(this.onChange);
   },
-
 
   onChange(state) {
     this.setState(state);
@@ -75,6 +77,8 @@ module.exports = React.createClass({
               <p className='clearfix'>
                 <span className='pull-right'>{book.available}/{book.count} available</span>
               </p>
+
+              <Comments bookId={book._id} comments={book.comments} />
 
             </div>
           </Col>

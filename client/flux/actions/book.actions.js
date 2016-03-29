@@ -54,29 +54,37 @@ class BookActions {
   }
 
   createBook(book) {
-    agent
-      .post('/api/book')
-      .send(book)
-      .end((err, res) => {
-        if (err) {
-          error(err);
-        } else {
-          hashHistory.push('/books');
-        }
-      });
+    return dispatch => {
+      dispatch();
+
+      agent
+        .post('/api/book')
+        .send(book)
+        .end((err, res) => {
+          if (err) {
+            error(err);
+          } else {
+            hashHistory.push('/books');
+          }
+        });
+    }
   }
 
   removeBook(bookId) {
-    agent
-      .delete(`/api/book/${bookId}`)
-      .set('Authorization', 'Bearer ' + cookie.load('token'))
-      .end((err, res) => {
-        if(err) {
-          error(err);
-        } else {
-          hashHistory.push('/books');
-        }
-      });
+    return dispatch => {
+      dispatch();
+
+      agent
+        .delete(`/api/book/${bookId}`)
+        .set('Authorization', 'Bearer ' + cookie.load('token'))
+        .end((err, res) => {
+          if (err) {
+            error(err);
+          } else {
+            hashHistory.push('/books');
+          }
+        });
+    }
   }
 }
 

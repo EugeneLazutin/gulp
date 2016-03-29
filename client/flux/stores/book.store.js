@@ -18,6 +18,8 @@ class bookStore {
 
   onReceiveBook(book) {
     this.book = book;
+
+    console.log(book);
   }
 
   onFetchBook() {

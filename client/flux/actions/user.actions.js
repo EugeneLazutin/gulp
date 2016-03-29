@@ -6,17 +6,21 @@ var { hashHistory } = require('react-router');
 
 class UserActions {
   tryFetchUser() {
-    var token = cookie.load('token');
+    return dispatch => {
+      dispatch();
 
-    if (token) {
-      agent
-        .get('/api/user/me')
-        .set('Authorization', 'Bearer ' + token)
-        .end((err, res) => {
-          if (!err) {
-            this.receiveUser(res.body);
-          }
-        });
+      var token = cookie.load('token');
+
+      if (token) {
+        agent
+          .get('/api/user/me')
+          .set('Authorization', 'Bearer ' + token)
+          .end((err, res) => {
+            if (!err) {
+              this.receiveUser(res.body);
+            }
+          });
+      }
     }
   }
 
@@ -33,11 +37,17 @@ class UserActions {
   }
 
   login(userLogin) {
-    this._sendAuth(userLogin, '/auth');
+    return dispatch => {
+      dispatch();
+      this._sendAuth(userLogin, '/auth');
+    }
   }
 
   register(user) {
-    this._sendAuth(user, '/api/user');
+    return dispatch => {
+      dispatch();
+      this._sendAuth(user, '/api/user');
+    }
   }
 
   _sendAuth(user, url) {

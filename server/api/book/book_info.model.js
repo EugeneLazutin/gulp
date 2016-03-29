@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Transaction = require('mongoose-transaction')(mongoose);
 var _ = require('lodash');
 var paginate = require('mongoose-paginate');
 
@@ -14,7 +13,8 @@ var BookInfoSchema = new Schema({
   year: {type: Number, required: true, max: currYear},
   pages: {type: Number, required: true, min: 1},
   count: {type: Number, default: 1, min: 1},
-  available: {type: Number, default: 1, min: 0}
+  available: {type: Number, default: 1, min: 0},
+  comments: [{type: Schema.ObjectId, ref: 'Comment'}]
 });
 
 BookInfoSchema.plugin(paginate);

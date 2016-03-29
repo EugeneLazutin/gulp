@@ -1,0 +1,23 @@
+.comments {
+  margin-top: 30px;
+
+  .create-comment {
+    padding: 10px;
+    overflow: hidden;
+
+    .message {
+      width: 100%;
+      resize: vertical;
+    }
+
+    button.btn {
+
+    }
+
+  }
+
+  .comment {
+    padding: 10px;
+  }
+
+}
