@@ -6,29 +6,38 @@ var Comment = require('./comment');
 module.exports = React.createClass({
   propTypes: {
     bookId: React.PropTypes.string,
-    comments: React.PropTypes.array
+    comments: React.PropTypes.array,
+    isAuthorized: React.PropTypes.bool,
+    isAdmin: React.PropTypes.bool
   },
 
-  getInitialState() {
+  getInitialState()  {
     return {
       comments: this.props.comments,
       newComments: []
     };
   },
 
-  componentDidMount() {
-    io('/comment').on('add_comment', comment => {
+  _updateComments(comment) {
+    if (comment.bookInfo === this.props.bookId) {
       this.state.newComments.push(comment);
-
-      if(comment.bookInfo === this.props.bookId) {
-        this.setState({
-          newComments: this.state.newComments
-        });
-      }
-    });
+      this.setState({
+        newComments: this.state.newComments
+      });
+    }
   },
 
-  _handleClick() {
+  componentDidMount()  {
+    this.socket = io('/comment');
+    this.socket.on('add_comment', this._updateComments);
+  },
+
+  componentWillUnmount() {
+    this.socket.removeListener('add_comment', this._updateComments);
+    this.socket = null;
+  },
+
+  _handleClick()  {
     this.state.newComments.forEach(comment => {
       this.state.comments.push(comment);
     });
@@ -38,7 +47,7 @@ module.exports = React.createClass({
     });
   },
 
-  _renderComments(comments) {
+  _renderComments(comments)  {
     if (comments && comments.length) {
       return (
         comments.map((comment, i) => {
@@ -50,7 +59,15 @@ module.exports = React.createClass({
     }
   },
 
-  _renderViewNewCommentsBtn(haveNewComments) {
+  _renderCommentForm() {
+    if (this.props.isAuthorized) {
+      return (
+        <CommentForm bookId={this.props.bookId}/>
+      );
+    }
+  },
+
+  _renderViewNewCommentsBtn(haveNewComments)  {
     if (haveNewComments) {
       return (
         <button className="btn btn-info btn-block btn-lg" onClick={this._handleClick}>view new comments</button>
@@ -58,17 +75,14 @@ module.exports = React.createClass({
     }
   },
 
-  render() {
+  render()  {
     var { comments, newComments } = this.state;
 
     return (
       <div className="comments">
-        <CommentForm bookId={this.props.bookId}/>
-
+        {this._renderCommentForm()}
         {this._renderComments(comments)}
-
         {this._renderViewNewCommentsBtn(!!newComments.length)}
-
       </div>
     );
   }

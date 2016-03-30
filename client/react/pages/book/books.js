@@ -1,6 +1,6 @@
 var React = require('react');
 var { Pagination } = require('react-bootstrap');
-var Book = require('./../../components/book/book_grid');
+var Books = require('./../../components/book/books');
 var SearchBar = require('../../components/search_bar');
 var _ = require('lodash');
 var { limit } = require('../../../../config/client/pagination');
@@ -31,7 +31,10 @@ module.exports = React.createClass({
   },
 
   onChange(state) {
-    this.setState(state);
+    this.setState({
+      books: state.books,
+      pages: state.pages
+    });
   },
 
   _fetch() {
@@ -85,27 +88,12 @@ module.exports = React.createClass({
   },
 
   render() {
-    if(!this.state.books) {
-      return (
-        <div> Loading ... </div>
-      );
-    }
-
     return (
       <div>
-
         <SearchBar changeHandler={this._updateSearchParams}/>
-
-        <div className='books'>
-          {this.state.books.map((book, i) => {
-            return (<Book book={book} key={i}/>);
-          })}
-        </div>
-
+        <Books books={this.state.books} />
         <br/>
-
         {this._createPagination()}
-
       </div>
     );
   }

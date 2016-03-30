@@ -11,20 +11,34 @@ var Comments = require('../../components/comment/comments');
 
 module.exports = React.createClass({
   getInitialState() {
-    return bookStore.getState();
+    var auth = {
+      isAuthorized: userStore.getState().isAuthorized,
+      isAdmin: userStore.getState().isAdmin
+    };
+
+    return Object.assign(auth, bookStore.getState());
   },
 
   componentDidMount() {
-    bookStore.listen(this.onChange);
+    bookStore.listen(this.onChangeBook);
+    userStore.listen(this.onChangeUser);
     bookActions.fetchBook(this.props.params.id);
   },
 
   componentWillUnmount() {
-    bookStore.unlisten(this.onChange);
+    bookStore.unlisten(this.onChangeBook);
+    userStore.unlisten(this.onChangeUser);
   },
 
-  onChange(state) {
+  onChangeBook(state) {
     this.setState(state);
+  },
+
+  onChangeUser(state) {
+    this.setState({
+      isAuthorized: state.isAuthorized,
+      isAdmin: state.isAdmin
+    });
   },
 
   _renderButtons() {
@@ -77,7 +91,8 @@ module.exports = React.createClass({
                 <span className='pull-right'>{book.available}/{book.count} available</span>
               </p>
 
-              <Comments bookId={book._id} comments={book.comments} />
+              <Comments bookId={book._id} comments={book.comments} isAuthorized={this.state.isAuthorized}
+                        isAdmin={this.state.isAdmin}/>
 
             </div>
           </Col>

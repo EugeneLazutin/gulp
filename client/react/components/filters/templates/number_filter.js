@@ -60,11 +60,6 @@ module.exports = placeholder => {
       };
     },
 
-    abc(evt) {
-      console.log('wtf!!!');
-      this.props.hideFilter(evt);
-    },
-
     render() {
       return (
         <div className="filter">
@@ -95,7 +90,7 @@ module.exports = placeholder => {
             <input ref='input' type='number' className='form-control input-sm' placeholder={placeholder}
                    onChange={this._handleChange} onKeyUp={this._handleKeyUp} onBlur={this._emitChanges}/>
         <span className='input-group-btn'>
-          <button className='btn btn-sm btn-danger' type='button' onClick={this.abc}>
+          <button className='btn btn-sm btn-danger' type='button' onClick={this.props.hideFilter}>
             <span className='glyphicon glyphicon-remove'></span>
           </button>
         </span>
