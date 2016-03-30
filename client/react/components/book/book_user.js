@@ -1,12 +1,25 @@
 var React = require('react');
-var Buttons = require('./user_buttons');
 var Comments = require('../comment/comments');
-
+var bookActions = require('../../../flux/actions/book.actions');
 
 module.exports = React.createClass({
   propTypes: {
     book: React.PropTypes.object,
     isAuthorized: React.PropTypes.bool
+  },
+
+  _makeOrder() {
+    bookActions.makeOrder(this.props.book._id);
+  },
+
+  _renderButton() {
+    if(this.props.isAuthorized) {
+      return (
+        <button className='btn btn-info btn-block' onClick={this._makeOrder}>
+          Make order
+        </button>
+      );
+    }
   },
 
   render() {
@@ -17,7 +30,7 @@ module.exports = React.createClass({
         <div className='picture'>
           <img className='img-rounded img-responsive' src={book.picture}/>
 
-          <Buttons bookId={book._id} />
+          {this._renderButton()}
 
         </div>
       </div>

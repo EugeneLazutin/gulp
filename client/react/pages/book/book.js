@@ -7,10 +7,6 @@ var _ = require('lodash');
 
 var BookUser = require('../../components/book/book_user');
 var BookAdmin = require('../../components/book/book_admin');
-var UserButtons = require('../../components/book/user_buttons');
-var AdminButtons = require('../../components/book/admin_buttons');
-
-var Comments = require('../../components/comment/comments');
 
 module.exports = React.createClass({
   getInitialState() {
