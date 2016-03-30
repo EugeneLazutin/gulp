@@ -3,7 +3,9 @@ var React = require('react');
 module.exports = React.createClass({
   render() {
     return (
-      <div>Orders...</div>
+      <div>
+        <img src="/images/loading.gif" />
+      </div>
     );
   }
 });

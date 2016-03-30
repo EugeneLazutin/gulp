@@ -19,7 +19,7 @@ module.exports = React.createClass({
       );
     } else {
       return (
-        <div>Loading...</div>
+        <div className="loader"/>
       );
     }
   }
