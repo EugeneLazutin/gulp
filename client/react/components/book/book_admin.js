@@ -27,7 +27,7 @@ module.exports = React.createClass({
 
   _renderBody() {
     if (this.state.ordersIsVisible) {
-      return <Orders />;
+      return <Orders orders={this.props.book.orders} />;
     }
     return <Comments />;
   },
