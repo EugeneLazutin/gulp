@@ -7,6 +7,4 @@ router.post('/', auth.isAuthenticated(), comment.create);
 
 router.post('/block', auth.isAuthenticated(true), comment.block);
 
-router.get('/:bookId', comment.getComments);
-
 module.exports = router;

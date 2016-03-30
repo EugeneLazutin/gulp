@@ -13,6 +13,9 @@ class userStore {
   }
 
   onReceiveUser(user) {
+
+    console.log(user);
+
     this.user = user;
     this.isAuthorized = true;
     this.isAdmin = user.role === roles.admin;

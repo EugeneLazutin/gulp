@@ -16,41 +16,23 @@ function createComment(message, bookId, userId) {
 exports.create = function (req, res) {
   var comment = createComment(req.body.message, req.body.bookId, req.user._id);
 
-  BookInfo.findById(req.body.bookId, function (err, bookInfo) {
+  Comment.create(comment, function (err, createdComment) {
     if (err) {
-      return handleError(res, err);
+      handleError(res, err);
+    } else {
+
+      User.populate(createdComment, {
+        path: 'user',
+        select: 'name'
+      }, function (err) {
+        if (err) {
+          handleError(err);
+        } else {
+          _io.of('/comment').emit('add_comment', createdComment);
+          res.status(201).json(createdComment);
+        }
+      });
     }
-
-    if (!bookInfo) {
-      return res.status(500).send('Book not found.');
-    }
-
-    Comment.create(comment, function (err, createdComment) {
-      if (err) {
-        handleError(res, err);
-      } else {
-
-        bookInfo.comments.push(createdComment);
-        bookInfo.save(function (err) {
-          if (err) {
-            return handleError(res, err);
-          }
-
-
-          User.populate(createdComment, {
-            path: 'user',
-            select: 'name'
-          }, function (err) {
-            if(err) {
-              handleError(err);
-            } else {
-              _io.of('/comment').emit('add_comment', createdComment);
-              res.status(201).json(createdComment);
-            }
-          });
-        })
-      }
-    });
   });
 };
 
@@ -73,20 +55,4 @@ exports.block = function (req, res) {
       }
     });
   });
-};
-
-exports.getComments = function (req, res) {
-  var bookId = req.params.bookId;
-
-  if (bookId) {
-    Comment.find({bookInfo: bookId}, function (err, comments) {
-      if (err) {
-        handleError(res, err);
-      } else {
-        res.status(200).json(comments);
-      }
-    });
-  } else {
-    res.status(500).send('bookId required');
-  }
 };
