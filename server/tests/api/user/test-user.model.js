@@ -1,4 +1,4 @@
-var User = require('../../../api/user/user.model.js');
+var User = require('../.././user.model.js');
 
 describe('user model', function () {
 

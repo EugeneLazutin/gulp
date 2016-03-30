@@ -8,7 +8,7 @@ var OrderSchema = new Schema({
     end: { type: Date, required: true }
   },
   user: { type: Schema.ObjectId, ref: 'User', require: true },
-  bookInfo: { type: Schema.ObjectId, ref: 'BookInfo', require: true }
+  book: { type: Schema.ObjectId, ref: 'Book', require: true }
 });
 
 module.exports = mongoose.model('Order', OrderSchema);

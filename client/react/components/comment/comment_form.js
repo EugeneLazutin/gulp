@@ -20,11 +20,13 @@ module.exports = React.createClass({
   },
 
   _handleClick() {
-    bookActions.createComment({
-      message: this.state.message,
-      bookId: this.props.bookId
-    });
-    this.refs.message.value = '';
+    if(this.state.message) {
+      bookActions.createComment({
+        message: this.state.message,
+        bookId: this.props.bookId
+      });
+      this.refs.message.value = '';
+    }
   },
 
   _btnClass() {

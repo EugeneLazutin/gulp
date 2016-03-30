@@ -1,83 +1,57 @@
-var BookInfo = require('./book_info.model');
-var User = require('../user/user.model');
-var Comment = require('../comment/comment.model');
 var handleError = require('../utils').handleError;
-var search = require('../../services/search');
-var _ = require('lodash');
+var bookService = require('../../services/book');
 
 exports.create = function (req, res) {
-  var book = req.body;
-  book.available = book.count;
-
-  BookInfo.create(book, function (err, bookInfo) {
-    if (err) {
-      return handleError(res, err);
-    }
-    res.status(201).json(bookInfo);
-  });
+  bookService
+    .create(req.body)
+    .then(book => {
+      res.status(201).json(book);
+    })
+    .catch(err => {
+      handleError(res, err);
+    });
 };
 
 exports.getAll = function (req, res) {
-  var query = search.toQuery(req.body.search);
-
-  BookInfo.paginate(query, req.body.pagination, function (err, docs) {
-    if (err) {
-      return handleError(res, err);
-    }
-    res.status(200).json(docs);
-  });
+  bookService
+    .getAll(req.body)
+    .then(books => {
+      res.status(200).json(books);
+    })
+    .catch(err => {
+      handleError(res, err);
+    });
 };
 
 exports.getBook = function (req, res) {
-  var id = req.params.id;
+  bookService
+    .getBookWithComments(req.params.id)
+    .then(book => {
+      res.status(200).json(book);
+    })
+    .catch(err => {
+      handleError(err);
+    });
+};
 
-  if (id) {
-    BookInfo
-      .findById(id)
-      .exec(function (err, book) {
-        if (err) {
-          return handleError(res, err);
-        }
-
-        if (!book) {
-          return res.json(401);
-        }
-
-        Comment.find({bookInfo: book._id}, function (err, comments) {
-          if (err) {
-            return handleError(res, err);
-          }
-
-          User.populate(comments, {
-            path: 'user',
-            select: 'name'
-          }, function (err) {
-            if (err) {
-              handleError(err);
-            } else {
-              var result = book.toObject();
-              result.comments = comments
-              res.status(200).json(result);
-            }
-          });
-        });
-      });
-  } else {
-    res.status(500).send('id required');
-  }
+exports.getBookAdmin = function (req, res) {
+  bookService
+    .getBookWithCommentsAndOrders(req.params.id)
+    .then(book => {
+      res.status(200).json(book);
+    })
+    .catch(err => {
+      handleError(err);
+    });
 };
 
 exports.delete = function (req, res) {
-  var id = req.params.id;
-
-  if (id) {
-    BookInfo.remove({_id: id}, function (err) {
-      if (err) {
-        return handleError(res, err);
-      }
-      res.status(200).send('removed');
+  bookService
+    .remove(req.params.id)
+    .then(() => {
+      res.status(200).send('Removed');
+    })
+    .catch(err => {
+      handleError(res, err);
     });
-  } else {
-    res.status(500).send('id required');
-  }
 };

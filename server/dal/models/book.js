@@ -5,7 +5,7 @@ var paginate = require('mongoose-paginate');
 
 var currYear = new Date().getFullYear();
 
-var BookInfoSchema = new Schema({
+var BookSchema = new Schema({
   title: {type: String, required: true},
   picture: {type: String},
   author: {type: String, required: true, default: 'not specified'},
@@ -16,23 +16,7 @@ var BookInfoSchema = new Schema({
   available: {type: Number, default: 1, min: 0}
 });
 
-BookInfoSchema.plugin(paginate);
+BookSchema.plugin(paginate);
 
-BookInfoSchema.methods = {
-  addBooks(count) {
-    if (count && _.isNumber(count)) {
-      this.count += count;
-      this.available += count;
-      this.save(function (err) {
-        if(err) {
-          throw err;
-        }
-      });
-    } else {
-      throw new Error('count should be a number');
-    }
-  }
-};
-
-module.exports = mongoose.model('BookInfo', BookInfoSchema);
+module.exports = mongoose.model('Book', BookSchema);
 

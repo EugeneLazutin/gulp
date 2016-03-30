@@ -2,6 +2,7 @@ var alt = require('../alt');
 var agent = require('superagent');
 var cookie = require('react-cookie');
 var error = require('../error_handler');
+var userStore = require('../stores/user.store');
 var { hashHistory } = require('react-router');
 
 class BookActions {
@@ -9,15 +10,25 @@ class BookActions {
     return dispatch => {
       dispatch();
 
-      agent
-        .get(`api/book/${bookId}`)
-        .end((err, res) => {
-          if (err) {
-            error(err);
-          } else {
-            this.receiveBook(res.body);
-          }
-        });
+      var request = agent
+        .get(`api/book/${bookId}`);
+
+      if (userStore.isAdmin()) {
+        request = agent
+          .get(`api/book/admin/${bookId}`)
+          .set('Authorization', 'Bearer ' + cookie.load('token'));
+      } else {
+        request = agent
+          .get(`api/book/${bookId}`);
+      }
+
+      request.end((err, res) => {
+        if (err) {
+          error(err);
+        } else {
+          this.receiveBook(res.body);
+        }
+      });
     }
   }
 

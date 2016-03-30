@@ -19,7 +19,7 @@ module.exports = React.createClass({
   },
 
   _updateComments(comment) {
-    if (comment.bookInfo === this.props.bookId) {
+    if (comment.book === this.props.bookId) {
       this.state.newComments.push(comment);
       this.setState({
         newComments: this.state.newComments

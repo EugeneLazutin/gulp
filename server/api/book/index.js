@@ -9,6 +9,8 @@ router.post('/all', book.getAll);
 
 router.get('/:id', book.getBook);
 
+router.get('/admin/:id', book.getBookAdmin);
+
 router.delete('/:id', auth.isAuthenticated(true), book.delete);
 
 module.exports = router;
