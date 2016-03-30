@@ -70,6 +70,22 @@ class BookActions {
     }
   }
 
+  createComment(comment) {
+    return dispatch => {
+      dispatch();
+
+      agent
+        .post('/api/comment')
+        .send(comment)
+        .set('Authorization', 'Bearer ' + cookie.load('token'))
+        .end((err, res) => {
+          if (err) {
+            error(err);
+          }
+        })
+    }
+  }
+
   removeBook(bookId) {
     return dispatch => {
       dispatch();

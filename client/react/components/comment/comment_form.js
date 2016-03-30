@@ -1,6 +1,6 @@
 var React = require('react');
 var classNames = require('classnames');
-var commentActions = require('../../../flux/actions/comment.actions');
+var bookActions = require('../../../flux/actions/book.actions');
 
 module.exports = React.createClass({
   propTypes: {
@@ -20,7 +20,7 @@ module.exports = React.createClass({
   },
 
   _handleClick() {
-    commentActions.createComment({
+    bookActions.createComment({
       message: this.state.message,
       bookId: this.props.bookId
     });

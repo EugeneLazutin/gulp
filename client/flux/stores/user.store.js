@@ -8,14 +8,20 @@ class userStore {
     this.bindActions(userActions);
 
     this.user = null;
+    this.isAuthorized = false;
+    this.isAdmin = false;
   }
 
   onReceiveUser(user) {
     this.user = user;
+    this.isAuthorized = true;
+    this.isAdmin = user.role === roles.admin;
   }
 
   onLogout() {
     this.user = null;
+    this.isAuthorized = false;
+    this.isAdmin = false;
   }
 
   static isAuthorized() {

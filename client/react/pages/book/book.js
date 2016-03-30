@@ -3,7 +3,6 @@ var { Col } = require('react-bootstrap');
 var bookActions = require('../../../flux/actions/book.actions');
 var bookStore = require('../../../flux/stores/book.store');
 var userStore = require('../../../flux/stores/user.store');
-var commentActions = require('../../../flux/actions/comment.actions');
 
 var UserButtons = require('../../components/book/user_buttons');
 var AdminButtons = require('../../components/book/admin_buttons');
