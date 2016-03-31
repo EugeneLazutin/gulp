@@ -108,4 +108,5 @@ gulp.task('app', ['js:app', 'sass']);
 
 gulp.task('lib', ['js:lib', 'css']);
 
-gulp.task('build', ['app', 'lib']);
+gulp.task('default', ['app', 'lib']);
+
