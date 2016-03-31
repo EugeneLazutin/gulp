@@ -5,6 +5,6 @@ var auth = require('../../services/auth/auth.service.js');
 
 router.post('/', auth.isAuthenticated(), comment.create);
 
-router.post('/block', auth.isAuthenticated(true), comment.block);
+router.post('/set-removed', auth.isAuthenticated(true), comment.setRemoved);
 
 module.exports = router;

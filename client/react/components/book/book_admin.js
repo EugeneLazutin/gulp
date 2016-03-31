@@ -1,6 +1,6 @@
 var React = require('react');
-var Comments = require('./comments');
-var Orders = require('./orders');
+var Comments = require('./../comment/comments.admin.js');
+var Orders = require('./../order/orders.admin.js');
 
 module.exports = React.createClass({
   propTypes: {
@@ -29,7 +29,7 @@ module.exports = React.createClass({
     if (this.state.ordersIsVisible) {
       return <Orders orders={this.props.book.orders} />;
     }
-    return <Comments />;
+    return <Comments comments={this.props.book.comments} />;
   },
 
   render() {

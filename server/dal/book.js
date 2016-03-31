@@ -1,4 +1,5 @@
 var Book = require('./models/book');
+var _ = require('lodash');
 
 
 exports.create = function (book) {
@@ -62,13 +63,21 @@ exports.remove = function (id) {
 exports.update = function (id, updates) {
   return new Promise(function (resolve, reject) {
     Book
-      .findOneAndUpdate(id, updates)
-      .exec(function (err, order) {
+      .findById(id)
+      .exec(function (err, book) {
         if (err) {
           return reject(err);
         }
 
-        resolve(order);
+        _.assign(book, updates);
+
+        book.save(err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(book);
+          }
+        });
       });
   });
 };

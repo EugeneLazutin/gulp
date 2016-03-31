@@ -1,4 +1,5 @@
 var Comment = require('./models/comment');
+var _ = require('lodash');
 
 
 exports.create = function (comment) {
@@ -15,13 +16,21 @@ exports.create = function (comment) {
 exports.update = function (id, updates) {
   return new Promise(function (resolve, reject) {
     Comment
-      .findOneAndUpdate(id, updates)
+      .findById(id)
       .exec(function (err, comment) {
         if (err) {
           return reject(err);
         }
 
-        resolve(comment);
+        _.assign(comment, updates);
+
+        comment.save(err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(comment);
+          }
+        });
       });
   });
 };

@@ -23,3 +23,14 @@ exports.takeOrder = function (req, res) {
       handleError(res, err);
     });
 };
+
+exports.closeOrder = function (req, res) {
+  orderService
+    .closeOrder(req.body.id)
+    .then(order => {
+      res.status(200).json(order);
+    })
+    .catch(err => {
+      handleError(res, err);
+    });
+};

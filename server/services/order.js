@@ -49,6 +49,27 @@ exports.giveOnHand = (id) => {
   };
   updates.date.end.setDate(updates.date.start.getDate() + orderAmount[orderStatus.onHand]);
 
-  return orderStore.update(id, updates);
+  return update(id, updates);
 };
 
+exports.closeOrder = id => {
+  var updates = {
+    status: orderStatus.closed
+  };
+
+  return update(id, updates);
+};
+
+function update(id, updates) {
+  return new Promise((resolve, reject) => {
+    orderStore
+      .update(id, updates)
+      .then(() => {
+        updates._id = id;
+        resolve(updates);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+}

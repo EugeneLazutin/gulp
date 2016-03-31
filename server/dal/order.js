@@ -1,4 +1,5 @@
 var Order = require('./models/order');
+var _ = require('lodash');
 
 
 exports.create = function (order) {
@@ -15,13 +16,21 @@ exports.create = function (order) {
 exports.update = function (id, updates) {
   return new Promise(function (resolve, reject) {
     Order
-      .findOneAndUpdate(id, updates)
+      .findById(id)
       .exec(function (err, order) {
         if (err) {
           return reject(err);
         }
 
-        resolve(order);
+        _.assign(order, updates);
+
+        order.save(err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(order);
+          }
+        });
       });
   });
 };

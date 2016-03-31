@@ -13,6 +13,15 @@ module.exports = React.createClass({
   render() {
     var { comment } = this.props;
 
+    if(comment.removed) {
+      return (
+        <div className="comment">
+          <div>{moment(comment.date).calendar()} {this._fullname()} wrote...</div>
+          <div>but i will not show you =D</div>
+        </div>
+      );
+    }
+
     return (
       <div className="comment">
         <div>{moment(comment.date).calendar()} {this._fullname()} wrote:</div>

@@ -35,10 +35,20 @@ exports.sendNewComment = comment => {
   });
 };
 
-exports.block = (id, block) => {
+exports.setRemoved = (id, removed) => {
   var updates = {
-    block: block
+    removed: removed
   };
 
-  return commentStore.update(id, updates);
+  return new Promise((resolve, reject) => {
+    commentStore
+      .update(id, updates)
+      .then(() => {
+        updates._id = id;
+        resolve(updates);
+      })
+      .catch(err => {
+        reject(err);
+      })
+  });
 };

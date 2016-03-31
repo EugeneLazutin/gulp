@@ -13,7 +13,7 @@ module.exports = React.createClass({
   },
 
   _renderButton() {
-    if(this.props.isAuthorized) {
+    if(this.props.isAuthorized && this.props.book.available > 0) {
       return (
         <button className='btn btn-info btn-block' onClick={this._makeOrder}>
           Make order

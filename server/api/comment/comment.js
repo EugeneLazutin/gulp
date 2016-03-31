@@ -14,9 +14,9 @@ exports.create = function (req, res) {
     });
 };
 
-exports.block = function (req, res) {
+exports.setRemoved = function (req, res) {
   commentService
-    .block(req.body.id)
+    .setRemoved(req.body.id, req.body.removed)
     .then(comment => {
       res.status(200).json(comment);
     })
