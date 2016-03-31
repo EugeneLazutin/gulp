@@ -52,12 +52,27 @@ exports.giveOnHand = (id) => {
   return update(id, updates);
 };
 
-exports.closeOrder = (id, status) => {
+exports.closeOrder = (orderId, bookId, status) => {
   var updates = {
     status: status
   };
 
-  return update(id, updates);
+  return new Promise((resolve,reject) => {
+    update(orderId, updates)
+      .then((result) => {
+        bookService
+          .incrementAvailable(bookId)
+          .then(() => {
+            resolve(result);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 exports.lostOrder = (orderId, bookId) => {

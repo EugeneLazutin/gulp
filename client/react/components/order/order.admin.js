@@ -37,16 +37,15 @@ var Order = React.createClass({
     }
   },
 
-  _cancel() {
-    orderActions.closeOrder(this.props.order._id, orderStatus.bookingCancelled);
+  _createCloseAction(status) {
+    return () => {
+      console.log(status)
+      orderActions.closeOrder(this.props.order._id, this.props.order.book, status);
+    };
   },
 
   _lost() {
     orderActions.lostBook(this.props.order._id, this.props.order.book);
-  },
-
-  _close() {
-    orderActions.closeOrder(this.props.order._id, orderStatus.rentalOver);
   },
 
   _lendOut() {
@@ -58,13 +57,14 @@ var Order = React.createClass({
       return (
         <div className="btn-group btn-group-xs">
           <button className="btn btn-info" onClick={this._lendOut}>Lend out</button>
-          <button className="btn btn-danger" onClick={this._cancel}>Cancel</button>
+          <button className="btn btn-danger" onClick={this._createCloseAction(orderStatus.bookingCancelled)}>Cancel
+          </button>
         </div>
       );
     } else if (this.props.order.status == orderStatus.onHand) {
       return (
         <div className="btn-group btn-group-xs">
-          <button className="btn btn-success" onClick={this._close}>Close</button>
+          <button className="btn btn-success" onClick={this._createCloseAction(orderStatus.rentalOver)}>Close</button>
           <button className="btn btn-danger" onClick={this._lost}>Lost</button>
         </div>
       );

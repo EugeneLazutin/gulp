@@ -14,11 +14,13 @@ class OrderActions {
     };
   }
 
-  closeOrder(orderId, status) {
+  closeOrder(orderId, bookId, status) {
     return dispatch => {
       dispatch();
 
-      this._updateOrder({id: orderId, status: status}, '/api/order/close');
+
+      console.log(status);
+      this._updateOrder({orderId, bookId, status}, '/api/order/close');
     };
   }
 

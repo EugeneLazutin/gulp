@@ -1,8 +1,11 @@
 var React = require('react');
 var commentStore = require('../../../flux/stores/comment.store.js');
 var Comment = require('./comment.admin.js');
+var _ = require('lodash');
 
-var comments = React.createClass({
+
+
+var Comments = React.createClass({
   propTypes: {
     comments: React.PropTypes.array
   },
@@ -22,7 +25,7 @@ var comments = React.createClass({
   },
 
   updateComment(state) {
-    var index = this.state.comments.findIndex(comment => {
+    var index = _.findIndex(this.state.comments, comment => {
       return comment._id === state.comment._id;
     });
 
@@ -68,4 +71,4 @@ var comments = React.createClass({
   }
 });
 
-module.exports = comments;
+module.exports = Comments;

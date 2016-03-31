@@ -8,6 +8,8 @@ class UserActions {
   tryFetchUser() {
     return dispatch => {
       dispatch();
+      console.log('Try Fetch User');
+
 
       var token = cookie.load('token');
 

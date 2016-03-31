@@ -24,7 +24,7 @@ module.exports = React.createClass({
   },
 
   updateOrder(state) {
-    var index = this.state.orders.findIndex(order => {
+    var index = _.findIndex(this.state.orders, order => {
       return order._id === state.order._id;
     });
 
