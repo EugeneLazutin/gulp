@@ -1,16 +1,32 @@
 var React = require('react');
 var Comments = require('./../comment/comments.admin.js');
 var Orders = require('./../order/orders.admin.js');
+var bookActions = require('../../../flux/actions/book.actions');
+var bookStore = require('../../../flux/stores/book.store');
 
 module.exports = React.createClass({
   propTypes: {
-    book: React.PropTypes.object
+    bookId: React.PropTypes.string
   },
 
   getInitialState() {
     return {
+      book: bookStore.getState(),
       ordersIsVisible: true
     };
+  },
+
+  componentDidMount() {
+    bookStore.listen(this._onChange);
+    bookActions.fetchBook(this.props.bookId, true);
+  },
+
+  componentWillUnmount() {
+    bookStore.unlisten(this._onChange);
+  },
+
+  _onChange(state) {
+    this.setState(state);
   },
 
   _showOrders() {
@@ -27,14 +43,17 @@ module.exports = React.createClass({
 
   _renderBody() {
     if (this.state.ordersIsVisible) {
-      return <Orders orders={this.props.book.orders} />;
+      return <Orders orders={this.state.book.orders} />;
     }
-    return <Comments comments={this.props.book.comments} />;
+    return <Comments comments={this.state.book.comments} />;
   },
 
   render() {
-    var { book } = this.props;
-    var { ordersIsVisible } = this.state;
+    var { book, ordersIsVisible } = this.state;
+
+    if(!book) {
+      return <div className="loader" />;
+    }
 
     return (
       <div className='book-details'>

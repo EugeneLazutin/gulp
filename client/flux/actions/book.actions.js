@@ -2,18 +2,17 @@ var alt = require('../alt');
 var agent = require('superagent');
 var cookie = require('react-cookie');
 var error = require('../error_handler');
-var userStore = require('../stores/user.store');
 var { hashHistory } = require('react-router');
 
+
 class BookActions {
-  fetchBook(bookId) {
+  fetchBook(bookId, isAdmin) {
     return dispatch => {
       dispatch();
 
-      var request = agent
-        .get(`api/book/${bookId}`);
+      var request;
 
-      if (userStore.isAdmin()) {
+      if (isAdmin) {
         request = agent
           .get(`api/book/admin/${bookId}`)
           .set('Authorization', 'Bearer ' + cookie.load('token'));

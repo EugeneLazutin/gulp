@@ -1,58 +1,42 @@
 var React = require('react');
-var bookActions = require('../../../flux/actions/book.actions');
-var bookStore = require('../../../flux/stores/book.store');
 var userStore = require('../../../flux/stores/user.store');
 var _ = require('lodash');
-
 var BookUser = require('../../components/book/book_user');
 var BookAdmin = require('../../components/book/book_admin');
 
-module.exports = React.createClass({
-  getInitialState() {
-    var auth = {
-      isAuthorized: userStore.getState().isAuthorized,
-      isAdmin: userStore.getState().isAdmin
-    };
 
-    return _.assign(auth, bookStore.getState());
+var BookPage = React.createClass({
+  getInitialState() {
+    return _.omit(userStore.getState(), ['user']);
   },
 
   componentDidMount() {
-    bookStore.listen(this.onChangeBook);
-    userStore.listen(this.onChangeUser);
-    bookActions.fetchBook(this.props.params.id, this.state.isAdmin);
+    userStore.listen(this._onChange);
   },
 
   componentWillUnmount() {
-    bookStore.unlisten(this.onChangeBook);
-    userStore.unlisten(this.onChangeUser);
+    userStore.unlisten(this._onChange);
   },
 
-  onChangeBook(state) {
-    this.setState(state);
-  },
-
-  onChangeUser(state) {
+  _onChange(state) {
     this.setState(_.omit(state, ['user']));
   },
 
   render() {
-    var { book, isAdmin, isAuthorized } = this.state;
-
-    if (!book) {
-      return <div className="loader" />;
-    }
+    var { isAdmin, isAuthorized } = this.state;
 
     return (
       <div className="container">
         {(() => {
-          if(isAdmin) {
-            return <BookAdmin book={book} />
+          if (isAdmin) {
+            return <BookAdmin bookId={this.props.params.id}/>
           } else {
-            return <BookUser book={book} isAuthorized={isAuthorized} />
+            return <BookUser bookId={this.props.params.id} isAuthorized={isAuthorized}/>
           }
         })()}
       </div>
     );
   }
 });
+
+module.exports = BookPage;

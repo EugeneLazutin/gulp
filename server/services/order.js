@@ -7,7 +7,7 @@ var bookService = require('./book');
 exports.create = (bookId, userId) => {
   var startDate = new Date();
   var endDate = new Date();
-  endDate.setDate(startDate.getDate() + orderAmount[orderStatus.booked]);
+  endDate.setDate(startDate.getDate() + orderAmount.booking);
 
   var order = {
     status: orderStatus.booked,
@@ -47,17 +47,40 @@ exports.giveOnHand = (id) => {
       end: new Date()
     }
   };
-  updates.date.end.setDate(updates.date.start.getDate() + orderAmount[orderStatus.onHand]);
+  updates.date.end.setDate(updates.date.start.getDate() + orderAmount.lendOut);
 
   return update(id, updates);
 };
 
-exports.closeOrder = id => {
+exports.closeOrder = (id, status) => {
   var updates = {
-    status: orderStatus.closed
+    status: status
   };
 
   return update(id, updates);
+};
+
+exports.lostOrder = (orderId, bookId) => {
+  return new Promise((resolve, reject) => {
+    var updates = {
+      status: orderStatus.lost
+    };
+
+    bookService
+      .bookLost(bookId)
+      .then(() => {
+        update(orderId, updates)
+          .then(result => {
+            resolve(result);
+          })
+          .catch(err => {
+            reject(err);
+          })
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 function update(id, updates) {

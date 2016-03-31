@@ -12,11 +12,15 @@ exports.create = book => {
 };
 
 exports.decrementAvailable = id => {
-  return changeAvailable(id, -1);
+  return bookStore.addAvailable(id, -1);
 };
 
 exports.incrementAvailable = id => {
-  return changeAvailable(id, +1);
+  return bookStore.addAvailable(id, +1);
+};
+
+exports.bookLost = id => {
+  return bookStore.addCount(id, -1);
 };
 
 exports.getAll = params => {
@@ -59,22 +63,6 @@ exports.getBookWithCommentsAndOrders = id => {
 exports.remove = id => {
   return bookStore.remove(id);
 };
-
-function changeAvailable (id, value) {
-  return new Promise((resolve, reject) => {
-    bookStore
-      .get(id)
-      .then(book => {
-        book.available += value;
-        book.save(err => {
-          if(err) {
-            return reject(err);
-          }
-          resolve(book);
-        })
-      })
-  });
-}
 
 function getBookWithComments(id) {
   return new Promise((resolve, reject) => {

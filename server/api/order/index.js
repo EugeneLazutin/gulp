@@ -9,4 +9,6 @@ router.post('/lend-out', auth.isAuthenticated(true), order.takeOrder);
 
 router.post('/close', auth.isAuthenticated(true), order.closeOrder);
 
+router.post('/lost', auth.isAuthenticated(true), order.lostOrder);
+
 module.exports = router;

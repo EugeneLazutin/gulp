@@ -26,7 +26,18 @@ exports.takeOrder = function (req, res) {
 
 exports.closeOrder = function (req, res) {
   orderService
-    .closeOrder(req.body.id)
+    .closeOrder(req.body.id, req.body.status)
+    .then(order => {
+      res.status(200).json(order);
+    })
+    .catch(err => {
+      handleError(res, err);
+    });
+};
+
+exports.lostOrder = function (req, res) {
+  orderService
+    .lostOrder(req.body.orderId, req.body.bookId)
     .then(order => {
       res.status(200).json(order);
     })

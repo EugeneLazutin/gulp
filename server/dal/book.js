@@ -81,3 +81,36 @@ exports.update = function (id, updates) {
       });
   });
 };
+
+exports.addAvailable = function (id, value) {
+  return changeCount(id, value, 'available');
+};
+
+exports.addCount = function (id, value) {
+  return changeCount(id, value, 'count');
+};
+
+function changeCount(id, value, key) {
+  return new Promise(function (resolve, reject) {
+    Book
+      .findById(id)
+      .exec(function (err, book) {
+        if (err) {
+          return reject(err);
+        }
+
+        if (!book) {
+          return reject(new Error('Book not found'));
+        }
+
+        book[key] += value;
+        book.save(err => {
+          if(err) {
+            return reject(err);
+          }
+
+          resolve(book);
+        });
+      });
+  });
+};

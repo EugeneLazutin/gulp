@@ -1,19 +1,39 @@
 var React = require('react');
 var Comments = require('../comment/comments');
 var bookActions = require('../../../flux/actions/book.actions');
+var bookStore = require('../../../flux/stores/book.store');
 
 module.exports = React.createClass({
   propTypes: {
-    book: React.PropTypes.object,
+    bookId: React.PropTypes.string,
     isAuthorized: React.PropTypes.bool
   },
 
+  getInitialState() {
+    return {
+      book: bookStore.getState()
+    };
+  },
+
+  componentDidMount() {
+    bookStore.listen(this._onChange);
+    bookActions.fetchBook(this.props.bookId, false);
+  },
+
+  componentWillUnmount() {
+    bookStore.unlisten(this._onChange);
+  },
+
+  _onChange(state) {
+    this.setState(state);
+  },
+
   _makeOrder() {
-    bookActions.makeOrder(this.props.book._id);
+    bookActions.makeOrder(this.props.bookId);
   },
 
   _renderButton() {
-    if(this.props.isAuthorized && this.props.book.available > 0) {
+    if(this.props.isAuthorized && this.state.book.available > 0) {
       return (
         <button className='btn btn-info btn-block' onClick={this._makeOrder}>
           Make order
@@ -23,7 +43,12 @@ module.exports = React.createClass({
   },
 
   render() {
-    var { book, isAuthorized } = this.props;
+    var { isAuthorized } = this.props;
+    var { book } = this.state;
+
+    if(!book) {
+      return <div className="loader" />;
+    }
 
     return <div className='book-details'>
       <div className="col-sm-4 text-center">

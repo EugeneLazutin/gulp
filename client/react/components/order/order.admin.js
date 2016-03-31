@@ -11,11 +11,14 @@ var Order = React.createClass({
   },
 
   _statusClass() {
+    var { status } = this.props.order;
+
     return classNames({
       'alert alert-status': true,
-      'alert-info': this.props.order.status == orderStatus.booked,
-      'alert-warning': this.props.order.status == orderStatus.onHand,
-      'alert-success': this.props.order.status == orderStatus.closed
+      'alert-info': status == orderStatus.booked,
+      'alert-warning': status == orderStatus.onHand,
+      'alert-success': status == orderStatus.rentalOver,
+      'alert-danger': status == orderStatus.bookingCancelled || status == orderStatus.lost
     });
   },
 
@@ -25,13 +28,25 @@ var Order = React.createClass({
         return 'booked';
       case orderStatus.onHand:
         return 'on hand';
-      case orderStatus.closed:
+      case orderStatus.rentalOver:
         return 'closed';
+      case orderStatus.bookingCancelled:
+        return 'cancelled';
+      case orderStatus.lost:
+        return 'lost'
     }
   },
 
+  _cancel() {
+    orderActions.closeOrder(this.props.order._id, orderStatus.bookingCancelled);
+  },
+
+  _lost() {
+    orderActions.lostBook(this.props.order._id, this.props.order.book);
+  },
+
   _close() {
-    orderActions.closeOrder(this.props.order._id);
+    orderActions.closeOrder(this.props.order._id, orderStatus.rentalOver);
   },
 
   _lendOut() {
@@ -43,11 +58,16 @@ var Order = React.createClass({
       return (
         <div className="btn-group btn-group-xs">
           <button className="btn btn-info" onClick={this._lendOut}>Lend out</button>
-          <button className="btn btn-danger" onClick={this._close}>Close order</button>
+          <button className="btn btn-danger" onClick={this._cancel}>Cancel</button>
         </div>
       );
-    } else if (status == orderStatus.onHand) {
-      return <button className="btn btn-info btn-xs" onClick={this._close}>Close order</button>;
+    } else if (this.props.order.status == orderStatus.onHand) {
+      return (
+        <div className="btn-group btn-group-xs">
+          <button className="btn btn-success" onClick={this._close}>Close</button>
+          <button className="btn btn-danger" onClick={this._lost}>Lost</button>
+        </div>
+      );
     }
   },
 

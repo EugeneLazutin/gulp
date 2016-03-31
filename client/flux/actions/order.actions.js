@@ -2,6 +2,7 @@ var alt = require('../alt');
 var agent = require('superagent');
 var cookie = require('react-cookie');
 var error = require('../error_handler');
+var orderStatus = require('../../../config').orderStatus;
 var { hashHistory } = require('react-router');
 
 class OrderActions {
@@ -9,15 +10,23 @@ class OrderActions {
     return dispatch => {
       dispatch();
 
-      this._updateOrder(orderId, '/api/order/lend-out');
+      this._updateOrder({id: orderId}, '/api/order/lend-out');
     };
   }
 
-  closeOrder(orderId) {
+  closeOrder(orderId, status) {
     return dispatch => {
       dispatch();
 
-      this._updateOrder(orderId, '/api/order/close');
+      this._updateOrder({id: orderId, status: status}, '/api/order/close');
+    };
+  }
+
+  lostBook(orderId, bookId) {
+    return dispatch => {
+      dispatch();
+
+      this._updateOrder({orderId, bookId}, '/api/order/lost');
     };
   }
 
@@ -25,11 +34,11 @@ class OrderActions {
     return order;
   }
 
-  _updateOrder(orderId, url) {
+  _updateOrder(params, url, status) {
     agent
       .post(url)
       .set('Authorization', 'Bearer ' + cookie.load('token'))
-      .send({id: orderId})
+      .send(params)
       .end((err, res) => {
         if (err) {
           error(err)
