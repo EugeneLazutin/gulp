@@ -6,6 +6,9 @@
     "start": "node ./bin/www",
     "postinstall": "gulp default"
   },
+  "engines": {
+    "node": "5.7.1"
+  },
   "dependencies": {
     "alt": "^0.18.2",
     "body-parser": "~1.13.2",
