@@ -1,28 +1,30 @@
 var alt = require('../alt');
 var agent = require('superagent');
+var cookie = require('react-cookie');
 var error = require('../error_handler');
 
-class BooksActions {
+class ListActions {
 
-  fetchBooks(params) {
+  fetch(params, url) {
     return (dispatch) => {
       dispatch();
 
       agent
-        .post('/api/book/all')
+        .post(url)
         .send(params)
+        .set('Authorization', 'Bearer ' + cookie.load('token'))
         .end((err, res) => {
           if (err) {
             error(err);
           }
-          this.receiveBooks(res.body);
+          this.receive(res.body);
         });
     }
   }
 
-  receiveBooks(books) {
-    return books;
+  receive(list) {
+    return list;
   }
 }
 
-module.exports = alt.createActions(BooksActions);
+module.exports = alt.createActions(ListActions);

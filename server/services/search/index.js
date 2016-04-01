@@ -1,4 +1,5 @@
 var types = require('../../../config/client/filter').number.types;
+var _ = require('lodash');
 
 function createConverter(types) {
   var converter = {};
@@ -27,6 +28,24 @@ exports.toQuery = params => {
 
   if(params.pages && params.pages.value) {
     query.pages = numberFilter(params.pages.value, params.pages.type);
+  }
+
+  if(params.available) {
+    query.available = {
+      '$gt': 0
+    };
+  }
+
+  if(params.status) {
+    query.status = params.status;
+  }
+
+  if(!_.isUndefined(params.removed)) {
+    query.removed = params.removed;
+  }
+
+  if(!_.isUndefined(params.blocked)) {
+    query.blocked = params.blocked;
   }
 
   return query;

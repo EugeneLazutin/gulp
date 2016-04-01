@@ -1,38 +1,23 @@
 var commentStore = require('../dal/comment');
 var User = require('../dal/models/user');
 var chalk = require('chalk');
+var toQuery = require('./search').toQuery;
 
-exports.create = (bookId, userId, message) => {
+
+exports.create = (bookId, userId, userName, message) => {
   var comment = {
     message: message,
     book: bookId,
     date: new Date(),
-    user: userId
+    user: userId,
+    userName: userName
   };
 
   return commentStore.create(comment);
 };
 
 exports.sendNewComment = comment => {
-
-  console.log('send new comment - ', comment);
-
-  User.populate(comment, {
-    path: 'user',
-    select: 'name'
-  }, function (err) {
-
-    console.log('after populating - ', err, comment);
-
-    if (err) {
-      //log error
-      console.log(chalk.red(err));
-    } else {
-
-      console.log(_io);
-      _io.of('/comment').emit('add_comment', comment);
-    }
-  });
+  _io.of('/comment').emit('add_comment', comment);
 };
 
 exports.setRemoved = (id, removed) => {
@@ -44,11 +29,16 @@ exports.setRemoved = (id, removed) => {
     commentStore
       .update(id, updates)
       .then(() => {
-        updates._id = id;
         resolve(updates);
       })
       .catch(err => {
         reject(err);
       })
   });
+};
+
+exports.getAll = params => {
+  var query = toQuery(params.search);
+
+  return commentStore.getAll(query, params.pagination);
 };

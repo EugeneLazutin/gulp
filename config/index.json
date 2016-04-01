@@ -12,9 +12,9 @@
   "orderStatus": {
     "booked": 1,
     "onHand": 2,
-    "bookingCancelled": 4,
-    "rentalOver": 5,
-    "lost": 6
+    "bookingCancelled": 3,
+    "rentalOver": 4,
+    "lost": 5
   },
   "orderAmount": {
     "booking": 2,

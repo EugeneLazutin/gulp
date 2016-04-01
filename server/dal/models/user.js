@@ -3,6 +3,8 @@ var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var config = require('../../../config/index');
 var _ = require('lodash');
+var paginate = require('mongoose-paginate');
+
 
 var UserSchema = new Schema({
   email: {type: String, required: true, unique: true},
@@ -12,8 +14,11 @@ var UserSchema = new Schema({
   },
   passwordHash: {type: String, select: false, required: true},
   salt: {type: String, select: false, required: true},
-  role: {type: Number, default: config.roles.user}
+  role: {type: Number, default: config.roles.user},
+  blocked: {type: Boolean, default: false}
 });
+
+UserSchema.plugin(paginate);
 
 UserSchema
   .virtual('password')
@@ -69,6 +74,9 @@ UserSchema.methods = {
   },
   isAdmin() {
     return this.role === config.roles.admin;
+  },
+  getName() {
+    return this.name.first + ' ' + this.name.last;
   }
 };
 

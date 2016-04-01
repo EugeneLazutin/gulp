@@ -2,12 +2,8 @@ var React = require('react');
 var Book = require('./book_grid');
 
 module.exports = React.createClass({
-  propTypes: {
-    books: React.PropTypes.array
-  },
-
   render() {
-    var { books }  = this.props;
+    var books = this.props.children;
 
     if(books) {
       return (

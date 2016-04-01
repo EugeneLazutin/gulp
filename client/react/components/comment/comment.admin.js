@@ -1,6 +1,6 @@
 var React = require('react');
 var classNames = require('classnames');
-var commentActions = require('../../../flux/actions/comment.actions.js');
+var commentService = require('../../../services/comment.service');
 var _ = require('lodash');
 var moment = require('moment');
 
@@ -9,39 +9,57 @@ var Comment = React.createClass({
     comment: React.PropTypes.object
   },
 
+  getInitialState() {
+    return this.props.comment;
+  },
+
   _statusClass() {
     return classNames({
       'alert alert-status': true,
-      'alert-danger': this.props.comment.removed,
-      'alert-info': !this.props.comment.removed
+      'alert-danger': this.state.removed,
+      'alert-info': !this.state.removed
     });
   },
 
   _status() {
-    return this.props.comment.removed ? 'removed' : 'active';
+    return this.state.removed ? 'removed' : 'active';
   },
 
   _remove() {
-    commentActions.removeComment(this.props.comment._id);
+    commentService
+      .removeComment(this.state._id)
+      .then(this._updateComment)
+      .catch(this._handleError);
   },
 
   _restore() {
-    commentActions.restoreComment(this.props.comment._id);
+    commentService
+      .restoreComment(this.state._id)
+      .then(this._updateComment)
+      .catch(this._handleError);
+  },
+
+  _updateComment(updates) {
+    this.setState(updates);
+  },
+
+  _handleError(err) {
+    console.log(err);
   },
 
   _buttons() {
-    if (this.props.comment.removed) {
+    if (this.state.removed) {
       return <button className="btn btn-danger btn-xs" onClick={this._restore}>Restore</button>;
     }
     return <button className="btn btn-info btn-xs" onClick={this._remove}>Remove</button>;
   },
 
   render() {
-    var { comment } = this.props;
+    var comment = this.state;
 
     return (
       <tr>
-        <td>{comment.user.name.first + ' ' + comment.user.name.last}</td>
+        <td>{comment.userName}</td>
         <td>{moment(comment.date).format('LL')}</td>
         <td>{comment.message}</td>
         <td>

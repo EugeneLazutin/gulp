@@ -5,7 +5,6 @@ var Auth = require('./auth');
 var Link = require('./../link');
 
 
-
 module.exports = React.createClass({
 
   getInitialState() {
@@ -36,9 +35,24 @@ module.exports = React.createClass({
 
         <Navbar.Collapse>
 
-          <Nav>
-            <Link to='/books'> Books </Link>
-          </Nav>
+          {(() => {
+            if (this.state.isAdmin) {
+              return (
+                <Nav>
+                  <Link to="/books">Books</Link>
+                  <Link to="/comments">Comments</Link>
+                  <Link to="/orders">Orders</Link>
+                  <Link to="/users">Users</Link>
+                </Nav>
+              );
+            } else {
+              return (
+                <Nav>
+                  <Link to="/books">Books</Link>
+                </Nav>
+              );
+            }
+          })()}
 
           <Auth />
         </Navbar.Collapse>

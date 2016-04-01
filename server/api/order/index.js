@@ -11,4 +11,6 @@ router.post('/close', auth.isAuthenticated(true), order.closeOrder);
 
 router.post('/lost', auth.isAuthenticated(true), order.lostOrder);
 
+router.post('/all', auth.isAuthenticated(true), order.getAll);
+
 module.exports = router;

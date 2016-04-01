@@ -16,9 +16,6 @@ exports.create = function (book) {
 
 exports.getAll = function (query, pagination) {
   return new Promise(function (resolve, reject) {
-
-    console.log('boook - ', query, pagination);
-
     Book.paginate(query, pagination, function (err, docs) {
       if (err) {
         return reject(err);

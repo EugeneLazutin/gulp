@@ -8,8 +8,6 @@ class UserActions {
   tryFetchUser() {
     return dispatch => {
       dispatch();
-      console.log('Try Fetch User');
-
 
       var token = cookie.load('token');
 
@@ -35,6 +33,8 @@ class UserActions {
       dispatch();
 
       cookie.remove('token');
+      var loginLocation = hashHistory.createLocation('/login');
+      hashHistory.transitionTo(loginLocation);
     }
   }
 
@@ -62,7 +62,7 @@ class UserActions {
         } else {
           this.receiveUser(res.body.user);
           cookie.save('token', res.body.token);
-          hashHistory.push('/');
+          hashHistory.goBack();
         }
       });
   }

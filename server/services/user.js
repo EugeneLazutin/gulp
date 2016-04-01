@@ -1,5 +1,6 @@
 var userStore = require('../dal/user');
 var orderStore = require('../dal/order');
+var toQuery = require('./search').toQuery;
 
 var Book = require('../dal/models/book');
 
@@ -41,4 +42,27 @@ exports.getWithOrders = (id) => {
         reject(err);
       });
   })
+};
+
+exports.getAll = params => {
+  var query = toQuery(params.search);
+
+  return userStore.getAll(query, params.pagination);
+};
+
+exports.setBlocked = (id, blocked) => {
+  var updates = {
+    blocked: blocked
+  };
+
+  return new Promise((resolve, reject) => {
+    userStore
+      .update(id, updates)
+      .then(() => {
+        resolve(updates);
+      })
+      .catch(err => {
+        reject(err);
+      })
+  });
 };

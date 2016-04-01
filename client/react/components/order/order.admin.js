@@ -2,7 +2,7 @@ var React = require('react');
 var moment = require('moment');
 var orderStatus = require('../../../../config/index').orderStatus;
 var classNames = require('classnames');
-var orderActions = require('../../../flux/actions/order.actions.js');
+var orderService = require('../../../services/order.service');
 
 
 var Order = React.createClass({
@@ -10,8 +10,12 @@ var Order = React.createClass({
     order: React.PropTypes.object
   },
 
+  getInitialState() {
+    return this.props.order;
+  },
+
   _statusClass() {
-    var { status } = this.props.order;
+    var status = this.state.status;
 
     return classNames({
       'alert alert-status': true,
@@ -23,7 +27,7 @@ var Order = React.createClass({
   },
 
   _status() {
-    switch (this.props.order.status) {
+    switch (this.state.status) {
       case orderStatus.booked:
         return 'booked';
       case orderStatus.onHand:
@@ -39,21 +43,37 @@ var Order = React.createClass({
 
   _createCloseAction(status) {
     return () => {
-      console.log(status)
-      orderActions.closeOrder(this.props.order._id, this.props.order.book, status);
+      orderService
+        .closeOrder(this.state._id, this.state.book, status)
+        .then(this._updateOrder)
+        .catch(this._handleError);
     };
   },
 
   _lost() {
-    orderActions.lostBook(this.props.order._id, this.props.order.book);
+    orderService
+      .lostOrder(this.state._id, this.state.book)
+      .then(this._updateOrder)
+      .catch(this._handleError);
   },
 
   _lendOut() {
-    orderActions.lendOutOrder(this.props.order._id);
+    orderService
+      .lendOutOrder(this.state._id)
+      .then(this._updateOrder)
+      .catch(this._handleError);
+  },
+
+  _updateOrder(updates) {
+    this.setState(updates);
+  },
+
+  _handleError(err) {
+    console.log(err);
   },
 
   _buttons() {
-    if (this.props.order.status == orderStatus.booked) {
+    if (this.state.status == orderStatus.booked) {
       return (
         <div className="btn-group btn-group-xs">
           <button className="btn btn-info" onClick={this._lendOut}>Lend out</button>
@@ -61,7 +81,7 @@ var Order = React.createClass({
           </button>
         </div>
       );
-    } else if (this.props.order.status == orderStatus.onHand) {
+    } else if (this.state.status == orderStatus.onHand) {
       return (
         <div className="btn-group btn-group-xs">
           <button className="btn btn-success" onClick={this._createCloseAction(orderStatus.rentalOver)}>Close</button>
@@ -72,12 +92,12 @@ var Order = React.createClass({
   },
 
   render() {
-    var { order } = this.props;
+    var order = this.state;
 
     return (
       <tr>
         <td>
-          {order.user.name.first + ' ' + order.user.name.last}
+          {order.userName}
         </td>
         <td>
           {moment(order.date.start).format('LL')}

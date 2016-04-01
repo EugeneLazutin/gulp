@@ -7,4 +7,6 @@ router.post('/', auth.isAuthenticated(), comment.create);
 
 router.post('/set-removed', auth.isAuthenticated(true), comment.setRemoved);
 
+router.post('/all', auth.isAuthenticated(true), comment.getAll);
+
 module.exports = router;

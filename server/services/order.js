@@ -2,9 +2,10 @@ var orderStore = require('../dal/order');
 var orderStatus = require('../../config').orderStatus;
 var orderAmount = require('../../config').orderAmount;
 var bookService = require('./book');
+var toQuery = require('./search').toQuery;
 
 
-exports.create = (bookId, userId) => {
+exports.create = (bookId, userId, userName) => {
   var startDate = new Date();
   var endDate = new Date();
   endDate.setDate(startDate.getDate() + orderAmount.booking);
@@ -16,7 +17,8 @@ exports.create = (bookId, userId) => {
       start: startDate,
       end: endDate
     },
-    user: userId
+    user: userId,
+    userName: userName
   };
 
   return new Promise((resolve, reject) => {
@@ -103,7 +105,6 @@ function update(id, updates) {
     orderStore
       .update(id, updates)
       .then(() => {
-        updates._id = id;
         resolve(updates);
       })
       .catch(err => {
@@ -111,3 +112,9 @@ function update(id, updates) {
       });
   });
 }
+
+exports.getAll = params => {
+  var query = toQuery(params.search);
+
+  return orderStore.getAll(query, params.pagination);
+};

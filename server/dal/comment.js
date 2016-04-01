@@ -48,3 +48,15 @@ exports.find = query => {
       });
   });
 };
+
+exports.getAll = function (query, pagination) {
+  return new Promise(function (resolve, reject) {
+    Comment.paginate(query, pagination, function (err, docs) {
+      if (err) {
+        return reject(err);
+      }
+
+      resolve(docs);
+    });
+  });
+};

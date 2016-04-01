@@ -4,7 +4,7 @@ var orderService = require('../../services/order');
 
 exports.makeOrder = function (req, res) {
   orderService
-    .create(req.body.id, req.user._id)
+    .create(req.body.id, req.user._id, req.user.getName())
     .then(order => {
       res.status(200).json(order);
     })
@@ -15,7 +15,7 @@ exports.makeOrder = function (req, res) {
 
 exports.takeOrder = function (req, res) {
   orderService
-    .giveOnHand(req.body.id)
+    .giveOnHand(req.body.orderId)
     .then(order => {
       res.status(200).json(order);
     })
@@ -40,6 +40,17 @@ exports.lostOrder = function (req, res) {
     .lostOrder(req.body.orderId, req.body.bookId)
     .then(order => {
       res.status(200).json(order);
+    })
+    .catch(err => {
+      handleError(res, err);
+    });
+};
+
+exports.getAll = function (req, res) {
+  orderService
+    .getAll(req.body)
+    .then(orders => {
+      res.status(200).json(orders);
     })
     .catch(err => {
       handleError(res, err);

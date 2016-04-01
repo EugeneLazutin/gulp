@@ -18,6 +18,11 @@ module.exports = placeholder => {
       };
     },
 
+    componentWillUnmount() {
+      this.props.changeHandler();
+      this.props.hideFilter();
+    },
+
     mixins: [mixin],
 
     _emitChanges() {
@@ -48,8 +53,6 @@ module.exports = placeholder => {
     createSetType(type) {
       return evt => {
         var notNaN = !_.isNaN(this.refs.input.value);
-
-        console.log(this.refs.input.value, notNaN ? 'is' : 'is not', 'a number');
 
         this.setState({
           type: type,

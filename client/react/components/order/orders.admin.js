@@ -1,41 +1,11 @@
 var React = require('react');
-var orderStore = require('../../../flux/stores/order.store.js');
 var _ = require('lodash');
 var Order = require('./order.admin.js');
 
 
-module.exports = React.createClass({
-  propTypes: {
-    orders: React.PropTypes.array
-  },
-
-  getInitialState() {
-    return {
-      orders: this.props.orders
-    }
-  },
-
-  componentDidMount() {
-    orderStore.listen(this.updateOrder);
-  },
-
-  componentWillUnmount() {
-    orderStore.unlisten(this.updateOrder);
-  },
-
-  updateOrder(state) {
-    var index = _.findIndex(this.state.orders, order => {
-      return order._id === state.order._id;
-    });
-
-    if (index != -1) {
-      _.assign(this.state.orders[index], state.order);
-      this.setState(this.state);
-    }
-  },
-
+var OrdersAdmin = React.createClass({
   render() {
-    var { orders } = this.props;
+    var orders = this.props.children;
 
     if (!orders || !orders.length) {
       return <i>There are no active orders.</i>;
@@ -71,3 +41,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = OrdersAdmin;

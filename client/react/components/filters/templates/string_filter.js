@@ -14,6 +14,11 @@ module.exports = placeholder => {
       };
     },
 
+    componentWillUnmount() {
+      this.props.changeHandler();
+      this.props.hideFilter();
+    },
+
     _emitChanges() {
       if (this.state.dirty) {
         this.setState({

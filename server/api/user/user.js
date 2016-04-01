@@ -35,3 +35,25 @@ exports.fullInfo = (req, res) => {
       handleError(res, err);
     });
 };
+
+exports.getAll = function (req, res) {
+  userService
+    .getAll(req.body)
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(err => {
+      handleError(res, err);
+    });
+};
+
+exports.setBlocked = function (req, res) {
+  userService
+    .setBlocked(req.body.id, req.body.blocked)
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(err => {
+      handleError(res, err);
+    });
+};

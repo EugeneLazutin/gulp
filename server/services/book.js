@@ -2,7 +2,6 @@ var bookStore = require('../dal/book');
 var toQuery = require('./search').toQuery;
 var commentStore = require('../dal/comment');
 var orderStore = require('../dal/order');
-var User = require('../dal/models/user');
 
 
 exports.create = book => {
@@ -38,25 +37,16 @@ exports.getBookWithCommentsAndOrders = id => {
         orderStore
           .find({book: book._id})
           .then(orders => {
-            User.populate(orders, {
-              path: 'user',
-              select: 'name'
-            }, err => {
-              if (err) {
-                reject(err);
-              } else {
-                book.orders = orders;
-                resolve(book);
-              }
-            })
+            book.orders = orders;
+            resolve(book);
           })
           .catch(err => {
             reject(err);
-          })
+          });
       })
       .catch(err => {
         reject(err);
-      })
+      });
   });
 };
 
@@ -72,26 +62,17 @@ function getBookWithComments(id) {
         commentStore
           .find({book: book._id})
           .then(comments => {
-            User.populate(comments, {
-              path: 'user',
-              select: 'name'
-            }, err => {
-              if (err) {
-                reject(err);
-              } else {
-                var bookObj = book.toObject();
-                bookObj.comments = comments;
-                resolve(bookObj);
-              }
-            });
+            var bookObj = book.toObject();
+            bookObj.comments = comments;
+            resolve(bookObj);
           })
           .catch(err => {
             reject(err);
-          })
+          });
       })
       .catch(err => {
         reject(err);
-      })
+      });
   });
 }
 

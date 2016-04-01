@@ -1,18 +1,17 @@
 var React = require('react');
-var filters = require('./filters');
 var classNames = require('classnames');
-var { Link } = require('react-router');
-
 var userStore = require('../../flux/stores/user.store');
+
 
 module.exports = React.createClass({
   propTypes: {
-    changeHandler: React.PropTypes.func
+    changeHandler: React.PropTypes.func,
+    filters: React.PropTypes.array
   },
 
   getInitialState() {
     return {
-      filters: filters.get(),
+      filters: this.props.filters,
       isAdmin: userStore.getState().isAdmin
     };
   },
@@ -35,11 +34,6 @@ module.exports = React.createClass({
     return evt => {
       filter.isActive = isActive;
       this._updateState();
-      if(!isActive) {
-        this.props.changeHandler({
-          key: filter.name
-        });
-      }
     };
   },
 
@@ -68,16 +62,6 @@ module.exports = React.createClass({
         value: value
       });
     };
-  },
-
-  _renderAddButton() {
-    if(this.state.isAdmin) {
-      return (
-        <Link to='/create-book' className='btn btn-sm btn-success' title='create new book'>
-          <span className='glyphicon glyphicon-plus'></span>
-        </Link>
-      );
-    }
   },
 
   render() {
@@ -112,7 +96,7 @@ module.exports = React.createClass({
                 if (!filter.isActive) {
                   return (
                     <li key={i}>
-                      <a className='empty-link' onClick={this._createFilterToggle(filter, true)}>{filter.name}</a>
+                      <a className='empty-link' onClick={this._createFilterToggle(filter, true)}>{filter.text}</a>
                     </li>
                   );
                 }
@@ -120,7 +104,7 @@ module.exports = React.createClass({
             </ul>
           </div>
 
-          {this._renderAddButton()}
+          {this.props.children}
 
         </div>
       </div>
