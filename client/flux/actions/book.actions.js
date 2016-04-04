@@ -57,6 +57,7 @@ class BookActions {
           if (err) {
             return error(err);
           } else {
+            toastr.success('Order is made.');
             this.orderIsMade(res.body);
           }
         });

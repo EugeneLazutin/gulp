@@ -48,6 +48,10 @@ exports.toQuery = params => {
     query.blocked = params.blocked;
   }
 
+  if(params.bookTitle) {
+    query.bookTitle = stringFilter(params.bookTitle);
+  }
+
   return query;
 };
 
