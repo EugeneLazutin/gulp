@@ -12,8 +12,7 @@ var BookSchema = new Schema({
   description: {type: String, required: true},
   year: {type: Number, required: true, max: currYear},
   pages: {type: Number, required: true, min: 1},
-  count: {type: Number, default: 1, min: 1},
-  available: {type: Number, default: 1, min: 0}
+  count: {type: Number, default: 1, min: 1}
 });
 
 BookSchema.plugin(paginate);

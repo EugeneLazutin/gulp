@@ -4,10 +4,10 @@ exports.lendOutOrder = orderId => {
   return update({orderId}, '/api/order/lend-out');
 };
 
-exports.closeOrder = (orderId, bookId, status) => {
-  return update({orderId, bookId, status}, '/api/order/close');
+exports.closeOrder = (orderId, status) => {
+  return update({orderId, status}, '/api/order/close');
 };
 
-exports.lostOrder = (orderId, bookId) => {
-  return update({orderId, bookId}, '/api/order/lost');
+exports.lostOrder = (orderId) => {
+  return update({orderId}, '/api/order/lost');
 };

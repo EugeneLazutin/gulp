@@ -1,41 +1,41 @@
 var orderStore = require('../dal/order');
 var orderStatus = require('../../config').orderStatus;
 var orderAmount = require('../../config').orderAmount;
-var bookService = require('./book');
 var toQuery = require('./search').toQuery;
-var Book = require('../dal/models/book');
 
 
 exports.create = (bookId, userId, userName, bookTitle) => {
-  var startDate = new Date();
-  var endDate = new Date();
-  endDate.setDate(startDate.getDate() + orderAmount.booking);
-
-  var order = {
-    status: orderStatus.booked,
-    book: bookId,
-    bookTitle: bookTitle,
-    date: {
-      start: startDate,
-      end: endDate
-    },
-    user: userId,
-    userName: userName
-  };
-
   return new Promise((resolve, reject) => {
-    orderStore
-      .create(order)
-      .then(createdOrder => {
-        bookService
-          .decrementAvailable(bookId)
-          .then(() => {
-            resolve(createdOrder);
-          })
-          .catch(err => {
-            createdOrder.remove();
-            reject(err);
-          });
+    availableCount(bookId)
+      .then(count => {
+        if(count > 0) {
+          var startDate = new Date();
+          var endDate = new Date();
+          endDate.setDate(startDate.getDate() + orderAmount.booking);
+
+          var order = {
+            status: orderStatus.booked,
+            book: bookId,
+            bookTitle: bookTitle,
+            date: {
+              start: startDate,
+              end: endDate
+            },
+            user: userId,
+            userName: userName
+          };
+
+          orderStore
+            .create(order)
+            .then(createdOrder => {
+              resolve(createdOrder);
+            })
+            .catch(err => {
+              reject(err);
+            });
+        } else {
+          reject(new Error('There is no available books.'));
+        }
       })
       .catch(err => {
         reject(err);
@@ -56,50 +56,20 @@ exports.giveOnHand = (id) => {
   return update(id, updates);
 };
 
-exports.closeOrder = (orderId, bookId, status) => {
+exports.closeOrder = (orderId, status) => {
   var updates = {
     status: status
   };
 
-  return new Promise((resolve,reject) => {
-    update(orderId, updates)
-      .then((result) => {
-        bookService
-          .incrementAvailable(bookId)
-          .then(() => {
-            resolve(result);
-          })
-          .catch(err => {
-            reject(err);
-          });
-      })
-      .catch(err => {
-        reject(err);
-      });
-  });
+  return update(orderId, updates);
 };
 
-exports.lostOrder = (orderId, bookId) => {
-  return new Promise((resolve, reject) => {
-    var updates = {
-      status: orderStatus.lost
-    };
+exports.lostOrder = (orderId) => {
+  var updates = {
+    status: orderStatus.lost
+  };
 
-    bookService
-      .bookLost(bookId)
-      .then(() => {
-        update(orderId, updates)
-          .then(result => {
-            resolve(result);
-          })
-          .catch(err => {
-            reject(err);
-          })
-      })
-      .catch(err => {
-        reject(err);
-      });
-  });
+  return update(orderId, updates);
 };
 
 function update(id, updates) {
@@ -114,6 +84,24 @@ function update(id, updates) {
       });
   });
 }
+
+exports.availableCount = availableCount;
+
+var availableCount = function (bookId) {
+  return new Promise((resolve, reject) => {
+    orderStore
+      .count({
+        book: bookId,
+        status: {$in: [orderStatus.booked, orderStatus.onHand, orderStatus.lost]}
+      })
+      .then(count => {
+        resolve(count);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
 
 exports.getAll = params => {
   var query = toQuery(params.search);

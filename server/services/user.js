@@ -1,5 +1,6 @@
 var userStore = require('../dal/user');
 var orderStore = require('../dal/order');
+var orderStatus = require('../../config').orderStatus;
 var toQuery = require('./search').toQuery;
 
 var Book = require('../dal/models/book');
@@ -25,7 +26,7 @@ exports.getWithOrders = (id) => {
                 path: 'book',
                 select: 'title author year'
               }, err => {
-                if(err) {
+                if (err) {
                   reject(err);
                 } else {
                   var userObj = user.toObject();
@@ -59,7 +60,18 @@ exports.setBlocked = (id, blocked) => {
     userStore
       .update(id, updates)
       .then(() => {
-        resolve(updates);
+        if (blocked) {
+          orderStore
+            .multipleUpdate({user: id, status: orderStatus.booked}, {status: orderStatus.bookingCancelled})
+            .then(() => {
+              resolve(updates);
+            })
+            .catch(err => {
+              reject(err);
+            });
+        } else {
+          resolve(updates);
+        }
       })
       .catch(err => {
         reject(err);

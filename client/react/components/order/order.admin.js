@@ -45,7 +45,7 @@ var Order = React.createClass({
   _createCloseAction(status) {
     return () => {
       orderService
-        .closeOrder(this.state._id, this.state.book, status)
+        .closeOrder(this.state._id, status)
         .then(this._updateOrder)
         .catch(this._handleError);
     };
@@ -53,7 +53,7 @@ var Order = React.createClass({
 
   _lost() {
     orderService
-      .lostOrder(this.state._id, this.state.book)
+      .lostOrder(this.state._id)
       .then(this._updateOrder)
       .catch(this._handleError);
   },

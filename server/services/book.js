@@ -2,24 +2,13 @@ var bookStore = require('../dal/book');
 var toQuery = require('./search').toQuery;
 var commentStore = require('../dal/comment');
 var orderStore = require('../dal/order');
+var orderService = require('./order');
 
 
 exports.create = book => {
   book.available = book.count;
 
   return bookStore.create(book);
-};
-
-exports.decrementAvailable = id => {
-  return bookStore.addAvailable(id, -1);
-};
-
-exports.incrementAvailable = id => {
-  return bookStore.addAvailable(id, +1);
-};
-
-exports.bookLost = id => {
-  return bookStore.addCount(id, -1);
 };
 
 exports.getAll = params => {
@@ -59,16 +48,30 @@ function getBookWithComments(id) {
     bookStore
       .get(id)
       .then(book => {
-        commentStore
-          .find({book: book._id})
-          .then(comments => {
-            var bookObj = book.toObject();
-            bookObj.comments = comments;
-            resolve(bookObj);
+
+        console.log('asdngnfag');
+
+        orderService
+          .availableCount(id)
+          .then(count => {
+
+            commentStore
+              .find({book: book._id})
+              .then(comments => {
+                var bookObj = book.toObject();
+                bookObj.comments = comments;
+                bookObj.available = bookObj.count - count;
+                resolve(bookObj);
+              })
+              .catch(err => {
+                reject(err);
+              });
+
           })
           .catch(err => {
             reject(err);
           });
+
       })
       .catch(err => {
         reject(err);

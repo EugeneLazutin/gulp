@@ -58,6 +58,7 @@ module.exports = React.createClass({
     return (
       <div className='book-details'>
         <h3>{book.title} <small>by</small> {book.author} <small>written in</small> {book.year}</h3>
+        <h5>{book.available}/{book.count} available</h5>
         <ul className="nav nav-tabs">
           <li className={ordersIsVisible ? 'active' : ''}>
             <a className="empty-link" onClick={this._showOrders}>Orders</a>

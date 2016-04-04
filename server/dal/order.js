@@ -35,6 +35,32 @@ exports.update = function (id, updates) {
   });
 };
 
+exports.multipleUpdate = function (query, updates) {
+  return new Promise((resolve, reject) => {
+    Order.update(query, updates, {multi: true}, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
+};
+
+exports.count = function (query) {
+  return new Promise((resolve, reject) => {
+    Order
+      .count(query, (err, count) => {
+        console.log(err, count);
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(count);
+      });
+  });
+};
+
 exports.find = function (query) {
   return new Promise((resolve, reject) => {
     Order
