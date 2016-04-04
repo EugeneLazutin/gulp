@@ -10,6 +10,9 @@ var http = require('http');
 var mongoose = require('mongoose');
 var SocketBootstraper = require('../server/socket.io');
 
+/* run task */
+require('../server/services/task_runner');
+
 mongoose.connect('mongodb://localhost/my_db');
 
 /**

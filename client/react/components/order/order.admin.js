@@ -21,7 +21,7 @@ var Order = React.createClass({
     return classNames({
       'alert alert-status': true,
       'alert-info': status == orderStatus.booked,
-      'alert-warning': status == orderStatus.onHand,
+      'alert-warning': status == orderStatus.onHand || status == orderStatus.notified,
       'alert-success': status == orderStatus.rentalOver,
       'alert-danger': status == orderStatus.bookingCancelled || status == orderStatus.lost
     });
@@ -38,7 +38,9 @@ var Order = React.createClass({
       case orderStatus.bookingCancelled:
         return 'cancelled';
       case orderStatus.lost:
-        return 'lost'
+        return 'lost';
+      case orderStatus.notified:
+        return 'notified';
     }
   },
 
@@ -74,8 +76,10 @@ var Order = React.createClass({
   },
 
   _buttons() {
+    var status = this.state.status;
+
     if(this.props.showButtons) {
-      if (this.state.status == orderStatus.booked) {
+      if (status == orderStatus.booked) {
         return (
           <div className="btn-group btn-group-xs">
             <button className="btn btn-info" onClick={this._lendOut}>Lend out</button>
@@ -83,7 +87,7 @@ var Order = React.createClass({
             </button>
           </div>
         );
-      } else if (this.state.status == orderStatus.onHand) {
+      } else if (status == orderStatus.onHand || status == orderStatus.notified) {
         return (
           <div className="btn-group btn-group-xs">
             <button className="btn btn-success" onClick={this._createCloseAction(orderStatus.rentalOver)}>Close</button>

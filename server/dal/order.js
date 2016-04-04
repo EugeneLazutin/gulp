@@ -51,7 +51,6 @@ exports.count = function (query) {
   return new Promise((resolve, reject) => {
     Order
       .count(query, (err, count) => {
-        console.log(err, count);
         if (err) {
           return reject(err);
         }

@@ -1,13 +1,16 @@
 var orderStore = require('../dal/order');
 var orderStatus = require('../../config').orderStatus;
 var orderAmount = require('../../config').orderAmount;
+var bookService = require('./book');
 var toQuery = require('./search').toQuery;
 
 
 exports.create = (bookId, userId, userName, bookTitle) => {
   return new Promise((resolve, reject) => {
-    availableCount(bookId)
+    bookService
+      .availableBookCount(bookId)
       .then(count => {
+
         if(count > 0) {
           var startDate = new Date();
           var endDate = new Date();
@@ -85,9 +88,9 @@ function update(id, updates) {
   });
 }
 
-exports.availableCount = availableCount;
+exports.activeOrderCount = activeOrderCount;
 
-var availableCount = function (bookId) {
+function activeOrderCount(bookId) {
   return new Promise((resolve, reject) => {
     orderStore
       .count({
@@ -101,7 +104,7 @@ var availableCount = function (bookId) {
         reject(err);
       });
   });
-};
+}
 
 exports.getAll = params => {
   var query = toQuery(params.search);

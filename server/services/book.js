@@ -43,16 +43,36 @@ exports.remove = id => {
   return bookStore.remove(id);
 };
 
+exports.availableBookCount = function (bookId) {
+  return new Promise((resolve, reject) => {
+    bookStore
+      .get(bookId)
+      .then(book => {
+
+        orderService
+          .activeOrderCount(bookId)
+          .then(count => {
+            resolve(book.count - count);
+          })
+          .catch(err => {
+            reject(err);
+          });
+
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
 function getBookWithComments(id) {
   return new Promise((resolve, reject) => {
     bookStore
       .get(id)
       .then(book => {
 
-        console.log('asdngnfag');
-
         orderService
-          .availableCount(id)
+          .activeOrderCount(id)
           .then(count => {
 
             commentStore

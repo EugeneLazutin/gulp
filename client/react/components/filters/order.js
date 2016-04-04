@@ -23,6 +23,10 @@ var StatusFilter = createFilter('status', 'Status', templateFactory.enum, [
   {
     key: 'Lost',
     value: orderStatus.lost
+  },
+  {
+    key: 'Notified',
+    value: orderStatus.notified
   }
 ]);
 var BookFilter = createFilter('bookTitle', 'Book', templateFactory.string);

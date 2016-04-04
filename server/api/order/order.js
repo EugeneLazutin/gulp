@@ -53,7 +53,6 @@ exports.getAll = function (req, res) {
       res.status(200).json(orders);
     })
     .catch(err => {
-      console.log(err);
       handleError(res, err);
     });
 };

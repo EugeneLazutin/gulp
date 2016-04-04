@@ -14,10 +14,13 @@
     "onHand": 2,
     "bookingCancelled": 3,
     "rentalOver": 4,
-    "lost": 5
+    "lost": 5,
+    "notified": 6
   },
   "orderAmount": {
     "booking": 2,
     "lendOut": 30
-  }
+  },
+  "smtps": "smtps://eugene.fake.johndoe%40gmail.com:fake.johndoe@smtp.gmail.com",
+  "taskWorkingHours": "0 7,11,15,19"
 }
