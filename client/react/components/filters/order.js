@@ -30,5 +30,7 @@ var StatusFilter = createFilter('status', 'Status', templateFactory.enum, [
   }
 ]);
 var BookFilter = createFilter('bookTitle', 'Book', templateFactory.string);
+var UserNameFilter = createFilter('userName', 'User', templateFactory.string);
 
-module.exports = [StatusFilter, BookFilter];
+
+module.exports = [StatusFilter, BookFilter, UserNameFilter];

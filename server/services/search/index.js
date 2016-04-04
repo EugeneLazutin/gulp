@@ -52,6 +52,14 @@ exports.toQuery = params => {
     query.bookTitle = stringFilter(params.bookTitle);
   }
 
+  if(params.message) {
+    query.message = stringFilter(params.message);
+  }
+
+  if(params.userName) {
+    query.userName = stringFilter(params.userName);
+  }
+
   return query;
 };
 

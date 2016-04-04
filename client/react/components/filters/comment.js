@@ -12,5 +12,7 @@ var RemovedFilter = createFilter('removed', 'Removed', templateFactory.enum, [
     value: false
   }
 ]);
+var MessageFilter = createFilter('message', 'Message', templateFactory.string);
+var UserNameFilter = createFilter('userName', 'User', templateFactory.string);
 
-module.exports = [RemovedFilter];
+module.exports = [RemovedFilter, MessageFilter, UserNameFilter];
