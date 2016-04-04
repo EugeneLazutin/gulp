@@ -3,6 +3,7 @@ var agent = require('superagent');
 var cookie = require('react-cookie');
 var error = require('../error_handler');
 var { hashHistory } = require('react-router');
+var apis = require('../../../config/client').apis;
 
 class UserActions {
   tryFetchUser() {
@@ -13,7 +14,7 @@ class UserActions {
 
       if (token) {
         agent
-          .get('/api/user/me')
+          .get(apis.userMe)
           .set('Authorization', 'Bearer ' + token)
           .end((err, res) => {
             if (!err) {
@@ -41,14 +42,14 @@ class UserActions {
   login(userLogin) {
     return dispatch => {
       dispatch();
-      this._sendAuth(userLogin, '/auth');
+      this._sendAuth(userLogin, apis.auth);
     }
   }
 
   register(user) {
     return dispatch => {
       dispatch();
-      this._sendAuth(user, '/api/user');
+      this._sendAuth(user, apis.user);
     }
   }
 

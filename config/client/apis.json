@@ -1,0 +1,22 @@
+{
+  "auth": "/api/auth",
+
+  "book": "/api/book",
+  "bookAdmin": "/api/book/admin",
+
+  "comment": "/api/comment",
+  "commentAll": "/api/comment/all",
+  "commentRemove": "/api/comment/set-removed",
+
+  "order": "/api/order",
+  "orderAll": "/api/order/all",
+  "orderClose": "/api/order/close",
+  "orderLendOut": "/api/order/lend-out",
+  "orderLost": "/api/order/lost",
+
+  "user": "/api/user",
+  "userAll": "/api/user/all",
+  "userBlock": "/api/user/set-blocked",
+  "userFull": "/api/user/full",
+  "userMe": "/api/user/me"
+}

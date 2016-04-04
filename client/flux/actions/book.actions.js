@@ -3,6 +3,7 @@ var agent = require('superagent');
 var cookie = require('react-cookie');
 var error = require('../error_handler');
 var { hashHistory } = require('react-router');
+var apis = require('../../../config/client').apis;
 
 
 class BookActions {
@@ -14,11 +15,11 @@ class BookActions {
 
       if (isAdmin) {
         request = agent
-          .get(`api/book/admin/${bookId}`)
+          .get(`${apis.bookAdmin}/${bookId}`)
           .set('Authorization', 'Bearer ' + cookie.load('token'));
       } else {
         request = agent
-          .get(`api/book/${bookId}`);
+          .get(`${apis.book}/${bookId}`);
       }
 
       request.end((err, res) => {
@@ -50,7 +51,7 @@ class BookActions {
       dispatch();
 
       agent
-        .post('/api/order')
+        .post(apis.order)
         .send({id: bookId, title: title})
         .set('Authorization', 'Bearer ' + cookie.load('token'))
         .end((err, res) => {
@@ -69,7 +70,7 @@ class BookActions {
       dispatch();
 
       agent
-        .post('/api/book')
+        .post(apis.book)
         .send(book)
         .end((err, res) => {
           if (err) {
@@ -86,7 +87,7 @@ class BookActions {
       dispatch();
 
       agent
-        .post('/api/comment')
+        .post(apis.comment)
         .send(comment)
         .set('Authorization', 'Bearer ' + cookie.load('token'))
         .end((err, res) => {
@@ -102,7 +103,7 @@ class BookActions {
       dispatch();
 
       agent
-        .delete(`/api/book/${bookId}`)
+        .delete(`${apis.book}/${bookId}`)
         .set('Authorization', 'Bearer ' + cookie.load('token'))
         .end((err, res) => {
           if (err) {

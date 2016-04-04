@@ -1,4 +1,4 @@
-var types = require('../../../config/client/filter').number.types;
+var types = require('../../config/client/filter').number.types;
 var _ = require('lodash');
 
 function createConverter(types) {

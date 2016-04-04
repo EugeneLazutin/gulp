@@ -1,15 +1,16 @@
 var update = require('./update.service');
+var apis = require('../../config/client').apis;
 
 exports.blockUser = userId => {
   return update({
     id: userId,
     blocked: true
-  }, '/api/user/set-blocked');
+  }, apis.userBlock);
 };
 
 exports.unblockUser = userId => {
   return update({
     id: userId,
     blocked: false
-  }, '/api/user/set-blocked');
+  }, apis.userBlock);
 };

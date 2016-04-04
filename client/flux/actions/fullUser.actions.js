@@ -3,6 +3,7 @@ var agent = require('superagent');
 var cookie = require('react-cookie');
 var error = require('../error_handler');
 var { hashHistory } = require('react-router');
+var apis = require('../../../config/client').apis;
 
 class FullUserActions {
   fetchFullUser(id) {
@@ -13,7 +14,7 @@ class FullUserActions {
 
       if (token) {
         agent
-          .get('/api/user/full/' + id)
+          .get(`${apis.userFull}/${id}`)
           .set('Authorization', 'Bearer ' + token)
           .end((err, res) => {
             if (err) {

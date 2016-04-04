@@ -1,13 +1,14 @@
 var update = require('./update.service');
+var apis = require('../../config/client').apis;
 
 exports.lendOutOrder = orderId => {
-  return update({orderId}, '/api/order/lend-out');
+  return update({orderId}, apis.orderLendOut);
 };
 
 exports.closeOrder = (orderId, status) => {
-  return update({orderId, status}, '/api/order/close');
+  return update({orderId, status}, apis.orderClose);
 };
 
 exports.lostOrder = (orderId) => {
-  return update({orderId}, '/api/order/lost');
+  return update({orderId}, apis.orderLost);
 };
