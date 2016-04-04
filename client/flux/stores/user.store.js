@@ -41,6 +41,13 @@ class userStore {
     }
     return null;
   }
+
+  static getId() {
+    if (this.state.user) {
+      return this.state.user._id;
+    }
+    return null;
+  }
 }
 
 module.exports = alt.createStore(userStore);

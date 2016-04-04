@@ -7,7 +7,8 @@ var orderService = require('../../../services/order.service');
 
 var Order = React.createClass({
   propTypes: {
-    order: React.PropTypes.object
+    order: React.PropTypes.object,
+    showButtons: React.PropTypes.bool
   },
 
   getInitialState() {
@@ -73,21 +74,23 @@ var Order = React.createClass({
   },
 
   _buttons() {
-    if (this.state.status == orderStatus.booked) {
-      return (
-        <div className="btn-group btn-group-xs">
-          <button className="btn btn-info" onClick={this._lendOut}>Lend out</button>
-          <button className="btn btn-danger" onClick={this._createCloseAction(orderStatus.bookingCancelled)}>Cancel
-          </button>
-        </div>
-      );
-    } else if (this.state.status == orderStatus.onHand) {
-      return (
-        <div className="btn-group btn-group-xs">
-          <button className="btn btn-success" onClick={this._createCloseAction(orderStatus.rentalOver)}>Close</button>
-          <button className="btn btn-danger" onClick={this._lost}>Lost</button>
-        </div>
-      );
+    if(this.props.showButtons) {
+      if (this.state.status == orderStatus.booked) {
+        return (
+          <div className="btn-group btn-group-xs">
+            <button className="btn btn-info" onClick={this._lendOut}>Lend out</button>
+            <button className="btn btn-danger" onClick={this._createCloseAction(orderStatus.bookingCancelled)}>Cancel
+            </button>
+          </div>
+        );
+      } else if (this.state.status == orderStatus.onHand) {
+        return (
+          <div className="btn-group btn-group-xs">
+            <button className="btn btn-success" onClick={this._createCloseAction(orderStatus.rentalOver)}>Close</button>
+            <button className="btn btn-danger" onClick={this._lost}>Lost</button>
+          </div>
+        );
+      }
     }
   },
 
@@ -100,16 +103,19 @@ var Order = React.createClass({
           {order.userName}
         </td>
         <td>
+          {order.bookTitle}
+        </td>
+        <td>
           {moment(order.date.start).format('LL')}
         </td>
         <td>
           {moment(order.date.end).calendar()}
         </td>
-        <th>
+        <td>
           <div className={this._statusClass()}>
             {this._status()}
           </div>
-        </th>
+        </td>
         <td>
           {this._buttons()}
         </td>

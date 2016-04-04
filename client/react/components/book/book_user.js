@@ -27,7 +27,7 @@ module.exports = React.createClass({
   },
 
   _makeOrder() {
-    bookActions.makeOrder(this.props.bookId);
+    bookActions.makeOrder(this.props.bookId, this.state.book.title);
   },
 
   _renderButton() {

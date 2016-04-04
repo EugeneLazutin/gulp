@@ -86,7 +86,7 @@ function createListPage(Component, filters, limit, url, button) {
 
     render() {
       return (
-        <div>
+        <div className="container">
           <SearchBar changeHandler={this._updateSearchParams} filters={filters}>
             {button}
           </SearchBar>

@@ -1,6 +1,7 @@
 var React = require('react');
 var _ = require('lodash');
 var Order = require('./order.admin.js');
+var userStore = require('../../../flux/stores/user.store');
 
 
 var OrdersAdmin = React.createClass({
@@ -19,6 +20,9 @@ var OrdersAdmin = React.createClass({
             User
           </th>
           <th>
+            Book
+          </th>
+          <th>
             Start date
           </th>
           <th>
@@ -33,7 +37,7 @@ var OrdersAdmin = React.createClass({
         <tbody>
         {orders.map((order, i) => {
           return (
-            <Order order={order} key={i}/>
+            <Order order={order} showButtons={userStore.isAdmin()} key={i}/>
           );
         })}
         </tbody>

@@ -20,7 +20,7 @@ module.exports = React.createClass({
     return userStore.isAuthorized() ?
 
       (<Nav pullRight>
-        <Link to='/user'> {userStore.fullName()} </Link>
+        <Link to={`/user/${userStore.getId()}`}> {userStore.fullName()} </Link>
         <NavItem onClick={this.logout}>Logout</NavItem>
       </Nav>)
 

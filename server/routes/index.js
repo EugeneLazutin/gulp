@@ -16,6 +16,9 @@ router.post('/auth', (req, res, next) => {
     if(!user) {
       return res.status(401).json({ msg: 'login failed' });
     }
+    if(user.blocked) {
+      return res.status(401).json({ msg: 'you are blocked by admin'});
+    }
     res.json({
       user: _.omit(user.toObject(), ['passwordHash', 'salt']),
       token: auth.signToken(user._id)

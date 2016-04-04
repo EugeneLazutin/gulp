@@ -58,7 +58,9 @@ class UserActions {
       .send(user)
       .end((err, res) => {
         if (err) {
-          error(err);
+          error({
+              message: res.body.msg
+            });
         } else {
           this.receiveUser(res.body.user);
           cookie.save('token', res.body.token);

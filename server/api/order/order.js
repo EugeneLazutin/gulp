@@ -4,7 +4,7 @@ var orderService = require('../../services/order');
 
 exports.makeOrder = function (req, res) {
   orderService
-    .create(req.body.id, req.user._id, req.user.getName())
+    .create(req.body.id, req.user._id, req.user.getName(), req.body.title)
     .then(order => {
       res.status(200).json(order);
     })
@@ -53,6 +53,7 @@ exports.getAll = function (req, res) {
       res.status(200).json(orders);
     })
     .catch(err => {
+      console.log(err);
       handleError(res, err);
     });
 };

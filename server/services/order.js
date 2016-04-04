@@ -3,9 +3,10 @@ var orderStatus = require('../../config').orderStatus;
 var orderAmount = require('../../config').orderAmount;
 var bookService = require('./book');
 var toQuery = require('./search').toQuery;
+var Book = require('../dal/models/book');
 
 
-exports.create = (bookId, userId, userName) => {
+exports.create = (bookId, userId, userName, bookTitle) => {
   var startDate = new Date();
   var endDate = new Date();
   endDate.setDate(startDate.getDate() + orderAmount.booking);
@@ -13,6 +14,7 @@ exports.create = (bookId, userId, userName) => {
   var order = {
     status: orderStatus.booked,
     book: bookId,
+    bookTitle: bookTitle,
     date: {
       start: startDate,
       end: endDate

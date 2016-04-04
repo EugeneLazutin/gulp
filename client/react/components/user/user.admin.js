@@ -2,6 +2,8 @@ var React = require('react');
 var classNames = require('classnames');
 var userService = require('../../../services/user.service');
 var _ = require('lodash');
+var { Link } = require('react-router');
+
 
 var User = React.createClass({
   propTypes: {
@@ -58,7 +60,11 @@ var User = React.createClass({
 
     return (
       <tr>
-        <td>{user.name.first + ' ' + user.name.last}</td>
+        <td>
+          <Link to={`/user/${user._id}`}>
+            {user.name.first + ' ' + user.name.last}
+          </Link>
+        </td>
         <td>
           <div className={this._statusClass()}>
             {this._status()}

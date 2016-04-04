@@ -25,5 +25,6 @@ var StatusFilter = createFilter('status', 'Status', templateFactory.enum, [
     value: orderStatus.lost
   }
 ]);
+var BookFilter = createFilter('book.title', 'Book', templateFactory.string);
 
-module.exports = [StatusFilter];
+module.exports = [StatusFilter, BookFilter];

@@ -11,4 +11,6 @@ router.post('/all', auth.isAuthenticated(true), user.getAll);
 
 router.post('/set-blocked', auth.isAuthenticated(true), user.setBlocked);
 
+router.get('/full/:id', auth.isAuthenticated(), user.fullInfo);
+
 module.exports = router;

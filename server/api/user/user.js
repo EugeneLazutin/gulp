@@ -27,7 +27,7 @@ exports.getMe = (req, res) => {
 
 exports.fullInfo = (req, res) => {
   userService
-    .getWithOrders(req.user._id)
+    .getWithOrders(req.params.id)
     .then(user => {
       res.status(200).json(user);
     })

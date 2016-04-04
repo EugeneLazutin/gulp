@@ -1,7 +1,7 @@
-module.exports = errorMessage => {
+module.exports = err => {
   if(toastr) {
-    toastr.error(errorMessage);
+    toastr.error(err.message);
   } else {
-    alert(errorMessage);
+    alert(err.message);
   }
 };

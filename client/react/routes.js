@@ -9,6 +9,7 @@ var Book = require('./pages/book/book');
 var Orders = require('./pages/orders');
 var Comments = require('./pages/comments');
 var Users = require('./pages/users');
+var User = require('./pages/user');
 
 var userStore = require('../flux/stores/user.store');
 
@@ -41,6 +42,7 @@ module.exports = (
     <Route path="orders" component={Orders} onEnter={adminOnly} />
     <Route path="comments" component={Comments} onEnter={adminOnly} />
     <Route path="users" component={Users} onEnter={adminOnly} />
+    <Route path="user/:id" component={User} onEnter={requireAuth} />
   </Route>
 );
 

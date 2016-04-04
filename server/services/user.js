@@ -23,7 +23,7 @@ exports.getWithOrders = (id) => {
             Book
               .populate(orders, {
                 path: 'book',
-                select: ['title', 'author', 'year']
+                select: 'title author year'
               }, err => {
                 if(err) {
                   reject(err);
@@ -32,7 +32,7 @@ exports.getWithOrders = (id) => {
                   userObj.orders = orders;
                   resolve(userObj);
                 }
-              })
+              });
           })
           .catch(err => {
             reject(err);

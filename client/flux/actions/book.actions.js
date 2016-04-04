@@ -45,13 +45,13 @@ class BookActions {
     return order;
   }
 
-  makeOrder(bookId) {
+  makeOrder(bookId, title) {
     return dispatch => {
       dispatch();
 
       agent
         .post('/api/order')
-        .send({id: bookId})
+        .send({id: bookId, title: title})
         .set('Authorization', 'Bearer ' + cookie.load('token'))
         .end((err, res) => {
           if (err) {

@@ -10,7 +10,8 @@ var OrderSchema = new Schema({
   },
   user: { type: Schema.ObjectId, ref: 'User', require: true },
   userName: { type: String, require: true },
-  book: { type: Schema.ObjectId, ref: 'Book', require: true }
+  book: { type: Schema.ObjectId, ref: 'Book', require: true },
+  bookTitle: { type: String, require: true }
 });
 
 OrderSchema.plugin(paginate);
