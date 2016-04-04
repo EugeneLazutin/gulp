@@ -7,7 +7,7 @@ var auth = require('../services/auth/auth.service');
 require('../services/auth/passport.config');
 
 /* POST login. */
-router.post('api/auth', (req, res, next) => {
+router.post('/api/auth', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     var error = err || info;
     if(error) {

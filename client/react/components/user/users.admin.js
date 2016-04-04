@@ -19,6 +19,9 @@ var Users = React.createClass({
             Name
           </th>
           <th>
+            Email
+          </th>
+          <th>
             Status
           </th>
           <th></th>

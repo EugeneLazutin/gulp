@@ -66,6 +66,9 @@ var User = React.createClass({
           </Link>
         </td>
         <td>
+          {user.email}
+        </td>
+        <td>
           <div className={this._statusClass()}>
             {this._status()}
           </div>

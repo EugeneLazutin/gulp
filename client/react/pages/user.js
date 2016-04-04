@@ -34,6 +34,7 @@ var UserPage = React.createClass({
     return (
       <div className="container">
         <h3>{user.name.first + ' ' + user.name.last}</h3>
+        <h4>{user.email}</h4>
 
         <Orders>{user.orders}</Orders>
       </div>
