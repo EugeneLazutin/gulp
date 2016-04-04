@@ -10,9 +10,7 @@ module.exports = React.createClass({
   },
 
   getInitialState() {
-    return {
-      book: bookStore.getState()
-    };
+    return bookStore.getState();
   },
 
   componentDidMount() {
@@ -44,7 +42,7 @@ module.exports = React.createClass({
 
   render() {
     var { isAuthorized } = this.props;
-    var { book } = this.state;
+    var book = this.state.book;
 
     if(!book) {
       return <div className="loader" />;
