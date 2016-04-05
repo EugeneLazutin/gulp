@@ -17,6 +17,7 @@
   "user": "/api/user",
   "userAll": "/api/user/all",
   "userBlock": "/api/user/set-blocked",
+  "userChangeRole": "/api/user/change-role",
   "userFull": "/api/user/full",
   "userMe": "/api/user/me"
 }

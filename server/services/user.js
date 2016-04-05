@@ -2,6 +2,7 @@ var userStore = require('../dal/user');
 var orderStore = require('../dal/order');
 var orderStatus = require('../../config').orderStatus;
 var toQuery = require('./search').toQuery;
+var roles = require('../../config').roles;
 
 var Book = require('../dal/models/book');
 
@@ -77,4 +78,12 @@ exports.setBlocked = (id, blocked) => {
         reject(err);
       })
   });
+};
+
+exports.changeRole = (id, role) => {
+  var updates = {
+    role: role
+  };
+
+  return userStore.update(id, updates);
 };

@@ -22,6 +22,9 @@ var Users = React.createClass({
             Email
           </th>
           <th>
+            Role
+          </th>
+          <th>
             Status
           </th>
           <th></th>

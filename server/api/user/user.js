@@ -57,3 +57,20 @@ exports.setBlocked = function (req, res) {
       handleError(res, err);
     });
 };
+
+exports.changeRole = function (req, res) {
+  var userId = req.body.id;
+
+  if(req.user._id == userId) {
+    return handleError(res, new Error('You cannot change the role itself.'));
+  }
+
+  userService
+    .changeRole(userId, req.body.role)
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(err => {
+      handleError(res, err);
+    });
+};

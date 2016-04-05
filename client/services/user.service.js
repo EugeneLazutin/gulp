@@ -14,3 +14,10 @@ exports.unblockUser = userId => {
     blocked: false
   }, apis.userBlock);
 };
+
+exports.changeRole = (userId, role) => {
+  return update({
+    id: userId,
+    role: role
+  }, apis.userChangeRole);
+};
