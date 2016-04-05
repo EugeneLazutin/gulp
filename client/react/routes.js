@@ -10,6 +10,7 @@ var Orders = require('./pages/orders');
 var Comments = require('./pages/comments');
 var Users = require('./pages/user/users');
 var User = require('./pages/user/user');
+var Home = require('./pages/home');
 var userStore = require('../flux/stores/user.store');
 
 
@@ -33,6 +34,7 @@ function adminOnly(nextState, replace) {
 
 module.exports = (
   <Route path='/' component={Layout}>
+    <IndexRoute component={Home} />
     <Route path='login' component={Login}/>
     <Route path='register' component={Register}/>
     <Route path='books' component={Books}/>
