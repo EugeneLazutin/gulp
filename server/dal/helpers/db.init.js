@@ -8,7 +8,7 @@ exports.init = () => {
       createAdmin();
     }
   });
-}
+};
 
 function createAdmin() {
   var admin = {

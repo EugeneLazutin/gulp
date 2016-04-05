@@ -1,7 +1,7 @@
 var React = require('react');
-var fullUserActions = require('../../flux/actions/fullUser.actions');
-var fullUserStore = require('../../flux/stores/fullUser.store');
-var Orders = require('../components/order/orders.admin');
+var fullUserActions = require('../../../flux/actions/fullUser.actions.js');
+var fullUserStore = require('../../../flux/stores/fullUser.store.js');
+var Orders = require('../../components/order/orders.admin.js');
 
 
 var UserPage = React.createClass({

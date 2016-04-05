@@ -2,9 +2,9 @@ var React = require( 'react');
 var { ButtonInput } = require( 'react-bootstrap');
 var { Form, ValidatedInput } = require( 'react-bootstrap-validation');
 var _ = require( 'lodash');
-var isEmail = require( '../../services/validation').isEmail;
-var config = require('../../../config');
-var userActions = require('../../flux/actions/user.actions');
+var isEmail = require( '../../../services/validation').isEmail;
+var config = require('../../../../config/index');
+var userActions = require('../../../flux/actions/user.actions.js');
 
 
 var Register = React.createClass({

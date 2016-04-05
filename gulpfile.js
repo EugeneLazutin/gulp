@@ -97,7 +97,5 @@ gulp.task('test', () => {
 
 gulp.task('app', ['js:app', 'sass']);
 
-gulp.task('lib', ['js:lib', 'css']);
-
-gulp.task('default', ['app', 'lib']);
+gulp.task('default', ['app', 'js:lib']);
 

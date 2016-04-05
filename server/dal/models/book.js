@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var _ = require('lodash');
 var paginate = require('mongoose-paginate');
 
 var currYear = new Date().getFullYear();
