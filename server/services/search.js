@@ -60,6 +60,15 @@ exports.toQuery = params => {
     query.userName = stringFilter(params.userName);
   }
 
+  if(params.email) {
+    query.email = stringFilter(params.email);
+  }
+
+  if(params.role) {
+    query.role = params.role;
+  }
+
+
   return query;
 };
 
