@@ -31,6 +31,7 @@ exports.create = (bookId, userId, userName, bookTitle) => {
           orderStore
             .create(order)
             .then(createdOrder => {
+              bookService.resetAvailable(bookId);
               resolve(createdOrder);
             })
             .catch(err => {
@@ -59,12 +60,21 @@ exports.giveOnHand = (id) => {
   return update(id, updates);
 };
 
-exports.closeOrder = (orderId, status) => {
+exports.closeOrder = (orderId, bookId, status) => {
   var updates = {
     status: status
   };
 
-  return update(orderId, updates);
+  return new Promise((resolve, reject) => {
+    update(orderId, updates)
+      .then(result => {
+        bookService.resetAvailable(bookId);
+        resolve(result);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
 };
 
 exports.lostOrder = (orderId) => {

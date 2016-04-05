@@ -5,8 +5,8 @@ exports.lendOutOrder = orderId => {
   return update({orderId}, apis.orderLendOut);
 };
 
-exports.closeOrder = (orderId, status) => {
-  return update({orderId, status}, apis.orderClose);
+exports.closeOrder = (orderId, bookId, status) => {
+  return update({orderId, bookId, status}, apis.orderClose);
 };
 
 exports.lostOrder = (orderId) => {

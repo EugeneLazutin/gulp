@@ -6,7 +6,7 @@ var orderService = require('./order');
 
 
 exports.create = book => {
-  book.available = book.count;
+  book.available = book.count > 0;
 
   return bookStore.create(book);
 };
@@ -53,6 +53,34 @@ exports.availableBookCount = function (bookId) {
           .activeOrderCount(bookId)
           .then(count => {
             resolve(book.count - count);
+          })
+          .catch(err => {
+            reject(err);
+          });
+
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+exports.resetAvailable = id => {
+  return new Promise((resolve, reject) => {
+    bookStore
+      .get(id)
+      .then(book => {
+
+        orderService
+          .activeOrderCount(id)
+          .then(count => {
+            book.available = book.count > count;
+            book.save(err => {
+              if(err) {
+                return reject(err);
+              }
+              resolve(book);
+            });
           })
           .catch(err => {
             reject(err);
