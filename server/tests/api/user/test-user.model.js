@@ -1,4 +1,4 @@
-var User = require('../.././user.model.js');
+var User = require('../../../dal/models/user');
 
 describe('user model', function () {
 

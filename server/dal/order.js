@@ -1,39 +1,12 @@
 var Order = require('./models/order');
-var _ = require('lodash');
+var factory = require('./dal.factory');
 
 
-exports.create = function (order) {
-  return new Promise(function (resolve, reject) {
-    Order.create(order, function (err, createdOrder) {
-      if (err) {
-        return reject(err);
-      }
-      resolve(createdOrder);
-    });
-  });
-};
+exports.create = factory.create(Order);
 
-exports.update = function (id, updates) {
-  return new Promise(function (resolve, reject) {
-    Order
-      .findById(id)
-      .exec(function (err, order) {
-        if (err) {
-          return reject(err);
-        }
+exports.getAll = factory.getAll(Order);
 
-        _.assign(order, updates);
-
-        order.save(err => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(order);
-          }
-        });
-      });
-  });
-};
+exports.update = factory.update(Order);
 
 exports.multipleUpdate = function (query, updates) {
   return new Promise((resolve, reject) => {
@@ -71,17 +44,5 @@ exports.find = function (query) {
 
         resolve(orders);
       });
-  });
-};
-
-exports.getAll = function (query, pagination) {
-  return new Promise(function (resolve, reject) {
-    Order.paginate(query, pagination, function (err, docs) {
-      if (err) {
-        return reject(err);
-      }
-
-      resolve(docs);
-    });
   });
 };

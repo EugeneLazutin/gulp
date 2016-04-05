@@ -7,12 +7,16 @@ var createListPage = require('../list.factory');
 var userStore = require('../../../flux/stores/user.store');
 
 
-var AddButton = userStore.isAdmin() ? (
-  <Link to='/create-book' className='btn btn-sm btn-success' title='create new book'>
-    <span className='glyphicon glyphicon-plus'></span>
-  </Link>
-) : null;
+var renderButton = () => {
+  if(userStore.isAdmin()) {
+    return (
+      <Link to='/create-book' className={'btn btn-sm btn-success'} title='create new book'>
+      <span className='glyphicon glyphicon-plus'></span>
+    </Link>
+    );
+  }
+};
 
-var BooksPage = createListPage(Books, bookFilters, limit.lg, '/api/book/all', AddButton);
+var BooksPage = createListPage(Books, bookFilters, limit.lg, '/api/book/all', renderButton);
 
 module.exports = BooksPage;

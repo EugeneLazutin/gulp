@@ -1,39 +1,12 @@
 var Comment = require('./models/comment');
-var _ = require('lodash');
+var factory = require('./dal.factory');
 
 
-exports.create = function (comment) {
-  return new Promise(function (resolve, reject) {
-    Comment.create(comment, function (err, createdComment) {
-      if (err) {
-        return reject(err);
-      }
-      resolve(createdComment);
-    });
-  });
-};
+exports.create = factory.create(Comment);
 
-exports.update = function (id, updates) {
-  return new Promise(function (resolve, reject) {
-    Comment
-      .findById(id)
-      .exec(function (err, comment) {
-        if (err) {
-          return reject(err);
-        }
+exports.getAll = factory.getAll(Comment);
 
-        _.assign(comment, updates);
-
-        comment.save(err => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(comment);
-          }
-        });
-      });
-  });
-};
+exports.update = factory.update(Comment);
 
 exports.find = query => {
   return new Promise((resolve, reject) => {
@@ -46,17 +19,5 @@ exports.find = query => {
 
         resolve(comments);
       });
-  });
-};
-
-exports.getAll = function (query, pagination) {
-  return new Promise(function (resolve, reject) {
-    Comment.paginate(query, pagination, function (err, docs) {
-      if (err) {
-        return reject(err);
-      }
-
-      resolve(docs);
-    });
   });
 };

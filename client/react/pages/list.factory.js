@@ -5,7 +5,7 @@ var _ = require('lodash');
 var listActions = require('../../flux/actions/list.actions');
 var listStore = require('../../flux/stores/list.store');
 
-function createListPage(Component, filters, limit, url, button) {
+function createListPage(Component, filters, limit, url, renderButton) {
   return React.createClass({
     getInitialState() {
       return {
@@ -88,7 +88,11 @@ function createListPage(Component, filters, limit, url, button) {
       return (
         <div className="container">
           <SearchBar changeHandler={this._updateSearchParams} filters={filters}>
-            {button}
+            {(() => {
+              if(renderButton) {
+                return renderButton();
+              }
+            })()}
           </SearchBar>
           <Component>{this.state.list}</Component>
           <br/>

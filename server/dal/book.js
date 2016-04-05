@@ -1,30 +1,12 @@
 var Book = require('./models/book');
-var _ = require('lodash');
+var factory = require('./dal.factory');
 
 
-exports.create = function (book) {
-  return new Promise(function (resolve, reject) {
-    Book.create(book, function (err, createdBook) {
-      if (err) {
-        return reject(err);
-      }
+exports.create = factory.create(Book);
 
-      resolve(createdBook);
-    });
-  });
-};
+exports.getAll = factory.getAll(Book);
 
-exports.getAll = function (query, pagination) {
-  return new Promise(function (resolve, reject) {
-    Book.paginate(query, pagination, function (err, docs) {
-      if (err) {
-        return reject(err);
-      }
-
-      resolve(docs);
-    });
-  });
-};
+exports.update = factory.update(Book);
 
 exports.get = function (id) {
   return new Promise(function (resolve, reject) {
@@ -53,28 +35,6 @@ exports.remove = function (id) {
         }
 
         resolve();
-      });
-  });
-};
-
-exports.update = function (id, updates) {
-  return new Promise(function (resolve, reject) {
-    Book
-      .findById(id)
-      .exec(function (err, book) {
-        if (err) {
-          return reject(err);
-        }
-
-        _.assign(book, updates);
-
-        book.save(err => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(book);
-          }
-        });
       });
   });
 };
