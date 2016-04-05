@@ -33,15 +33,6 @@ gulp.task('js:lib', () => {
     .pipe(gulp.dest('./public/js'));
 });
 
-gulp.task('css', () => {
-  var cssFilter = filter('**/*.css');
-  return gulp.src('./client/bower.json')
-    .pipe(mainBowerFiles())
-    .pipe(cssFilter)
-    .pipe(concat('lib.css'))
-    .pipe(gulp.dest('./public/css'));
-});
-
 var defaultOpts = {
   entries: './client/bootstrap.js',
   debug: true
