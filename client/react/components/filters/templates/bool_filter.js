@@ -9,7 +9,6 @@ var BoolFilterFactory = (text, value) => {
     },
 
     componentDidMount() {
-      console.log(value);
       this.props.changeHandler(value);
     },
 

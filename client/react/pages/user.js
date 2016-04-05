@@ -29,8 +29,6 @@ var UserPage = React.createClass({
       return <div className="loader" />;
     }
 
-    console.log(user);
-
     return (
       <div className="container">
         <h3>{user.name.first + ' ' + user.name.last}</h3>

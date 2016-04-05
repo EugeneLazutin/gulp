@@ -42,8 +42,6 @@ function createListPage(Component, filters, limit, url, renderButton) {
     },
 
     _updateSearchParams({key, value}) {
-      console.log(key, ' -  ', value);
-
       this.state.search[key] = value;
       this.state.pagination.page = 1;
 

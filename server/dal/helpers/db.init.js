@@ -21,7 +21,7 @@ function createAdmin() {
     role: roles.admin
   };
 
-  User.create(admin, (err, user) => {
+  User.create(admin, (err) => {
     if(err) {
       return console.log(chalk.red(err));
     }

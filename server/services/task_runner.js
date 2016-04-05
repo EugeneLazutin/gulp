@@ -3,7 +3,6 @@ var Order = require('../dal/models/order');
 var orderStatus = require('../../config').orderStatus;
 var taskWorkingHours= require('../../config').taskWorkingHours;
 var sender = require('./email_sender');
-var _ = require('lodash');
 var chalk = require('chalk');
 var moment = require('moment');
 
@@ -11,7 +10,7 @@ var log = console.log;
 
 schedule.scheduleJob(`0 ${taskWorkingHours} * * *`, function () {
 
-  log(chalk.green(`Task is running ${moment().format()}`));
+  log(chalk.green(`Task is running (${moment().format('LLL')}).`));
 
   Order
     .find({
@@ -27,7 +26,7 @@ schedule.scheduleJob(`0 ${taskWorkingHours} * * *`, function () {
         return log(chalk.red(err));
       }
 
-      log(chalk.blue(`Booked orders count - ${orders.length}`));
+      log(chalk.blue(`Number of elapsed reservations - ${orders.length}`));
 
       orders.forEach(order => {
         order.status = orderStatus.bookingCancelled;
@@ -46,12 +45,11 @@ schedule.scheduleJob(`0 ${taskWorkingHours} * * *`, function () {
     })
     .populate('user')
     .exec((err, orders) => {
-      console.log(err, orders);
       if (err) {
         return log(chalk.red(err));
       }
 
-      log(chalk.blue(`Books on hand - ${orders.length}`));
+      log(chalk.blue(`Number of elapsed rentals - ${orders.length}`));
 
       orders.forEach(order => {
         var mailOptions = {
@@ -66,6 +64,7 @@ schedule.scheduleJob(`0 ${taskWorkingHours} * * *`, function () {
         sender
           .send(mailOptions)
           .then(msg => {
+            console.log(chalk.blue(`${order.user.email} was notified.`));
             order.status = orderStatus.notified;
             order.save();
           })
