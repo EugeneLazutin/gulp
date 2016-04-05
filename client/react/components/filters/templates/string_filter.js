@@ -1,7 +1,8 @@
 var React = require('react');
 var mixin = require('./template_mixin');
 
-module.exports = placeholder => {
+
+var StringFilter = placeholder => {
   return React.createClass({
     propTypes: {
       hideFilter: React.PropTypes.func,
@@ -48,3 +49,5 @@ module.exports = placeholder => {
     }
   });
 };
+
+module.exports = StringFilter;

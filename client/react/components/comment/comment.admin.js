@@ -4,6 +4,7 @@ var commentService = require('../../../services/comment.service');
 var _ = require('lodash');
 var moment = require('moment');
 
+
 var Comment = React.createClass({
   propTypes: {
     comment: React.PropTypes.object

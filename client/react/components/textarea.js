@@ -1,7 +1,8 @@
 var React = require('react');
 var classNames = require('classnames');
 
-module.exports = React.createClass({
+
+var Textarea = React.createClass({
   propTypes: {
     placeholder: React.PropTypes.string,
     required: React.PropTypes.bool
@@ -74,3 +75,5 @@ electronic typesetting, remaining essentially unchanged. It was popularised in
 the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
   and more recently with desktop publishing software like Aldus PageMaker including
 versions of Lorem Ipsum.`;
+
+module.exports = Textarea;

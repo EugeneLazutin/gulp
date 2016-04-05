@@ -1,7 +1,7 @@
 var alt = require('../alt');
 var bookActions = require('../actions/book.actions');
-
 var socket = io('/book');
+
 
 class bookStore {
   constructor() {

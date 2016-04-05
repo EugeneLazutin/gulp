@@ -1,6 +1,7 @@
 var { enter } = require('../../../../../config').keyCodes;
 
-module.exports = {
+
+var mixin = {
   _handleKeyUp(evt) {
     if (evt.keyCode === enter) {
       this._emitChanges();
@@ -13,3 +14,5 @@ module.exports = {
     });
   }
 };
+
+module.exports = mixin;

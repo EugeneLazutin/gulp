@@ -2,14 +2,12 @@ var React = require( 'react');
 var { ButtonInput } = require( 'react-bootstrap');
 var { Form, ValidatedInput } = require( 'react-bootstrap-validation');
 var _ = require( 'lodash');
-var services = require( '../../services');
-var { browserHistory } = require( 'react-router');
+var isEmail = require( '../../services/validation').isEmail;
 var config = require('../../../config');
 var userActions = require('../../flux/actions/user.actions');
 
-var isEmail = services.validation.isEmail;
 
-module.exports = React.createClass({
+var Register = React.createClass({
 
   handleValid(values){
     var user = _.omit(values, ['firstName', 'lastName']);
@@ -77,3 +75,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Register;

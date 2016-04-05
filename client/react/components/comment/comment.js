@@ -1,7 +1,8 @@
 var React = require('react');
 var moment = require('moment');
 
-module.exports = React.createClass({
+
+var Comment = React.createClass({
   propTypes: {
     comment: React.PropTypes.object
   },
@@ -26,3 +27,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Comment;

@@ -5,7 +5,7 @@ var Auth = require('./auth');
 var Link = require('./../link');
 
 
-module.exports = React.createClass({
+var NavComponent = React.createClass({
 
   getInitialState() {
     return userStore.getState();
@@ -60,3 +60,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = NavComponent;

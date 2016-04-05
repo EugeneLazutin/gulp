@@ -2,7 +2,8 @@ var React = require('react');
 var PropTypes = React.PropTypes;
 var { Link } = require('react-router');
 
-module.exports = React.createClass({
+
+var BookGrid = React.createClass({
   propTypes: {
     book: PropTypes.object,
     key: PropTypes.number
@@ -21,3 +22,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = BookGrid;

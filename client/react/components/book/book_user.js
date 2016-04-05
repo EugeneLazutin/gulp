@@ -3,7 +3,8 @@ var Comments = require('../comment/comments');
 var bookActions = require('../../../flux/actions/book.actions');
 var bookStore = require('../../../flux/stores/book.store');
 
-module.exports = React.createClass({
+
+var BookUser = React.createClass({
   propTypes: {
     bookId: React.PropTypes.string,
     isAuthorized: React.PropTypes.bool
@@ -76,3 +77,5 @@ module.exports = React.createClass({
     </div>
   }
 });
+
+module.exports = BookUser;

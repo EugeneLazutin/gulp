@@ -1,14 +1,12 @@
 var React = require('react');
 var { ButtonInput } = require('react-bootstrap');
 var { Form, ValidatedInput } = require('react-bootstrap-validation');
-var services = require('../../services');
-var { browserHistory } = require('react-router');
+var isEmail = require('../../services/validation').isEmail;
 var config = require('../../../config');
 var userActions = require('../../flux/actions/user.actions');
 
-var isEmail = services.validation.isEmail;
 
-module.exports = React.createClass({
+var Login = React.createClass({
 
   handleValid(values) {
     userActions.login(values);
@@ -50,3 +48,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Login;

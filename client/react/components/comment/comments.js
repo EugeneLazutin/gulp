@@ -1,9 +1,9 @@
 var React = require('react');
-
 var CommentForm = require('./comment_form');
 var Comment = require('./comment');
 
-module.exports = React.createClass({
+
+var Comments = React.createClass({
   propTypes: {
     bookId: React.PropTypes.string,
     comments: React.PropTypes.array,
@@ -88,3 +88,4 @@ module.exports = React.createClass({
   }
 });
 
+module.exports = Comments;

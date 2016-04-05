@@ -1,4 +1,3 @@
-var React = require('react');
 var { Route, IndexRoute } = require('react-router');
 var Layout = require('./layout');
 var Register = require('./pages/register');
@@ -10,7 +9,6 @@ var Orders = require('./pages/orders');
 var Comments = require('./pages/comments');
 var Users = require('./pages/users');
 var User = require('./pages/user');
-
 var userStore = require('../flux/stores/user.store');
 
 

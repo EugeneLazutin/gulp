@@ -2,8 +2,8 @@ var alt = require('../alt');
 var agent = require('superagent');
 var cookie = require('react-cookie');
 var error = require('../error_handler');
-var { hashHistory } = require('react-router');
 var apis = require('../../../config/client').apis;
+
 
 class FullUserActions {
   fetchFullUser(id) {

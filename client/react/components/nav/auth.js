@@ -6,7 +6,7 @@ var userStore = require('../../../flux/stores/user.store.js');
 var userActions = require('../../../flux/actions/user.actions.js');
 
 
-module.exports = React.createClass({
+var Auth = React.createClass({
   componentDidMount() {
     userActions.tryFetchUser();
   },
@@ -33,3 +33,5 @@ module.exports = React.createClass({
 
   }
 });
+
+module.exports = Auth;

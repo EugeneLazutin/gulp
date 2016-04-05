@@ -1,6 +1,5 @@
 var { Validator } = require('react-bootstrap-validation');
 var _ = require('lodash');
-var React = require('react');
 
 var imageType = /^image\//;
 

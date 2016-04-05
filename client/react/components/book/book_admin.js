@@ -4,7 +4,8 @@ var Orders = require('./../order/orders.admin.js');
 var bookActions = require('../../../flux/actions/book.actions');
 var bookStore = require('../../../flux/stores/book.store');
 
-module.exports = React.createClass({
+
+var BookAdmin = React.createClass({
   propTypes: {
     bookId: React.PropTypes.string
   },
@@ -71,3 +72,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = BookAdmin;

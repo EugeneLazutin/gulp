@@ -1,6 +1,7 @@
 var React = require('react');
 
-module.exports = (placeholder, array) => {
+
+var EnumFilter = (placeholder, array) => {
   return React.createClass({
     propTypes: {
       hideFilter: React.PropTypes.func,
@@ -57,3 +58,4 @@ module.exports = (placeholder, array) => {
   });
 };
 
+module.exports = EnumFilter;

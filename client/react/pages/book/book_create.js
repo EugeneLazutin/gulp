@@ -1,16 +1,15 @@
 var React = require('react');
 var { ButtonInput } = require('react-bootstrap');
 var { Form, ValidatedInput } = require('react-bootstrap-validation');
-var services = require('../../../services/index');
+var isNumber = require('../../../services/validation').isNumber;
+var file2base64 = require('../../../services/image').file2base64;
 var ImagePicker = require('../../components/image_picker');
 var TextArea = require('../../components/textarea');
 var _ = require('lodash');
 var bookActions = require('../../../flux/actions/book.actions');
 
-var { isNumber } = services.validation;
-var { file2base64 } = services.image;
 
-module.exports = React.createClass({
+var BookCreate = React.createClass({
 
   handleValid(book) {
 
@@ -96,3 +95,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = BookCreate;

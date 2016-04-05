@@ -2,7 +2,8 @@ var React = require('react');
 var classNames = require('classnames');
 var bookActions = require('../../../flux/actions/book.actions');
 
-module.exports = React.createClass({
+
+var CommentForm = React.createClass({
   propTypes: {
     bookId: React.PropTypes.string
   },
@@ -49,3 +50,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = CommentForm;

@@ -4,7 +4,8 @@ var classNames = require('classnames');
 var mixin = require('./template_mixin');
 var _ = require('lodash');
 
-module.exports = placeholder => {
+
+var NumberFilter = placeholder => {
   return React.createClass({
     propTypes: {
       hideFilter: React.PropTypes.func,
@@ -104,4 +105,4 @@ module.exports = placeholder => {
   });
 };
 
-
+module.exports = NumberFilter;

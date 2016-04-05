@@ -1,8 +1,9 @@
 var React = require('react');
 var ClassNames = require('classnames');
-var { isSingleImage } = require('../../services/validation');
+var isSingleImage = require('../../services/validation').isSingleImage;
 
-module.exports = React.createClass({
+
+var ImagePicker = React.createClass({
   getInitialState() {
     return {
       name: '',
@@ -77,3 +78,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = ImagePicker;

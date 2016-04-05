@@ -1,7 +1,8 @@
 var React = require('react');
 var Book = require('./book_grid');
 
-module.exports = React.createClass({
+
+var Books = React.createClass({
   render() {
     var books = this.props.children;
 
@@ -20,3 +21,5 @@ module.exports = React.createClass({
     }
   }
 });
+
+module.exports = Books;

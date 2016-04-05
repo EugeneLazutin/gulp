@@ -1,8 +1,8 @@
 var React = require('react');
 var Nav = require('./components/nav/nav');
 
-module.exports = React.createClass({
 
+var Layout = React.createClass({
   render: function () {
     return (
       <div>
@@ -15,3 +15,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Layout;

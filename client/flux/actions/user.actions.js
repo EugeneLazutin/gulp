@@ -5,6 +5,7 @@ var error = require('../error_handler');
 var { hashHistory } = require('react-router');
 var apis = require('../../../config/client').apis;
 
+
 class UserActions {
   tryFetchUser() {
     return dispatch => {

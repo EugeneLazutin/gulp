@@ -3,7 +3,7 @@ var classNames = require('classnames');
 var userStore = require('../../flux/stores/user.store');
 
 
-module.exports = React.createClass({
+var SearchBar = React.createClass({
   propTypes: {
     changeHandler: React.PropTypes.func,
     filters: React.PropTypes.array
@@ -111,3 +111,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = SearchBar
