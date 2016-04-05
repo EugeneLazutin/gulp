@@ -1,5 +1,5 @@
 var Order = require('./models/order');
-var factory = require('./dal.factory');
+var factory = require('./helpers/dal.factory.js');
 
 
 exports.create = factory.create(Order);

@@ -1,5 +1,5 @@
 var User = require('./models/user');
-var factory = require('./dal.factory');
+var factory = require('./helpers/dal.factory.js');
 
 
 exports.create = factory.create(User);

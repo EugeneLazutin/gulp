@@ -9,11 +9,16 @@ var debug = require('debug')('react-express:server');
 var http = require('http');
 var mongoose = require('mongoose');
 var SocketBootstraper = require('../server/socket.io');
+var dbInitializer = require('../server/dal/helpers/db.init');
 
 /* run task */
 require('../server/services/task_runner');
 
 mongoose.connect('mongodb://localhost/my_db');
+
+mongoose.connection.once('open', () => {
+  dbInitializer.init();
+});
 
 /**
  * Get port from environment and store in Express.

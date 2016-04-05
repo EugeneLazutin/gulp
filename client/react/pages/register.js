@@ -65,16 +65,6 @@ module.exports = React.createClass({
           }}
         />
 
-        <ValidatedInput
-          type="number"
-          name="role"
-          placeholder="Role"
-          validate="required"
-          errorHelp={{
-            required: 'Please enter your role.'
-          }}
-        />
-
         <ButtonInput
           type='submit'
           bsSize='large'
