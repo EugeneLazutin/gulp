@@ -11,7 +11,6 @@ module.exports = React.createClass({
 
   getInitialState() {
     return {
-      book: bookStore.getState(),
       ordersIsVisible: true
     };
   },

@@ -30,13 +30,11 @@ module.exports = React.createClass({
   componentDidMount()  {
     this.socket = io('/comment');
     this.socket.on('add_comment', this._updateComments);
-    console.log('mount, socket - ', this.socket, this.socket.connected);
   },
 
   componentWillUnmount() {
     this.socket.removeListener('add_comment', this._updateComments);
     this.socket = null;
-    console.log('unmount, socket - ', this.socket);
   },
 
   _handleClick()  {

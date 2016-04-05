@@ -6,8 +6,8 @@ function Bootstraper(server) {
 
   BookIo(io);
 
+  io.of('/comment');
   global._io = io;
-
 }
 
 module.exports = Bootstraper;

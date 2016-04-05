@@ -9,10 +9,6 @@ module.exports = React.createClass({
     isAuthorized: React.PropTypes.bool
   },
 
-  getInitialState() {
-    return bookStore.getState();
-  },
-
   componentDidMount() {
     bookStore.listen(this._onChange);
     bookActions.fetchBook(this.props.bookId, false);
@@ -42,7 +38,7 @@ module.exports = React.createClass({
 
   render() {
     var { isAuthorized } = this.props;
-    var book = this.state.book;
+    var book = this.state ? this.state.book : null;
 
     if(!book) {
       return <div className="loader" />;
