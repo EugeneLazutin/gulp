@@ -1,13 +1,11 @@
 var _ = require('lodash');
 var express = require('express');
-var router = express.Router();
 var passport = require('passport');
 
-var auth = require('../services/auth/auth.service');
-require('../services/auth/passport.config');
+var auth = require('../../services/auth/auth.service');
+require('../../services/auth/passport.config');
 
-/* POST login. */
-router.post('/api/auth', (req, res, next) => {
+exports.login = function (req, res, next) {
   passport.authenticate('local', (err, user, info) => {
     var error = err || info;
     if(error) {
@@ -24,11 +22,4 @@ router.post('/api/auth', (req, res, next) => {
       token: auth.signToken(user._id)
     });
   })(req, res, next);
-});
-
-/* GET home page. */
-router.get('*', function(req, res) {
-  res.render('index');
-});
-
-module.exports = router;
+};

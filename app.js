@@ -5,8 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./server/routes/index');
-
 var app = express();
 
 // view engine setup
@@ -19,19 +17,16 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-//app.use(require('node-sass-middleware')({
-//  src: path.join(__dirname, 'public'),
-//  dest: path.join(__dirname, 'public'),
-//  indentedSyntax: true,
-//  sourceMap: true
-//}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api/auth', require('./server/api/auth'));
 app.use('/api/user', require('./server/api/user'));
 app.use('/api/book', require('./server/api/book'));
 app.use('/api/order', require('./server/api/order'));
 app.use('/api/comment', require('./server/api/comment'));
-app.use('/', routes);
+app.use('/', (req, res) => {
+  res.render('index');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
