@@ -7,7 +7,6 @@ var moment = require('moment');
 var chalk = require('chalk');
 var filter = require('gulp-filter');
 var concat = require('gulp-concat');
-var mainBowerFiles = require('gulp-main-bower-files');
 var sass = require('gulp-sass');
 var jasmine = require('gulp-jasmine');
 var SpecReporter = require('jasmine-spec-reporter');
@@ -22,15 +21,6 @@ gulp.task('sass', () => {
 
 gulp.task('watch:sass', () => {
   gulp.watch('./client/styles/**/*.scss', ['sass']);
-});
-
-gulp.task('js:lib', () => {
-  var jsFilter = filter('**/*.js');
-  return gulp.src('./client/bower.json')
-    .pipe(mainBowerFiles())
-    .pipe(jsFilter)
-    .pipe(concat('lib.js'))
-    .pipe(gulp.dest('./public/js'));
 });
 
 var defaultOpts = {
@@ -97,5 +87,5 @@ gulp.task('test', () => {
 
 gulp.task('app', ['js:app', 'sass']);
 
-gulp.task('default', ['app', 'js:lib']);
+gulp.task('default', ['app']);
 
