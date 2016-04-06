@@ -14,64 +14,18 @@ var converter = createConverter(types);
 exports.toQuery = params => {
   var query = {};
 
-  if(params.title) {
-    query.title = stringFilter(params.title);
-  }
-
-  if(params.author) {
-    query.author = stringFilter(params.author);
-  }
-
-  if(params.year && params.year.value) {
-    query.year = numberFilter(params.year.value, params.year.type);
-  }
-
-  if(params.pages && params.pages.value) {
-    query.pages = numberFilter(params.pages.value, params.pages.type);
-  }
-
-  if(params.available) {
-    query.available = {
-      '$gt': 0
-    };
-  }
-
-  if(params.status) {
-    query.status = params.status;
-  }
-
-  if(!_.isUndefined(params.removed)) {
-    query.removed = params.removed;
-  }
-
-  if(!_.isUndefined(params.blocked)) {
-    query.blocked = params.blocked;
-  }
-
-  if(params.bookTitle) {
-    query.bookTitle = stringFilter(params.bookTitle);
-  }
-
-  if(params.message) {
-    query.message = stringFilter(params.message);
-  }
-
-  if(params.userName) {
-    query.userName = stringFilter(params.userName);
-  }
-
-  if(params.email) {
-    query.email = stringFilter(params.email);
-  }
-
-  if(params.role) {
-    query.role = params.role;
-  }
-
+  _.forOwn(params, (value, key) => {
+    if(_.isString(value)) {
+      return query[key] = stringFilter(value);
+    }
+    if(_.isObject(value) && !_.isUndefined(value.value) && !_.isUndefined(value.type)) {
+      return query[key] = numberFilter(value.value, value.type);
+    }
+    query[key] = value;
+  });
 
   return query;
-};
-
+}
 function numberFilter (number, type) {
   var result = {};
   result[converter[type]] = number;
