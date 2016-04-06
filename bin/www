@@ -21,6 +21,12 @@ mongoose.connection.once('open', () => {
   dbInitializer.init();
 });
 
+process.on('SIGINT', function() {
+  mongoose.connection.close(function () {
+    process.exit(0);
+  });
+});
+
 /**
  * Get port from environment and store in Express.
  */
